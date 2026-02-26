@@ -1,0 +1,221 @@
+/**
+ * 全局样式
+ */
+
+:root {
+  /* 基础颜色 */
+  --color-bg-primary: #0a0a0f;
+  --color-bg-secondary: #1a0a0f;
+  --color-bg-card: #151018;
+  --color-bg-elevated: #1e1820;
+
+  /* 强调色 */
+  --color-accent-gold: #c9a227;
+  --color-accent-gold-light: #d4b84a;
+  --color-accent-gold-dark: #a88420;
+  --color-accent-red: #8b0000;
+  --color-accent-red-light: #a52a2a;
+  --color-accent-red-dark: #6b0000;
+
+  /* 文字颜色 */
+  --color-text-primary: #f5f5dc;
+  --color-text-secondary: #a08070;
+  --color-text-muted: #606060;
+  --color-text-disabled: #404040;
+
+  /* 边框颜色 */
+  --color-border-default: rgba(120, 100, 80, 0.2);
+  --color-border-hover: rgba(120, 100, 80, 0.4);
+  --color-border-focus: rgba(201, 162, 39, 0.5);
+
+  /* 间距 */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+
+  /* 字体 */
+  --font-family-base: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-family-serif: 'Noto Serif SC', 'Source Han Serif SC', serif;
+  --font-family-decorative: 'ZCOOL XiaoWei', 'Ma Shan Zheng', cursive;
+
+  /* 圆角 */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* 阴影 */
+  --shadow-gold: 0 0 20px rgba(201, 162, 39, 0.3);
+  --shadow-red: 0 0 20px rgba(139, 0, 0, 0.3);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border-color: var(--color-border-default);
+}
+
+html {
+  font-family: var(--font-family-base);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  min-height: 100vh;
+}
+
+/* 游戏容器 */
+.game-container {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    var(--color-bg-primary) 0%,
+    var(--color-bg-secondary) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md);
+}
+
+/* 玻璃卡片 */
+.glass-card {
+  position: relative;
+  background: rgba(21, 16, 24, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-2xl);
+  width: 100%;
+  max-width: 2xl;
+}
+
+/* 金色边框 */
+.gold-border {
+  border: 1px solid var(--color-accent-gold);
+  box-shadow: 0 0 10px rgba(201, 162, 39, 0.3);
+}
+
+/* 金色文字 */
+.text-gold {
+  color: var(--color-accent-gold);
+  text-shadow: 0 0 10px rgba(201, 162, 39, 0.5);
+}
+
+/* 标题样式 */
+h1 {
+  font-size: 5rem;
+  font-family: var(--font-family-serif);
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+/* 副标题样式 */
+p {
+  text-align: center;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-2xl);
+}
+
+/* 按钮样式 */
+button {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* 主按钮 */
+button.gold-border {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(to right, rgba(180, 130, 39, 0.8), rgba(160, 110, 30, 0.8));
+  padding: var(--spacing-lg);
+  font-family: var(--font-family-serif);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-accent-gold);
+}
+
+button.gold-border:hover {
+  background: linear-gradient(to right, rgba(160, 110, 30, 0.8), rgba(140, 90, 20, 0.8));
+}
+
+button.gold-border:active {
+  transform: scale(0.98);
+}
+
+/* 次要按钮 */
+button.secondary {
+  flex: 1;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-default);
+  background: rgba(21, 16, 24, 0.5);
+  padding: var(--spacing-sm);
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+button.secondary:hover {
+  border-color: var(--color-border-hover);
+  color: var(--color-text-primary);
+}
+
+/* 按钮容器 */
+.button-container {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+}
+
+/* 游戏状态容器 */
+.game-status {
+  display: flex;
+  justify-content: around;
+  background-color: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  border: 1px solid var(--color-border-default);
+  margin-bottom: var(--spacing-md);
+}
+
+/* 状态项 */
+.status-item {
+  text-align: center;
+}
+
+.status-item .label {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.status-item .value {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* 游戏进行中提示 */
+.game-in-progress {
+  text-align: center;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-md);
+}
+
+/* 页脚 */
+.footer {
+  margin-top: var(--spacing-2xl);
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}

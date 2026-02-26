@@ -1,0 +1,11 @@
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+/**
+ * 合并 Tailwind CSS 类名
+ * 1. 使用 clsx 处理条件类名
+ * 2. 使用 tailwind-merge 解决类名冲突
+ */
+export function cn(...inputs: ClassValue[]): string {
+  return twMerge(clsx(inputs));
+}
