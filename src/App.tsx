@@ -9,6 +9,7 @@ import { scenarios } from '@config/scenarios';
 import { ScenarioSelect } from '@components/game/ScenarioSelect';
 import { DialogueContainer } from '@components/game/DialogueContainer';
 import { PlayerInput } from '@components/game/PlayerInput';
+import { StatChangeAnimation } from '@components/game/StatChangeAnimation';
 import type { ChatMessage } from '@types/game';
 
 function App() {
@@ -224,6 +225,7 @@ function App() {
                 style={{ width: `${stats.authority}%` }}
               ></div>
             </div>
+            <StatChangeAnimation value={stats.authority} type="authority" />
           </div>
 
           <div className="stat-item">
@@ -238,6 +240,7 @@ function App() {
                 style={{ width: `${stats.suspicion}%` }}
               ></div>
             </div>
+            <StatChangeAnimation value={stats.suspicion} type="suspicion" />
           </div>
         </div>
 

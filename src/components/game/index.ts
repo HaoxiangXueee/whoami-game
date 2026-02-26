@@ -2,5 +2,14 @@
  * 游戏专用组件统一导出
  */
 
-// 游戏组件将在后续实现
-export {};
+export { ScenarioSelect } from './ScenarioSelect';
+export { DialogueContainer } from './DialogueContainer';
+export { DialogueBubble, NPCBubble, PlayerBubble, SystemBubble } from './DialogueBubble';
+export { PlayerInput } from './PlayerInput';
+export { StatChangeAnimation } from './StatChangeAnimation';
+export {
+  BubbleAnimation,
+  TypewriterEffect,
+  PulseAnimation,
+  ShakeAnimation,
+} from './BubbleAnimation';
