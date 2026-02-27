@@ -88,10 +88,13 @@ export function useLLM(options: UseLLMOptions): UseLLMReturn {
 
       try {
         const service = llmServiceRef.current;
+        // 确保参数有默认值，避免 undefined
+        const safeCurrentTurn = currentTurn ?? 1;
+        const safeMaxTurns = maxTurns ?? 10;
         const systemPrompt = generateSystemPrompt(
-          scenario.background,
-          currentTurn,
-          maxTurns,
+          scenario.background || '',
+          safeCurrentTurn,
+          safeMaxTurns,
           0, // authority 会在后续更新
           0  // suspicion 会在后续更新
         );
