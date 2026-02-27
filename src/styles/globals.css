@@ -1061,4 +1061,455 @@ button.secondary:hover {
   }
 }
 
+/* ==========================================================================
+   主菜单样式
+   ========================================================================== */
+.start-menu {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-2xl);
+  background: linear-gradient(
+    180deg,
+    var(--color-bg-primary) 0%,
+    var(--color-bg-secondary) 50%,
+    var(--color-bg-primary) 100%
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+.start-menu::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    circle at 50% 40%,
+    rgba(201, 162, 39, 0.08) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+.title-section {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+  position: relative;
+  z-index: 1;
+}
+
+.game-title {
+  font-family: var(--font-family-serif);
+  font-size: 3.5rem;
+  color: var(--color-accent-gold);
+  text-shadow: 0 0 30px rgba(201, 162, 39, 0.4);
+  margin-bottom: var(--spacing-md);
+  letter-spacing: 0.1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+}
+
+.title-icon {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 0 10px rgba(201, 162, 39, 0.5));
+}
+
+.game-subtitle {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  font-style: italic;
+  letter-spacing: 0.05em;
+  margin-bottom: 0;
+}
+
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  width: 100%;
+  max-width: 360px;
+  position: relative;
+  z-index: 1;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: var(--spacing-lg) var(--spacing-xl);
+  background: linear-gradient(135deg, var(--color-accent-gold-dark) 0%, var(--color-accent-gold) 100%);
+  border: 2px solid var(--color-accent-gold);
+  border-radius: var(--radius-xl);
+  color: var(--color-bg-primary);
+  font-family: var(--font-family-serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  box-shadow: 0 0 30px rgba(201, 162, 39, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(201, 162, 39, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-icon {
+  font-size: 1.3rem;
+}
+
+.secondary-buttons {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.btn-secondary {
+  flex: 1;
+  padding: var(--spacing-md);
+  background: rgba(21, 16, 24, 0.6);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-border-hover);
+  color: var(--color-text-primary);
+  background: rgba(21, 16, 24, 0.8);
+}
+
+.game-footer {
+  margin-top: var(--spacing-2xl);
+  position: relative;
+  z-index: 1;
+}
+
+.game-footer p {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+@media (max-width: 480px) {
+  .game-title {
+    font-size: 2.2rem;
+  }
+
+  .title-icon {
+    font-size: 1.8rem;
+  }
+
+  .menu-buttons {
+    max-width: 300px;
+  }
+}
+
+/* ==========================================================================
+   随机剧本加载器（穿越动画）样式
+   ========================================================================== */
+.random-scenario-loader {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-primary);
+  overflow: hidden;
+}
+
+.loader-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.loader-container.glitch {
+  animation: glitchEffect 0.3s ease;
+}
+
+@keyframes glitchEffect {
+  0% { transform: translate(0); filter: none; }
+  20% { transform: translate(-3px, 2px); filter: hue-rotate(90deg); }
+  40% { transform: translate(3px, -2px); filter: brightness(1.5); }
+  60% { transform: translate(-2px, -1px); filter: hue-rotate(180deg); }
+  80% { transform: translate(2px, 1px); filter: brightness(0.8); }
+  100% { transform: translate(0); filter: none; }
+}
+
+.loader-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.loader-noise {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: repeating-radial-gradient(
+    circle,
+    rgba(201, 162, 39, 0.03) 0px,
+    transparent 1px,
+    transparent 3px
+  );
+  animation: noiseMove 8s linear infinite;
+}
+
+@keyframes noiseMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(50px, 50px); }
+}
+
+.loader-vignette {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 40%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+}
+
+.loader-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: var(--spacing-2xl);
+  max-width: 500px;
+  width: 100%;
+}
+
+.loader-title {
+  font-family: var(--font-family-serif);
+  font-size: 2rem;
+  color: var(--color-accent-gold);
+  text-shadow: 0 0 20px rgba(201, 162, 39, 0.4);
+  margin-bottom: var(--spacing-2xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+}
+
+.loader-title .title-icon {
+  font-size: 2rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.1); }
+}
+
+.loader-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  margin-bottom: var(--spacing-xl);
+  min-height: 2em;
+}
+
+.status-text {
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  color: var(--color-accent-gold-light);
+  margin: 0;
+}
+
+.status-cursor {
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  color: var(--color-accent-gold);
+  animation: blink 0.8s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.loader-progress-container {
+  margin-bottom: var(--spacing-xl);
+}
+
+.loader-progress-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(201, 162, 39, 0.15);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: var(--spacing-sm);
+}
+
+.loader-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-accent-gold-dark), var(--color-accent-gold));
+  border-radius: var(--radius-full);
+  transition: width 0.8s ease;
+  box-shadow: 0 0 10px rgba(201, 162, 39, 0.5);
+}
+
+.loader-progress-text {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  font-family: 'Courier New', monospace;
+}
+
+.loader-decorations {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.decoration-ring {
+  position: absolute;
+  border: 1px solid rgba(201, 162, 39, 0.1);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.ring-1 {
+  width: 200px;
+  height: 200px;
+  animation: ringRotate 10s linear infinite;
+}
+
+.ring-2 {
+  width: 300px;
+  height: 300px;
+  animation: ringRotate 15s linear infinite reverse;
+}
+
+.ring-3 {
+  width: 400px;
+  height: 400px;
+  animation: ringRotate 20s linear infinite;
+}
+
+@keyframes ringRotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.loader-hint {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+  margin: 0;
+  animation: fadeInOut 3s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* 数值变化动画 */
+.stat-change-animation {
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+.floating-number {
+  position: absolute;
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+  animation: floatUp 2.5s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes floatUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+}
+
+.stat-change-positive {
+  color: #4ade80;
+  text-shadow: 0 0 8px rgba(74, 222, 128, 0.5);
+}
+
+.stat-change-negative {
+  color: #f87171;
+  text-shadow: 0 0 8px rgba(248, 113, 113, 0.5);
+}
+
+/* 加载指示器 */
+.loading-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+}
+
+.loading-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.loading-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent-gold);
+  animation: dotBounce 1.4s infinite ease-in-out both;
+}
+
+.loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+.loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+.loading-dots span:nth-child(3) { animation-delay: 0; }
+
+@keyframes dotBounce {
+  0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+.loading-indicator .loading-text {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
 

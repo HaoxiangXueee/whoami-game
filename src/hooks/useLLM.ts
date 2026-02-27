@@ -1,94 +1,144 @@
 /**
- * LLM交互Hook
- * 封装与LLM服务的交互逻辑
+ * LLM Hook
+ * 用于在组件中调用LLM服务
  */
 
-import { useCallback, useRef, useState } from 'react';
-import { getLLMService, generateSystemPrompt, type GameLLMResponse } from '@services/llm';
-import { useGameStore } from '@stores/gameStore';
+import { useState, useCallback, useRef, useEffect } from 'react';
+import { getLLMService, resetLLMService } from '@services/llm/LLMService';
+import { generateSystemPrompt } from '@config/prompts/systemPrompt';
+import type {
+  GameLLMResponse,
+  GameContext,
+} from '@services/llm/types';
+import type { ScenarioConfig, ChatMessage } from '@types/game';
 
 interface UseLLMOptions {
-  onSuccess?: (response: GameLLMResponse) => void;
-  onError?: (error: Error) => void;
+  scenario: ScenarioConfig | null;
+  chatHistory: ChatMessage[];
+  currentTurn: number;
+  maxTurns: number;
 }
 
 interface UseLLMReturn {
-  sendMessage: (content: string) => Promise<void>;
   isLoading: boolean;
   error: string | null;
-  abort: () => void;
+  sendMessage: (content: string) => Promise<GameLLMResponse | null>;
+  initialize: (apiKey: string) => boolean;
+  isInitialized: boolean;
 }
 
-export function useLLM(options: UseLLMOptions = {}): UseLLMReturn {
+export function useLLM(options: UseLLMOptions): UseLLMReturn {
+  const { scenario, chatHistory, currentTurn, maxTurns } = options;
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isInitialized, setIsInitialized] = useState(false);
 
-  const abortControllerRef = useRef<AbortController | null>(null);
-  const { currentScenario, stats, currentTurn, maxTurns, chatHistory } = useGameStore();
+  const llmServiceRef = useRef(getLLMService());
 
-  const abort = useCallback(() => {
-    if (abortControllerRef.current) {
-      abortControllerRef.current.abort();
-      abortControllerRef.current = null;
+  // 初始化LLM服务
+  const initialize = useCallback((apiKey: string): boolean => {
+    try {
+      const service = llmServiceRef.current;
+      const success = service.initialize({
+        provider: 'kimi',
+        apiKey,
+        baseUrl: 'https://api.moonshot.cn',
+        model: 'moonshot-v1-8k',
+        defaultConfig: {
+          temperature: 0.7,
+          maxTokens: 1500,
+          topP: 0.9,
+        },
+      });
+
+      if (success) {
+        setIsInitialized(true);
+        setError(null);
+        console.log('[LLM] Kimi服务初始化成功');
+      } else {
+        setError('LLM服务初始化失败');
+        console.error('[LLM] Kimi服务初始化失败');
+      }
+
+      return success;
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : '未知错误';
+      setError(`LLM初始化错误: ${errorMessage}`);
+      console.error('[LLM] 初始化错误:', err);
+      return false;
     }
   }, []);
 
-  const sendMessage = useCallback(async (content: string): Promise<void> => {
-    if (!currentScenario) {
-      setError('没有选中的剧本');
-      return;
-    }
+  // 发送消息
+  const sendMessage = useCallback(
+    async (content: string): Promise<GameLLMResponse | null> => {
+      if (!scenario) {
+        setError('没有可用的剧本');
+        return null;
+      }
 
-    const llmService = getLLMService();
-    if (!llmService.isInitialized()) {
-      setError('LLM服务未初始化');
-      return;
-    }
+      if (!isInitialized) {
+        setError('LLM服务未初始化');
+        return null;
+      }
 
-    setIsLoading(true);
-    setError(null);
+      setIsLoading(true);
+      setError(null);
 
-    try {
-      // 生成系统提示词
-      const systemPrompt = generateSystemPrompt(
-        currentScenario.background,
-        currentTurn,
-        maxTurns,
-        stats.authority,
-        stats.suspicion
-      );
+      try {
+        const service = llmServiceRef.current;
+        const systemPrompt = generateSystemPrompt(
+          scenario.background,
+          currentTurn,
+          maxTurns,
+          0, // authority 会在后续更新
+          0  // suspicion 会在后续更新
+        );
 
-      // 构建游戏上下文
-      const gameContext = {
-        scenario: currentScenario,
-        currentTurn,
-        maxTurns,
-        stats,
-        chatHistory: chatHistory.slice(-10), // 最近10条消息
-      };
+        const gameContext: GameContext = {
+          scenario,
+          currentTurn,
+          maxTurns,
+          stats: { authority: 0, suspicion: 0 }, // 会在实际调用时更新
+          chatHistory,
+        };
 
-      // 发送请求到LLM
-      const response = await llmService.sendGameMessage(
-        content,
-        gameContext,
-        systemPrompt
-      );
+        console.log('[LLM] 发送请求:', { content, systemPromptLength: systemPrompt.length });
 
-      // 处理成功响应
-      options.onSuccess?.(response);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : '未知错误';
-      setError(errorMessage);
-      options.onError?.(err instanceof Error ? err : new Error(errorMessage));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [currentScenario, stats, currentTurn, maxTurns, chatHistory, options]);
+        const response = await service.sendGameMessage(
+          content,
+          gameContext,
+          systemPrompt
+        );
+
+        console.log('[LLM] 收到响应:', response);
+
+        return response;
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : '未知错误';
+        setError(`请求失败: ${errorMessage}`);
+        console.error('[LLM] 请求错误:', err);
+        return null;
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [scenario, chatHistory, currentTurn, maxTurns, isInitialized]
+  );
+
+  // 清理
+  useEffect(() => {
+    return () => {
+      // 可选：清理资源
+    };
+  }, []);
 
   return {
-    sendMessage,
     isLoading,
     error,
-    abort,
+    sendMessage,
+    initialize,
+    isInitialized,
   };
 }

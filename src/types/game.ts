@@ -49,6 +49,7 @@ export interface NPCConfig {
   avatar?: string;   // 头像路径
   personality: string;// 性格特点
   attitude: 'loyal' | 'neutral' | 'suspicious' | 'hostile'; // 对皇帝态度
+  introduction?: string; // v1.1: NPC开场介绍台词
 }
 
 // 剧本配置
@@ -63,6 +64,7 @@ export interface ScenarioConfig {
   maxTurns: number;
   npcs: NPCConfig[];
   background: string;  // 给LLM的背景故事
+  playerIntro?: string; // v1.1: 给玩家的模糊失忆场景描述
   winConditions: string[];
   loseConditions: string[];
 }

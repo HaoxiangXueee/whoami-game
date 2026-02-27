@@ -3,7 +3,7 @@
  * 负责管理LLM提供商和处理游戏对话请求
  */
 
-import { AnthropicProvider } from './providers/AnthropicProvider';
+import { AnthropicProvider, KimiProvider } from './providers';
 import type {
   ILLMProvider,
   LLMRequest,
@@ -35,10 +35,13 @@ export class LLMService {
             defaultConfig: config.defaultConfig,
           });
           break;
-        // 其他提供商将在后续添加
-        // case 'openai':
-        //   this.provider = new OpenAIProvider(...);
-        //   break;
+        case 'kimi':
+          this.provider = new KimiProvider(config.apiKey, {
+            baseUrl: config.baseUrl ?? 'https://api.moonshot.cn',
+            model: config.model ?? 'moonshot-v1-8k',
+            defaultConfig: config.defaultConfig,
+          });
+          break;
         default:
           console.error(`Unsupported LLM provider: ${config.provider}`);
           return false;

@@ -5,7 +5,7 @@
 import type { GameStats, ScenarioConfig, ChatMessage } from '@types/game';
 
 // LLM提供商类型
-export type LLMProviderType = 'anthropic' | 'openai' | 'gemini' | 'volcano' | 'zhipu';
+export type LLMProviderType = 'anthropic' | 'openai' | 'gemini' | 'volcano' | 'zhipu' | 'kimi';
 
 // LLM请求配置
 export interface LLMRequestConfig {

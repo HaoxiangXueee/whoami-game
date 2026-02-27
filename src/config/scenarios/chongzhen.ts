@@ -41,19 +41,21 @@ export const chongzhenScenario: ScenarioConfig = {
   npcs: [
     {
       id: 'wang_chengen',
-      name: '王承恩',
-      title: '司礼监掌印太监',
-      description: '崇祯帝最信任的老太监，忠心耿耿侍奉多年',
+      name: '一位老太监',
+      title: '身旁的老宦官',
+      description: '皇帝身边最信任的老太监，忠心耿耿侍奉多年',
       personality: '忠诚老练，深知大势已去但仍想护主',
       attitude: 'loyal',
+      introduction: '陛...陛下！您终于醒了！您...您还记得老奴吗？外面...外面情况紧急，还请陛下速速定夺！',
     },
     {
       id: 'wei_zaode',
-      name: '魏藻德',
-      title: '内阁首辅',
-      description: '崇祯最后的内阁首辅，圆滑世故',
-      personality: '圆滑世故，正在考虑投靠李自成',
+      name: '一位中年大臣',
+      title: '内阁重臣',
+      description: '皇帝倚重的大臣，圆滑世故',
+      personality: '圆滑世故，正在考虑是否另谋出路',
       attitude: 'neutral',
+      introduction: '陛下龙体可安？臣...臣有紧急军情要禀报。',
     },
   ],
 
