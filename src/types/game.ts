@@ -12,17 +12,43 @@ export type GameStatus =
 
 // 游戏结局类型
 export type EndingType =
-  | 'win_parallel'     // 瞒天过海：在位善终
-  | 'lose_coup'        // 被迫禅让或被推翻
-  | 'lose_assassinated'// 被刺杀
-  | 'lose_exposed'     // 真实身份被揭发
-  | 'lose_suicide'     // 绝望自裁
-  | 'neutral_escape';  // 成功逃离宫廷（另一种胜利）
+  | 'win_parallel'      // 完美结局：瞒天过海，在位善终
+  | 'win_escape'        // 逃亡结局：成功逃离但失去皇位
+  | 'win_surrender'     // 投降结局：保全性命但国破
+  | 'lose_coup'         // 政变结局：威势归零被废黜
+  | 'lose_imposter'     // 穿帮结局：暴露度满被识破
+  | 'lose_assassinated' // 刺杀结局：被暗杀身亡
+  | 'lose_timeout'      // 超时结局：回合耗尽未解决
+  | 'lose_suicide'      // 自裁结局：绝望自尽
+  | 'lose_exposed'      // 暴露结局：真实身份被揭发
+  | 'neutral_escape'    // 逃离结局：成功逃离宫廷
+  | 'win_correct_answer' // 新增：正确回答问题后胜利
+  | 'lose_wrong_answer'; // 新增：回答问题错误后失败
 
 // 游戏数值
 export interface GameStats {
   authority: number;   // 威势值 0-100（九鼎）
   suspicion: number; // 暴露度 0-100（龙脉）
+}
+
+// 答案状态
+export interface AnswerState {
+  emperorGuess: string;      // 玩家猜测的皇帝姓名
+  dynastyGuess: string;        // 玩家猜测的朝代
+  emperorAttempts: number;     // 皇帝问题尝试次数
+  dynastyAttempts: number;     // 朝代问题尝试次数
+  emperorCorrect: boolean | null;  // 皇帝答案是否正确
+  dynastyCorrect: boolean | null;  // 朝代答案是否正确
+  isSubmitting: boolean;     // 是否正在提交答案
+  lastValidationResult?: AnswerValidationResult; // 最后一次验证结果
+}
+
+// 答案验证结果
+export interface AnswerValidationResult {
+  isCorrect: boolean;
+  feedback: string;          // 反馈信息
+  similarity: number;        // 相似度 0-1
+  suggestions?: string[];    // 建议（如果答错了）
 }
 
 // 皇帝信息
@@ -99,6 +125,8 @@ export interface GameState {
   ending: GameEnding | null;
   isLoading: boolean;
   error: string | null;
+  answerState: AnswerState;  // 新增：答案状态
+  isAnsweringQuestions: boolean;  // 新增：是否正在回答问题阶段
 }
 
 // 游戏动作

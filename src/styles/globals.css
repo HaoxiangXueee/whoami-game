@@ -2,6 +2,9 @@
  * 全局样式
  */
 
+/* Tailwind CSS v4 - 使用新的导入方式 */
+@import "tailwindcss";
+
 :root {
   /* 基础颜色 */
   --color-bg-primary: #0a0a0f;
@@ -54,23 +57,26 @@
   --shadow-red: 0 0 20px rgba(139, 0, 0, 0.3);
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  border-color: var(--color-border-default);
-}
+/* 全局元素选择器放入 @layer base，避免覆盖 Tailwind 工具类 */
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border-color: var(--color-border-default);
+  }
 
-html {
-  font-family: var(--font-family-base);
-  font-size: 16px;
-  line-height: 1.5;
-}
+  html {
+    font-family: var(--font-family-base);
+    font-size: 16px;
+    line-height: 1.5;
+  }
 
-body {
-  background-color: var(--color-bg-primary);
-  color: var(--color-text-primary);
-  min-height: 100vh;
+  body {
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    min-height: 100vh;
+  }
 }
 
 /* 游戏容器 */
@@ -114,26 +120,29 @@ body {
   text-shadow: 0 0 10px rgba(201, 162, 39, 0.5);
 }
 
-/* 标题样式 */
-h1 {
-  font-size: 5rem;
-  font-family: var(--font-family-serif);
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: var(--spacing-sm);
-}
+/* 全局元素样式放入 @layer base，避免覆盖 Tailwind 工具类 */
+@layer base {
+  /* 标题样式 */
+  h1 {
+    font-size: 5rem;
+    font-family: var(--font-family-serif);
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: var(--spacing-sm);
+  }
 
-/* 副标题样式 */
-p {
-  text-align: center;
-  color: var(--color-text-secondary);
-  margin-bottom: var(--spacing-2xl);
-}
+  /* 副标题样式 */
+  p {
+    text-align: center;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-2xl);
+  }
 
-/* 按钮样式 */
-button {
-  cursor: pointer;
-  transition: all 0.3s ease;
+  /* 按钮样式 */
+  button {
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
 }
 
 /* 主按钮 */

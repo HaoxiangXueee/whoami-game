@@ -2,7 +2,8 @@
  * LLM服务类型定义
  */
 
-import type { GameStats, ScenarioConfig, ChatMessage } from '@types/game';
+import type { GameStats, ScenarioConfig, ChatMessage, EndingType } from '@types/game';
+export type { EndingType } from '@types/game';
 
 // LLM提供商类型
 export type LLMProviderType = 'anthropic' | 'openai' | 'gemini' | 'volcano' | 'zhipu' | 'kimi';
@@ -55,14 +56,7 @@ export interface GameLLMResponse {
   ending_summary: string | null; // 结局总结
 }
 
-// 结局类型
-export type EndingType =
-  | 'win_parallel'      // 完美结局：开辟平行历史
-  | 'win_escape'        // 逃亡结局：成功逃离但失去皇位
-  | 'win_surrender'     // 投降结局：保全性命但国破
-  | 'lose_coup'         // 政变结局：威势归零被废黜
-  | 'lose_imposter'     // 穿帮结局：暴露度满被识破
-  | 'lose_timeout';     // 超时结局：回合耗尽未解决
+// EndingType is now re-exported from '@types/game'
 
 // 游戏上下文
 export interface GameContext {

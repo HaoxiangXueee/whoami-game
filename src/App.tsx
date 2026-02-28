@@ -16,8 +16,10 @@ import { RandomScenarioLoader } from '@components/game/RandomScenarioLoader';
 import { DialogueContainer } from '@components/game/DialogueContainer';
 import { PlayerInput } from '@components/game/PlayerInput';
 import { StatChangeAnimation } from '@components/game/StatChangeAnimation';
+import { EndingScreen } from '@components/game/EndingScreen';
+import { QuestionAnswerPanel } from '@components/game/QuestionAnswerPanel';
 import { getScenarioIntro } from '@config/scenarios';
-import type { ChatMessage, ScenarioConfig } from '@types/game';
+import type { ChatMessage, ScenarioConfig, AnswerValidationResult, AnswerState } from '@types/game';
 
 function App() {
   const {
@@ -28,12 +30,20 @@ function App() {
     isLoading,
     currentTurn,
     maxTurns,
+    ending,
+    answerState,
+    isAnsweringQuestions,
     resetGame,
     setScenario,
     addMessage,
     setLoading,
     updateStats,
     nextTurn,
+    setEnding,
+    submitAnswer,
+    setAnsweringQuestions,
+    setAnswerCorrect,
+    incrementAnswerAttempt,
   } = useGameStore();
 
   // v1.1: 控制穿越动画显示
@@ -62,10 +72,105 @@ function App() {
     }
   }, [llm]);
 
+  // 监听回合数，回合耗尽时触发结局
+  useEffect(() => {
+    if (status === 'playing' && currentTurn >= maxTurns && currentTurn > 0) {
+      console.log('[App] 回合耗尽，自动开启问题回答');
+      // 回合耗尽时自动开启问题回答面板
+      setAnsweringQuestions(true);
+    }
+  }, [currentTurn, maxTurns, status, setAnsweringQuestions]);
+
   // v1.1: 处理开始游戏 - 显示穿越动画
-  const handleStartGame = () => {
+  const handleStartGame = useCallback(() => {
+    // 重置游戏状态，确保每次开始都是干净的
+    resetGame();
     setIsRandomLoading(true);
-  };
+  }, [resetGame]);
+
+  // 处理答案提交
+  const handleAnswerSubmit = useCallback((type: 'emperor' | 'dynasty', answer: string) => {
+    console.log(`[App] 提交${type === 'emperor' ? '皇帝' : '朝代'}答案:`, answer);
+    submitAnswer(type, answer);
+  }, [submitAnswer]);
+
+  // 验证答案（简单版本，不调用LLM）
+  const validateAnswer = useCallback(async (
+    type: 'emperor' | 'dynasty',
+    answer: string
+  ): Promise<AnswerValidationResult> => {
+    if (!currentScenario) {
+      return {
+        isCorrect: false,
+        feedback: '无法验证答案',
+        similarity: 0,
+      };
+    }
+
+    const correctAnswer = type === 'emperor'
+      ? currentScenario.emperor.name
+      : currentScenario.emperor.dynasty;
+
+    // 简单的字符串匹配（可以改进为更智能的匹配）
+    const normalizedAnswer = answer.trim().toLowerCase();
+    const normalizedCorrect = correctAnswer.trim().toLowerCase();
+
+    // 完全匹配或包含关系
+    const isCorrect = normalizedAnswer === normalizedCorrect ||
+      normalizedCorrect.includes(normalizedAnswer) ||
+      normalizedAnswer.includes(normalizedCorrect);
+
+    // 计算剩余次数
+    const maxAttempts = 3;
+    const currentAttempts = type === 'emperor' ? answerState.emperorAttempts : answerState.dynastyAttempts;
+    const remainingAttempts = maxAttempts - currentAttempts - 1; // -1 because this attempt just happened
+
+    return {
+      isCorrect,
+      // 不透露正确答案，只告诉用户是否正确
+      feedback: isCorrect
+        ? `回答正确！✓`
+        : `回答错误，请继续尝试。剩余 ${Math.max(0, remainingAttempts)} 次机会。`,
+      similarity: isCorrect ? 1 : 0,
+    };
+  }, [currentScenario, answerState]);
+
+  // 处理问题回答完成
+  const handleQuestionsComplete = useCallback((finalState: AnswerState) => {
+    console.log('[App] 问题回答完成:', finalState);
+
+    // 根据回答结果决定结局
+    const hasCorrectEmperor = finalState.emperorCorrect === true;
+    const hasCorrectDynasty = finalState.dynastyCorrect === true;
+
+    if (hasCorrectEmperor && hasCorrectDynasty) {
+      // 两个问题都答对了
+      setEnding({
+        type: 'win_correct_answer',
+        title: '真相大白',
+        summary: '你成功找回了自己的身份！通过对朝臣们的巧妙试探和对局势的敏锐判断，你终于确认了自己的真实身份。',
+        epilogue: '你的智慧和耐心帮助你度过了这场危机，现在你终于可以以真实的身份治理天下了。',
+      });
+    } else if (hasCorrectEmperor || hasCorrectDynasty) {
+      // 答对了一个
+      setEnding({
+        type: 'neutral_escape',
+        title: '部分真相',
+        summary: `你只答对了${hasCorrectEmperor ? '皇帝身份' : '朝代'}，但这也足以让你暂时稳住局势。`,
+        epilogue: '虽然你没有完全找回自己的身份，但你的部分认知足以让你在这个危险的世界中生存下去。',
+      });
+    } else {
+      // 都没答对
+      setEnding({
+        type: 'lose_wrong_answer',
+        title: '身份迷失',
+        summary: '你没有正确回答出任何一个问题。你的记忆混乱到了极点，连最基本的自我认知都无法保持。',
+        epilogue: '朝臣们对你的怀疑越来越深，你的处境变得越来越危险...最终，你被当作冒名顶替者处理。',
+      });
+    }
+
+    setAnsweringQuestions(false);
+  }, [setEnding, setAnsweringQuestions]);
 
   // v1.1: 穿越动画完成，RandomScenarioLoader 传回随机选中的剧本
   const handleScenarioReady = useCallback((scenario: ScenarioConfig) => {
@@ -161,8 +266,15 @@ function App() {
 
         // 检查游戏是否结束
         if (response.is_game_over) {
-          // TODO: 处理游戏结束
           console.log('[App] 游戏结束:', response.ending_type);
+          // 设置结局并更新游戏状态
+          if (response.ending_type) {
+            setEnding({
+              type: response.ending_type,
+              title: response.ending_title || '结局',
+              summary: response.ending_summary || '游戏结束',
+            });
+          }
         }
 
         // 添加DM旁白（如果有）
@@ -254,9 +366,63 @@ function App() {
     </div>
   );
 
+  // 渲染结局
+  const renderEnding = () => {
+    if (!ending || !currentScenario) return null;
+
+    return (
+      <EndingScreen
+        type={ending.type}
+        title={ending.title}
+        summary={ending.summary}
+        epilogue={ending.epilogue}
+        initialStats={currentScenario.initialStats}
+        finalStats={stats}
+        currentTurn={currentTurn}
+        maxTurns={maxTurns}
+        onRestart={handleStartGame}
+        onReturnToMenu={resetGame}
+      />
+    );
+  };
+
   // 渲染游戏中
   const renderPlaying = () => {
     if (!currentScenario) return null;
+
+    // 如果正在回答问题，显示问题面板
+    if (isAnsweringQuestions) {
+      return (
+        <QuestionAnswerPanel
+          answerState={answerState}
+          isForced={currentTurn >= maxTurns}
+          maxAttempts={3}
+          onSubmitAnswer={handleAnswerSubmit}
+          onValidateAnswer={validateAnswer}
+          onComplete={handleQuestionsComplete}
+          onClose={() => setAnsweringQuestions(false)}
+        />
+      );
+    }
+
+    // 检查是否应该强制结束（任意问题耗尽且答错，或全部完成）
+    const isEmperorDone = answerState.emperorCorrect === true || answerState.emperorAttempts >= 3;
+    const isDynastyDone = answerState.dynastyCorrect === true || answerState.dynastyAttempts >= 3;
+    const isAllDone = isEmperorDone && isDynastyDone;
+
+    // 任意一个问题耗尽且答错，就应该强制结束
+    const hasEmperorFailed = answerState.emperorAttempts >= 3 && answerState.emperorCorrect !== true;
+    const hasDynastyFailed = answerState.dynastyAttempts >= 3 && answerState.dynastyCorrect !== true;
+    const shouldForceAnswer = hasEmperorFailed || hasDynastyFailed || isAllDone;
+
+    // 如果应该强制结束，但面板没打开，自动打开并触发结局
+    if (shouldForceAnswer && !isAnsweringQuestions) {
+      setAnsweringQuestions(true);
+      // 延迟一点触发结局，让用户看到结果
+      setTimeout(() => {
+        handleQuestionsComplete(answerState);
+      }, 1500);
+    }
 
     return (
       <div className="game-screen">
@@ -274,6 +440,27 @@ function App() {
             <span className="turn-label">回合</span>
             <span className="turn-value">{currentTurn}/{maxTurns}</span>
           </div>
+
+          {/* 回答问题按钮 - 玩家随时可以点击 */}
+          {(answerState.emperorCorrect !== true || answerState.dynastyCorrect !== true) && (
+            <button
+              onClick={() => setAnsweringQuestions(true)}
+              className="answer-btn"
+              style={{
+                marginLeft: '10px',
+                padding: '5px 12px',
+                backgroundColor: '#d4a574',
+                color: '#2a2a2a',
+                border: '1px solid #8b6914',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: 'bold'
+              }}
+            >
+              回答问题 ({[answerState.emperorCorrect, answerState.dynastyCorrect].filter(Boolean).length}/2)
+            </button>
+          )}
         </header>
 
         {/* 数值条 */}
@@ -316,13 +503,41 @@ function App() {
           isLoading={isLoading}
         />
 
-        {/* 输入区域 */}
-        <PlayerInput
-          onSend={handleSendMessage}
-          isLoading={isLoading}
-          placeholder="朕意如何..."
-          maxLength={500}
-        />
+        {/* 输入区域 - 回合耗尽且未答对所有问题时禁用 */}
+        {shouldForceAnswer ? (
+          <div style={{
+            padding: '15px',
+            textAlign: 'center',
+            backgroundColor: '#2a2a2a',
+            borderTop: '1px solid #444',
+            color: '#d4a574'
+          }}>
+            <p style={{margin: '0 0 10px 0', fontWeight: 'bold'}}>
+              ⚠️ 回合已耗尽，请先回答问题！
+            </p>
+            <button
+              onClick={() => setAnsweringQuestions(true)}
+              style={{
+                padding: '8px 20px',
+                backgroundColor: '#d4a574',
+                color: '#2a2a2a',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontWeight: 'bold'
+              }}
+            >
+              立即回答问题
+            </button>
+          </div>
+        ) : (
+          <PlayerInput
+            onSend={handleSendMessage}
+            isLoading={isLoading}
+            placeholder="朕意如何..."
+            maxLength={500}
+          />
+        )}
       </div>
     );
   };
@@ -341,6 +556,7 @@ function App() {
     <div className="game-app">
       {status === 'start_menu' && renderStartMenu()}
       {status === 'playing' && renderPlaying()}
+      {status === 'game_over' && renderEnding()}
     </div>
   );
 }

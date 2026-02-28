@@ -242,6 +242,33 @@ export class LLMService {
   getRetryConfig(): RetryConfig {
     return { ...this.retryConfig };
   }
+
+  // 验证答案正确性
+  async validateAnswer(
+    answer: string,
+    correctAnswer: string,
+    questionType: 'emperor' | 'dynasty'
+  ): Promise<{ isCorrect: boolean; feedback: string; similarity: number }> {
+    // 简单的字符串匹配（可以改进为调用LLM进行更智能的匹配）
+    const normalizedAnswer = answer.trim().toLowerCase();
+    const normalizedCorrect = correctAnswer.trim().toLowerCase();
+
+    // 完全匹配或包含关系
+    const isCorrect =
+      normalizedAnswer === normalizedCorrect ||
+      normalizedCorrect.includes(normalizedAnswer) ||
+      normalizedAnswer.includes(normalizedCorrect);
+
+    const typeName = questionType === 'emperor' ? '皇帝' : '朝代';
+
+    return {
+      isCorrect,
+      feedback: isCorrect
+        ? `回答正确！${typeName}确实是"${correctAnswer}"。`
+        : `回答错误。正确答案是"${correctAnswer}"。`,
+      similarity: isCorrect ? 1 : 0,
+    };
+  }
 }
 
 // 单例实例

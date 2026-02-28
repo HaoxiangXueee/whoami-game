@@ -64,7 +64,7 @@ export function generateEnding(
       summary: '权臣发动政变，废黜了你的帝位，你被软禁于冷宫。',
       epilogue: '史书记载：「权臣柄政，帝被幽禁，天下大乱。」你的余生在监视中度过，郁郁而终。',
     },
-    lose_imposter: {
+    lose_exposed: {
       title: '身份败露',
       summary: '你被识破不是真正的皇帝，遭囚禁处决，为天下笑。',
       epilogue: '史书记载：「假帝事败，伏诛于市，天下哗然。」你的名字成为后世的笑柄。',
@@ -73,6 +73,26 @@ export function generateEnding(
       title: '大势已去',
       summary: '回合耗尽，大势已去，你未能改变命运。',
       epilogue: '史书记载：「帝昏庸无能，国破家亡。」你的不作为导致了王朝的覆灭。',
+    },
+    lose_imposter: {
+      title: '身份败露',
+      summary: '你被识破不是真正的皇帝，遭囚禁处决，为天下笑。',
+      epilogue: '史书记载：「假帝事败，伏诛于市，天下哗然。」你的名字成为后世的笑柄。',
+    },
+    lose_assassinated: {
+      title: '遇刺身亡',
+      summary: '你被刺客暗杀，朝野震动，天下大乱。',
+      epilogue: '史书记载：「帝遇刺，天下大乱，诸侯并起。」你的死亡引发了更大的动乱。',
+    },
+    lose_suicide: {
+      title: '自裁谢罪',
+      summary: '你在绝望中自裁，结束了自己的生命。',
+      epilogue: '史书记载：「帝自裁，国破家亡，令人唏嘘。」你的结局令人惋惜。',
+    },
+    neutral_escape: {
+      title: '逃离宫廷',
+      summary: '你成功逃离了宫廷，隐姓埋名过上了平凡的生活。',
+      epilogue: '史书记载：「帝失踪，不知所终。」有传言说你在民间过着普通人的生活。',
     },
   };
 

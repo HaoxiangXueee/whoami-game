@@ -13,3 +13,6 @@ export {
   PulseAnimation,
   ShakeAnimation,
 } from './BubbleAnimation';
+export { EndingScreen } from './EndingScreen';
+export { EndingCard } from './EndingCard';
+export { QuestionAnswerPanel } from './QuestionAnswerPanel';
