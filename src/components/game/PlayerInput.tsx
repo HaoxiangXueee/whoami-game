@@ -88,15 +88,15 @@ export function PlayerInput({
   }, []);
 
   return (
-    <div className="player-input-container">
+    <div className="bg-slate-900 border-t border-slate-800 p-2 sm:p-3">
       {/* 快捷回复选项 */}
       {showQuickReplies && (
-        <div className="quick-replies">
+        <div className="flex flex-wrap gap-2 mb-2 p-2 bg-slate-800/50 rounded-lg">
           {QUICK_REPLIES.map((reply) => (
             <button
               key={reply}
-              className="quick-reply-btn"
               onClick={() => selectQuickReply(reply)}
+              className="px-2 py-1 text-xs sm:text-sm bg-slate-700 hover:bg-slate-600 text-slate-300 rounded transition-colors"
             >
               {reply}
             </button>
@@ -105,50 +105,62 @@ export function PlayerInput({
       )}
 
       {/* 输入区域 */}
-      <div className="input-area">
+      <div className="flex items-end gap-2">
         <button
-          className="quick-reply-toggle"
           onClick={() => setShowQuickReplies(!showQuickReplies)}
           title="快捷回复"
+          className="shrink-0 w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center bg-slate-800 hover:bg-slate-700 text-slate-400 rounded-lg transition-colors text-base sm:text-lg"
         >
           💬
         </button>
 
-        <textarea
-          ref={textareaRef}
-          className="player-textarea"
-          value={content}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          placeholder={placeholder}
-          disabled={isLoading}
-          rows={1}
-        />
+        <div className="flex-1 relative">
+          <textarea
+            ref={textareaRef}
+            value={content}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            placeholder={placeholder}
+            disabled={isLoading}
+            rows={1}
+            className="w-full min-h-[40px] sm:min-h-[44px] max-h-[120px] px-3 py-2 sm:py-2.5 bg-slate-800 border border-slate-700 rounded-lg text-slate-200 placeholder-slate-500 text-sm sm:text-base resize-none focus:outline-none focus:border-amber-600/50 disabled:opacity-50"
+          />
+          {/* 字数统计 - 移动端显示在textarea内 */}
+          <span className="absolute bottom-1 right-2 text-[10px] sm:hidden text-slate-600">
+            {content.length}/{maxLength}
+          </span>
+        </div>
 
         <button
-          className={`send-btn ${!content.trim() || isLoading ? 'disabled' : ''}`}
           onClick={handleSend}
           disabled={!content.trim() || isLoading}
           title="发送 (Ctrl+Enter)"
+          className={`shrink-0 h-9 sm:h-11 px-3 sm:px-4 rounded-lg font-bold text-sm sm:text-base flex items-center justify-center gap-1 transition-all ${
+            !content.trim() || isLoading
+              ? 'bg-slate-700 text-slate-500 cursor-not-allowed'
+              : 'bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white shadow-lg shadow-amber-600/30'
+          }`}
         >
           {isLoading ? (
-            <span className="send-spinner">⟳</span>
+            <span className="animate-spin text-lg">⟳</span>
           ) : (
             <>
-              <span className="seal-icon">🧧</span>
-              <span className="send-text">下旨</span>
+              <span className="hidden sm:inline text-base">🧧</span>
+              <span className="hidden sm:inline">下旨</span>
+              <span className="sm:hidden text-lg">📤</span>
             </>
           )}
         </button>
       </div>
 
-      {/* 字数统计 */}
-      <div className="input-meta">
-        <span className="char-count">
-          {content.length}/{maxLength}
+      {/* 字数统计和快捷键提示 - 桌面端显示 */}
+      <div className="hidden sm:flex items-center justify-between mt-1.5 px-1 text-xs text-slate-500">
+        <span>
+          {content.length}/{maxLength} 字
         </span>
-        <span className="shortcut-hint">Ctrl+Enter 发送</span>
+        <span className="hidden lg:inline">Ctrl+Enter 发送</span>
       </div>
     </div>
   );
 }
+

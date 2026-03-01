@@ -1,0 +1,153 @@
+{
+  "version": "2.0.0",
+  "lastUpdated": "2026-03-01T00:00:00Z",
+  "scenarios": [
+    {
+      "id": "qin_shihuang",
+      "name": "秦始皇",
+      "description": "统一六国，称帝建制，千古一帝的开端",
+      "difficulty": "medium",
+      "tags": ["秦朝", "开国", "统一", "困难"]
+    },
+    {
+      "id": "han_wudi",
+      "name": "汉武帝",
+      "description": "北伐匈奴，开拓西域，大汉盛世",
+      "difficulty": "medium",
+      "tags": ["西汉", "盛世", "战争", "中等"]
+    },
+    {
+      "id": "cao_cao",
+      "name": "曹操",
+      "description": "挟天子以令诸侯，乱世奸雄",
+      "difficulty": "medium",
+      "tags": ["三国", "魏", "乱世", "中等"]
+    },
+    {
+      "id": "tang_taizong",
+      "name": "唐太宗",
+      "description": "贞观之治，天可汗，盛唐奠基人",
+      "difficulty": "medium",
+      "tags": ["唐朝", "盛世", "明君", "中等"]
+    },
+    {
+      "id": "wu_zetian",
+      "name": "武则天",
+      "description": "唯一女皇，上承贞观下启开元",
+      "difficulty": "hard",
+      "tags": ["唐朝", "武周", "女皇", "困难"]
+    },
+    {
+      "id": "song_taizu",
+      "name": "宋太祖",
+      "description": "杯酒释兵权，重文轻武的开国皇帝",
+      "difficulty": "medium",
+      "tags": ["宋朝", "开国", "文治", "中等"]
+    },
+    {
+      "id": "genghis_khan",
+      "name": "成吉思汗",
+      "description": "蒙古帝国，征服世界的草原雄鹰",
+      "difficulty": "hard",
+      "tags": ["蒙古", "帝国", "征服", "困难"]
+    },
+    {
+      "id": "ming_chengzu",
+      "name": "明成祖",
+      "description": "靖难之役，迁都北京，永乐盛世",
+      "difficulty": "medium",
+      "tags": ["明朝", "永乐", "盛世", "中等"]
+    },
+    {
+      "id": "kangxi",
+      "name": "康熙帝",
+      "description": "平定三藩，收复台湾，康乾盛世",
+      "difficulty": "medium",
+      "tags": ["清朝", "康熙", "盛世", "中等"]
+    },
+    {
+      "id": "qianlong",
+      "name": "乾隆帝",
+      "description": "十全武功，六下江南，康乾盛世顶峰",
+      "difficulty": "medium",
+      "tags": ["清朝", "乾隆", "盛世", "中等"]
+    },
+    {
+      "id": "qin_er_shi",
+      "name": "秦二世",
+      "description": "指鹿为马，帝国崩溃，末代悲剧",
+      "difficulty": "hard",
+      "tags": ["秦朝", "亡国之君", "悲剧", "困难"]
+    },
+    {
+      "id": "han_xiandi",
+      "name": "汉献帝",
+      "description": "傀儡皇帝，禅让曹丕，东汉终结",
+      "difficulty": "hard",
+      "tags": ["东汉", "傀儡", "禅让", "困难"]
+    },
+    {
+      "id": "liu_shan",
+      "name": "刘禅",
+      "description": "乐不思蜀，降魏，蜀汉后主",
+      "difficulty": "easy",
+      "tags": ["三国", "蜀汉", "安乐公", "简单"]
+    },
+    {
+      "id": "suiyangdi",
+      "name": "隋炀帝",
+      "description": "大运河，三征高句丽，帝国崩溃",
+      "difficulty": "hard",
+      "tags": ["隋朝", "暴君", "大运河", "困难"]
+    },
+    {
+      "id": "tang_xuanzong",
+      "name": "唐玄宗",
+      "description": "开元盛世，安史之乱，马嵬坡",
+      "difficulty": "medium",
+      "tags": ["唐朝", "开元", "安史之乱", "中等"]
+    },
+    {
+      "id": "song_huizong",
+      "name": "宋徽宗",
+      "description": "靖康之变，书画皇帝，北宋终结",
+      "difficulty": "hard",
+      "tags": ["北宋", "靖康", "艺术家", "困难"]
+    },
+    {
+      "id": "chongzhen",
+      "name": "崇祯帝",
+      "description": "煤山自缢，亡国之君，明朝终结",
+      "difficulty": "hard",
+      "tags": ["明朝", "崇祯", "煤山", "困难"]
+    },
+    {
+      "id": "xuantong",
+      "name": "溥仪",
+      "description": "末代皇帝，退位诏书，清朝终结",
+      "difficulty": "easy",
+      "tags": ["清朝", "末代皇帝", "退位", "简单"]
+    },
+    {
+      "id": "han_gaozu",
+      "name": "汉高祖",
+      "description": "楚汉争霸，平民皇帝，大汉开国",
+      "difficulty": "medium",
+      "tags": ["西汉", "开国", "平民", "中等"]
+    },
+    {
+      "id": "xiang_yu",
+      "name": "项羽",
+      "description": "霸王别姬，乌江自刎，西楚霸王",
+      "difficulty": "hard",
+      "tags": ["秦末", "霸王", "悲剧", "困难"]
+    }
+  ],
+  "total": 30,
+  "difficultyDistribution": {
+    "easy": 4,
+    "medium": 15,
+    "hard": 11
+  },
+  "dynasties": ["秦", "西汉", "东汉", "三国", "隋", "唐", "北宋", "南宋", "元", "明", "清"]
+}

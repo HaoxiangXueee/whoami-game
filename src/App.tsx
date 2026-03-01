@@ -12,13 +12,13 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useGameStore } from '@stores/gameStore';
 import { useLLM } from '@hooks/useLLM';
+import { useScenarios } from '@hooks/useScenarios';
 import { RandomScenarioLoader } from '@components/game/RandomScenarioLoader';
 import { DialogueContainer } from '@components/game/DialogueContainer';
 import { PlayerInput } from '@components/game/PlayerInput';
 import { StatChangeAnimation } from '@components/game/StatChangeAnimation';
 import { EndingScreen } from '@components/game/EndingScreen';
 import { QuestionAnswerPanel } from '@components/game/QuestionAnswerPanel';
-import { getScenarioIntro } from '@config/scenarios';
 import type { ChatMessage, ScenarioConfig, AnswerValidationResult, AnswerState } from '@types/game';
 
 function App() {
@@ -333,35 +333,53 @@ function App() {
 
   // 渲染主菜单
   const renderStartMenu = () => (
-    <div className="start-menu">
-      <div className="title-section">
-        <h1 className="game-title">
-          <span className="title-icon">🏛️</span>
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-8 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+      {/* 标题区域 */}
+      <div className="text-center mb-8 sm:mb-12">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-amber-400 mb-3 sm:mb-4 tracking-wider">
+          <span className="inline-block mr-2">🏛️</span>
           朕到底是谁
         </h1>
-        <p className="game-subtitle">历史生存推理文字游戏 | 你的选择将决定命运</p>
+        <p className="text-sm sm:text-base text-slate-400 px-2">
+          历史生存推理文字游戏 | 你的选择将决定命运
+        </p>
       </div>
 
-      <div className="menu-buttons">
-        <button className="btn-primary" onClick={handleStartGame}>
-          <span className="btn-icon">👑</span>
+      {/* 按钮区域 */}
+      <div className="w-full max-w-xs sm:max-w-sm space-y-3 sm:space-y-4">
+        {/* 主按钮 */}
+        <button
+          onClick={handleStartGame}
+          className="w-full py-3.5 sm:py-4 px-6 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-bold rounded-xl shadow-lg shadow-amber-600/30 transition-all duration-300 flex items-center justify-center gap-2 text-base sm:text-lg"
+        >
+          <span>👑</span>
           登基为帝
         </button>
 
-        <div className="secondary-buttons">
-          <button className="btn-secondary" onClick={() => {}}>
-            <span className="btn-icon">📊</span>
-            游戏统计
+        {/* 次要按钮组 */}
+        <div className="grid grid-cols-2 gap-2 sm:gap-3">
+          <button
+            onClick={() => {}}
+            className="py-3 px-3 sm:px-4 bg-slate-700 hover:bg-slate-600 text-slate-200 font-medium rounded-lg border border-slate-600 transition-all duration-300 flex items-center justify-center gap-1.5 sm:gap-2 text-sm"
+          >
+            <span>📊</span>
+            <span className="hidden sm:inline">游戏统计</span>
+            <span className="sm:hidden">统计</span>
           </button>
-          <button className="btn-secondary" onClick={() => {}}>
-            <span className="btn-icon">⚙️</span>
-            设置
+          <button
+            onClick={() => {}}
+            className="py-3 px-3 sm:px-4 bg-slate-700 hover:bg-slate-600 text-slate-200 font-medium rounded-lg border border-slate-600 transition-all duration-300 flex items-center justify-center gap-1.5 sm:gap-2 text-sm"
+          >
+            <span>⚙️</span>
+            <span className="hidden sm:inline">游戏设置</span>
+            <span className="sm:hidden">设置</span>
           </button>
         </div>
       </div>
 
-      <footer className="game-footer">
-        <p>版本 1.1.0 | 制作：AI Game Studio</p>
+      {/* 页脚 */}
+      <footer className="mt-8 sm:mt-12 text-center text-slate-500 text-xs sm:text-sm">
+        <p>版本 2.0.0 | 百帝之志</p>
       </footer>
     </div>
   );
@@ -425,72 +443,72 @@ function App() {
     }
 
     return (
-      <div className="game-screen">
+      <div className="game-screen flex flex-col h-screen bg-slate-950">
         {/* 顶部标题栏 */}
-        <header className="game-header">
-          <button className="back-btn" onClick={resetGame}>
+        <header className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 bg-slate-900 border-b border-slate-800 shrink-0">
+          <button
+            onClick={resetGame}
+            className="text-slate-400 hover:text-slate-200 text-sm sm:text-base flex items-center gap-1"
+          >
             ← 返回
           </button>
+
           {/* v1.1: 隐藏身份信息，显示模糊描述 */}
-          <div className="header-title">
-            <h2>深宫之中</h2>
-            <p>时辰不明</p>
-          </div>
-          <div className="turn-info">
-            <span className="turn-label">回合</span>
-            <span className="turn-value">{currentTurn}/{maxTurns}</span>
+          <div className="text-center">
+            <h2 className="text-amber-400 text-sm sm:text-base font-bold">深宫之中</h2>
+            <p className="text-slate-500 text-xs sm:text-sm">时辰不明</p>
           </div>
 
-          {/* 回答问题按钮 - 玩家随时可以点击 */}
+          <div className="text-right">
+            <span className="text-slate-400 text-xs block">回合</span>
+            <span className="text-amber-400 font-bold text-sm sm:text-base">{currentTurn}/{maxTurns}</span>
+          </div>
+
+          {/* 回答问题按钮 - 只在桌面端显示，移动端放到底部 */}
           {(answerState.emperorCorrect !== true || answerState.dynastyCorrect !== true) && (
             <button
               onClick={() => setAnsweringQuestions(true)}
-              className="answer-btn"
-              style={{
-                marginLeft: '10px',
-                padding: '5px 12px',
-                backgroundColor: '#d4a574',
-                color: '#2a2a2a',
-                border: '1px solid #8b6914',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: 'bold'
-              }}
+              className="hidden sm:block ml-2 px-3 py-1 bg-amber-600/80 hover:bg-amber-500 text-amber-100 rounded border border-amber-500 text-sm font-bold transition-colors"
             >
-              回答问题 ({[answerState.emperorCorrect, answerState.dynastyCorrect].filter(Boolean).length}/2)
+              答题 ({[answerState.emperorCorrect, answerState.dynastyCorrect].filter(Boolean).length}/2)
             </button>
           )}
         </header>
 
-        {/* 数值条 */}
-        <div className="stats-bar">
-          <div className="stat-item">
-            <span className="stat-icon">🏺</span>
-            <div className="stat-info">
-              <span className="stat-label">威势值</span>
-              <span className="stat-value">{stats.authority}</span>
-            </div>
-            <div className="stat-bar">
-              <div
-                className="stat-fill authority-fill"
-                style={{ width: `${stats.authority}%` }}
-              ></div>
+        {/* 数值条 - 响应式布局 */}
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 p-2 sm:p-4 bg-slate-900/50 border-b border-slate-800">
+          {/* 威势值 */}
+          <div className="flex-1 flex items-center gap-2 sm:gap-3 bg-slate-800/50 rounded-lg p-2 sm:p-3">
+            <span className="text-lg sm:text-xl">🏺</span>
+            <div className="flex-1">
+              <div className="flex items-center justify-between mb-0.5 sm:mb-1">
+                <span className="text-xs sm:text-sm text-slate-400">威势值</span>
+                <span className="text-sm sm:text-base font-bold text-amber-400">{stats.authority}</span>
+              </div>
+              <div className="h-1.5 sm:h-2 bg-slate-700 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-amber-600 to-amber-400 transition-all duration-300"
+                  style={{ width: `${stats.authority}%` }}
+                />
+              </div>
             </div>
             <StatChangeAnimation value={stats.authority} type="authority" />
           </div>
 
-          <div className="stat-item">
-            <span className="stat-icon">🐉</span>
-            <div className="stat-info">
-              <span className="stat-label">暴露度</span>
-              <span className="stat-value">{stats.suspicion}</span>
-            </div>
-            <div className="stat-bar">
-              <div
-                className="stat-fill suspicion-fill"
-                style={{ width: `${stats.suspicion}%` }}
-              ></div>
+          {/* 暴露度 */}
+          <div className="flex-1 flex items-center gap-2 sm:gap-3 bg-slate-800/50 rounded-lg p-2 sm:p-3">
+            <span className="text-lg sm:text-xl">🐉</span>
+            <div className="flex-1">
+              <div className="flex items-center justify-between mb-0.5 sm:mb-1">
+                <span className="text-xs sm:text-sm text-slate-400">暴露度</span>
+                <span className="text-sm sm:text-base font-bold text-red-400">{stats.suspicion}</span>
+              </div>
+              <div className="h-1.5 sm:h-2 bg-slate-700 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-red-600 to-red-400 transition-all duration-300"
+                  style={{ width: `${stats.suspicion}%` }}
+                />
+              </div>
             </div>
             <StatChangeAnimation value={stats.suspicion} type="suspicion" />
           </div>

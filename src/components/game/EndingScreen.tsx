@@ -125,7 +125,7 @@ export function EndingScreen({
   const turnsUsed = currentTurn;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center p-2 sm:p-4">
       {/* 背景粒子 */}
       <ParticleBackground type={type} />
 
@@ -144,7 +144,7 @@ export function EndingScreen({
             },
           },
         }}
-        className="relative w-full max-w-4xl z-10"
+        className="relative w-full max-w-4xl z-10 px-2 sm:px-4"
       >
         {/* 结局卡片 */}
         <EndingCard
@@ -164,54 +164,54 @@ export function EndingScreen({
               transition={{ duration: 0.5 }}
               className="bg-slate-800/80 backdrop-blur-sm rounded-xl border border-slate-700 p-6 mb-6"
             >
-              <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+              <h3 className="text-base sm:text-lg font-bold text-white mb-3 sm:mb-4 flex items-center gap-2">
                 <span>📊</span>
                 <span>本局数据</span>
               </h3>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
                 {/* 威势值变化 */}
-                <div className="bg-slate-700/50 rounded-lg p-4">
-                  <div className="text-slate-400 text-sm mb-1">威势值</div>
+                <div className="bg-slate-700/50 rounded-lg p-3 sm:p-4">
+                  <div className="text-slate-400 text-xs sm:text-sm mb-1">威势值</div>
                   <div className="flex items-baseline gap-2">
-                    <span className="text-2xl font-bold text-white">
+                    <span className="text-xl sm:text-2xl font-bold text-white">
                       <AnimatedNumber value={finalStats.authority} delay={0.2} />
                     </span>
-                    <span className={`text-sm ${authorityChange >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                    <span className={`text-xs sm:text-sm ${authorityChange >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                       {authorityChange >= 0 ? '+' : ''}{authorityChange}
                     </span>
                   </div>
-                  <div className="mt-2 text-xs text-slate-500">
+                  <div className="mt-1 sm:mt-2 text-xs text-slate-500">
                     初始: {initialStats.authority}
                   </div>
                 </div>
 
                 {/* 暴露度变化 */}
-                <div className="bg-slate-700/50 rounded-lg p-4">
-                  <div className="text-slate-400 text-sm mb-1">暴露度</div>
+                <div className="bg-slate-700/50 rounded-lg p-3 sm:p-4">
+                  <div className="text-slate-400 text-xs sm:text-sm mb-1">暴露度</div>
                   <div className="flex items-baseline gap-2">
-                    <span className="text-2xl font-bold text-white">
+                    <span className="text-xl sm:text-2xl font-bold text-white">
                       <AnimatedNumber value={finalStats.suspicion} delay={0.4} />
                     </span>
-                    <span className={`text-sm ${suspicionChange > 0 ? 'text-red-400' : 'text-green-400'}`}>
+                    <span className={`text-xs sm:text-sm ${suspicionChange > 0 ? 'text-red-400' : 'text-green-400'}`}>
                       {suspicionChange > 0 ? '+' : ''}{suspicionChange}
                     </span>
                   </div>
-                  <div className="mt-2 text-xs text-slate-500">
+                  <div className="mt-1 sm:mt-2 text-xs text-slate-500">
                     初始: {initialStats.suspicion}
                   </div>
                 </div>
 
                 {/* 回合使用情况 */}
-                <div className="bg-slate-700/50 rounded-lg p-4">
-                  <div className="text-slate-400 text-sm mb-1">使用回合</div>
+                <div className="bg-slate-700/50 rounded-lg p-3 sm:p-4">
+                  <div className="text-slate-400 text-xs sm:text-sm mb-1">使用回合</div>
                   <div className="flex items-baseline gap-2">
-                    <span className="text-2xl font-bold text-white">
+                    <span className="text-xl sm:text-2xl font-bold text-white">
                       <AnimatedNumber value={turnsUsed} delay={0.6} />
                     </span>
-                    <span className="text-sm text-slate-400">/ {maxTurns}</span>
+                    <span className="text-xs sm:text-sm text-slate-400">/ {maxTurns}</span>
                   </div>
-                  <div className="mt-2 w-full bg-slate-600 rounded-full h-1.5">
+                  <div className="mt-1 sm:mt-2 w-full bg-slate-600 rounded-full h-1.5">
                     <motion.div
                       className="bg-gradient-to-r from-blue-400 to-cyan-400 h-1.5 rounded-full"
                       initial={{ width: 0 }}
@@ -236,10 +236,10 @@ export function EndingScreen({
                 transition={{ duration: 0.5 }}
                 className="bg-slate-800/60 backdrop-blur-sm rounded-xl border border-slate-700/50 p-6 mb-6"
               >
-                <h3 className="text-sm font-medium text-slate-400 mb-3 uppercase tracking-wider">
+                <h3 className="text-xs sm:text-sm font-medium text-slate-400 mb-2 sm:mb-3 uppercase tracking-wider">
                   尾声
                 </h3>
-                <p className="text-slate-300 leading-relaxed italic">
+                <p className="text-sm sm:text-base text-slate-300 leading-relaxed italic">
                   {epilogue}
                 </p>
               </motion.div>
@@ -285,9 +285,9 @@ export function EndingScreen({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2.5 }}
-          className="mt-12 text-center"
+          className="mt-8 sm:mt-12 text-center"
         >
-          <p className="text-slate-500 text-sm">
+          <p className="text-slate-500 text-xs sm:text-sm px-4">
             每一次选择，都将改变历史的走向
           </p>
           <div className="mt-2 flex justify-center gap-1">

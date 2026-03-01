@@ -1,0 +1,14 @@
+{
+  "id": "tang_taizong",
+  "name": "唐太宗",
+  "title": "太宗",
+  "dynasty": "唐",
+  "time": "公元626年-649年",
+  "location": "大明宫",
+  "difficulty": "medium",
+  "scenarioType": "founding",
+  "keyEvents": ["玄武门之变", "贞观之治", "天可汗"],
+  "personality": "虚怀若谷，从谏如流，开明君主",
+  "crisis": "玄武门之变手足相残，突厥压境长安震动",
+  "npcTypes": ["loyal", "scholar", "general", "eunuch"]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "han_wudi",
+  "name": "汉武帝",
+  "title": "武帝",
+  "dynasty": "西汉",
+  "time": "公元前141年-前87年",
+  "location": "未央宫",
+  "difficulty": "medium",
+  "scenarioType": "expansion",
+  "keyEvents": ["北伐匈奴", "开拓西域", "推恩令"],
+  "personality": "雄才大略，好大喜功，独断专行",
+  "crisis": "连年征战国库空虚，巫蛊之祸动摇国本",
+  "npcTypes": ["loyal", "general", "scholar", "eunuch"]
+}

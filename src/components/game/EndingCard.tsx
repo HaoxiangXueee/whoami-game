@@ -140,7 +140,7 @@ export function EndingCard({ type, title, summary, className = '' }: EndingCardP
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={`
-        relative overflow-hidden rounded-2xl border-2 ${config.borderColor} ${config.shadowColor} shadow-2xl
+        relative overflow-hidden rounded-xl sm:rounded-2xl border-2 ${config.borderColor} ${config.shadowColor} shadow-2xl
         bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900
         ${className}
       `}
@@ -177,14 +177,14 @@ export function EndingCard({ type, title, summary, className = '' }: EndingCardP
       </div>
 
       {/* 内容区域 */}
-      <div className="relative z-10 p-8">
+      <div className="relative z-10 p-4 sm:p-8">
         {/* 结局类型标签 */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
           className={`
-            inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium
+            inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium
             bg-gradient-to-r ${config.gradient} text-white shadow-lg
           `}
         >
@@ -197,7 +197,7 @@ export function EndingCard({ type, title, summary, className = '' }: EndingCardP
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="mt-6 text-4xl font-bold text-white tracking-wide"
+          className="mt-4 sm:mt-6 text-2xl sm:text-4xl font-bold text-white tracking-wide"
         >
           {title}
         </motion.h2>
@@ -208,7 +208,7 @@ export function EndingCard({ type, title, summary, className = '' }: EndingCardP
           animate={{ scaleX: 1 }}
           transition={{ delay: 0.7, duration: 0.5 }}
           className={`
-            mt-6 h-0.5 bg-gradient-to-r from-transparent via-white/50 to-transparent
+            mt-4 sm:mt-6 h-0.5 bg-gradient-to-r from-transparent via-white/50 to-transparent
           `}
         />
 
@@ -217,7 +217,7 @@ export function EndingCard({ type, title, summary, className = '' }: EndingCardP
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.9 }}
-          className="mt-6 text-lg text-slate-300 leading-relaxed"
+          className="mt-4 sm:mt-6 text-sm sm:text-lg text-slate-300 leading-relaxed"
         >
           {summary}
         </motion.p>

@@ -1,0 +1,14 @@
+{
+  "id": "cao_cao",
+  "name": "曹操",
+  "title": "魏武帝",
+  "dynasty": "东汉/魏",
+  "time": "公元196年-220年",
+  "location": "许都",
+  "difficulty": "medium",
+  "scenarioType": "crisis",
+  "keyEvents": ["挟天子以令诸侯", "官渡之战", "赤壁之战"],
+  "personality": "奸雄本色，唯才是举，雄才大略",
+  "crisis": "北方初定人心未附，赤壁战败元气大伤",
+  "npcTypes": ["schemer", "general", "scholar", "loyal"]
+}

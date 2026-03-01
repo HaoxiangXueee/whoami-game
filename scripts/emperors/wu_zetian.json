@@ -1,0 +1,14 @@
+{
+  "id": "wu_zetian",
+  "name": "武则天",
+  "title": "则天皇帝",
+  "dynasty": "唐/武周",
+  "time": "公元690年-705年",
+  "location": "神都洛阳",
+  "difficulty": "hard",
+  "scenarioType": "crisis",
+  "keyEvents": ["称帝建周", "酷吏政治", "神龙政变"],
+  "personality": "心狠手辣，雄才大略，唯我独尊",
+  "crisis": "女主称帝朝野震动，酷吏横行人人自危",
+  "npcTypes": ["schemer", "eunuch", "loyal", "hostile"]
+}

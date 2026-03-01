@@ -1,0 +1,14 @@
+{
+  "id": "qin_shihuang",
+  "name": "秦始皇",
+  "title": "始皇帝",
+  "dynasty": "秦",
+  "time": "公元前221年",
+  "location": "咸阳宫",
+  "difficulty": "medium",
+  "scenarioType": "founding",
+  "keyEvents": ["统一六国", "称帝建制", "焚书坑儒"],
+  "personality": "雄才大略，刚愎自用，追求永生",
+  "crisis": "六国遗民反抗，求仙问道耗竭国力",
+  "npcTypes": ["loyal", "schemer", "eunuch", "general"]
+}
