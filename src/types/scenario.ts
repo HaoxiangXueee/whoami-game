@@ -26,6 +26,11 @@ export interface EmperorInfo {
   title: string;
   dynasty: string;
   realIdentity: string;
+  /**
+   * 历史事件描述（用于第二题问答）
+   * 例如："崇祯煤山自缢"、"李自成攻破北京"等
+   */
+  historicalEvent?: string;
 }
 
 /**

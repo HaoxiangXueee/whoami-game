@@ -19,6 +19,7 @@ export const liushanScenario: ScenarioConfig = {
     title: '蜀汉后主',
     dynasty: '蜀汉',
     realIdentity: '安乐公',
+    historicalEvent: '蜀汉灭亡，刘禅投降魏国',
   },
 
   // 场景设定
@@ -46,7 +47,7 @@ export const liushanScenario: ScenarioConfig = {
       description: '身披铠甲的年轻将领，目光坚毅',
       personality: '年轻气盛，忠心耿耿，急于建功',
       attitude: 'loyal',
-      introduction: '陛下，您终于醒了。北境...北境有紧急军情传来。臣请陛下速速升殿议事！',
+      introduction: '（一个身披铠甲的年轻身影快步闯入殿内，铠甲随着急促的步伐发出金属碰撞的声响。他单膝跪地，声音里带着难以掩饰的焦急）陛下！您可算醒了！那...那北境的八百里加急刚刚送到，说是...说是贼军已经...（他咬紧牙关，几乎是从齿缝里挤出这句话）还请陛下速速定夺啊！',
     },
     {
       id: 'qiao_zhou',
@@ -55,7 +56,7 @@ export const liushanScenario: ScenarioConfig = {
       description: '白发苍苍的老臣，神色凝重',
       personality: '老成持重，主张保境安民',
       attitude: 'neutral',
-      introduction: '陛下安好。老臣有要事相禀，还请陛下定夺。',
+      introduction: '（殿外传来一阵缓慢而沉重的脚步声，一位白发苍苍的老臣拄着拐杖，在侍从的搀扶下缓步走入。他的脸上满是忧虑，浑浊的眼眸中透着深深的疲惫）陛下...老臣斗胆，恳请陛下三思。如今这局势...（他摇了摇头，长叹一声）先帝留下的基业，怕是要...唉，还请陛下以苍生为念啊。',
     },
   ],
 

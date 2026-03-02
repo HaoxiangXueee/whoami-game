@@ -19,6 +19,7 @@ export const tangxuanzongScenario: ScenarioConfig = {
     title: '唐玄宗',
     dynasty: '大唐',
     realIdentity: '唐明皇',
+    historicalEvent: '安史之乱爆发，玄宗逃亡马嵬坡',
   },
 
   // 场景设定
@@ -46,7 +47,7 @@ export const tangxuanzongScenario: ScenarioConfig = {
       description: '身居高位的权臣，专权跋扈',
       personality: '专权跋扈，与边将势同水火',
       attitude: 'neutral',
-      introduction: '圣人万安！臣有紧急军报，范阳方面...恐有异动！',
+      introduction: '（殿外传来急促的脚步声，一个身着紫袍的中年大臣几乎是跌撞着闯入内殿。他的面色惨白如纸，额头上满是细密的汗珠，连声音都在颤抖）圣人！圣人万安！臣...臣刚从尚书省收到八百里加急，那...那范阳方面...（他说到此处，四下张望，压低声音，几乎是耳语）恐有异动！臣请圣人即刻移驾，以防不测！',
     },
     {
       id: 'gao_lishi',
@@ -55,7 +56,7 @@ export const tangxuanzongScenario: ScenarioConfig = {
       description: '皇帝身边的老宦官，忠心耿耿',
       personality: '忠心耿耿，侍奉多代帝王',
       attitude: 'loyal',
-      introduction: '圣人...您终于醒了！范阳...范阳有紧急军报传来！老奴惶恐，还请圣人定夺。',
+      introduction: '（殿外传来一阵轻微而急促的脚步声，一个佝偻着背的老宦官拄着拂尘，几乎是连滚带爬地闯入内室。他的老脸上满是惊恐之色，浑浊的眼眸中透着深深的忧虑，声音沙哑而颤抖）圣人...圣人！您终于醒了！老奴该死，老奴该死！那...那范阳...范阳有紧急军报传来！（他扑倒在地，额头重重地磕在金砖上）老奴惶恐，还请圣人...还请圣人即刻定夺啊！',
     },
   ],
 

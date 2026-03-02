@@ -21,6 +21,7 @@ import { EndingScreen } from '@components/game/EndingScreen';
 import { QuestionAnswerPanel } from '@components/game/QuestionAnswerPanel';
 import type { ChatMessage, ScenarioConfig, AnswerValidationResult, AnswerState } from '@types/game';
 import { getScenarioIntro } from '@config/scenarios';
+import { validateAnswerWithAI } from '@services/answerValidator';
 
 function App() {
   const {
@@ -188,7 +189,7 @@ function App() {
     '清': ['清朝', '大清', '清代', '满清'],
   };
 
-  // 验证答案（支持别名系统）
+  // 统一使用AI验证答案
   const validateAnswer = useCallback(async (
     type: 'emperor' | 'dynasty',
     answer: string
@@ -201,42 +202,84 @@ function App() {
       };
     }
 
-    const correctAnswer = type === 'emperor'
-      ? currentScenario.emperor.name
-      : currentScenario.emperor.dynasty;
-
-    // 获取别名列表
-    const aliasMap = type === 'emperor' ? emperorAliasMap : dynastyAliasMap;
-    const aliases = aliasMap[correctAnswer] || [];
-
-    // 标准化用户输入
-    const normalizedAnswer = answer.trim().toLowerCase().replace(/[\s·]/g, '');
-
-    // 检查是否匹配正确答案或任何别名
-    const isCorrect = aliases.some(alias => {
-      const normalizedAlias = alias.toLowerCase().replace(/[\s·]/g, '');
-      const normalizedCorrectName = correctAnswer.toLowerCase().replace(/[\s·]/g, '');
-
-      return normalizedAnswer === normalizedAlias ||
-        normalizedAnswer === normalizedCorrectName ||
-        normalizedAlias.includes(normalizedAnswer) ||
-        normalizedAnswer.includes(normalizedAlias);
-    }) || normalizedAnswer === correctAnswer.toLowerCase().replace(/[\s·]/g, '');
-
     // 计算剩余次数
     const maxAttempts = 3;
     const currentAttempts = type === 'emperor' ? answerState.emperorAttempts : answerState.dynastyAttempts;
-    const remainingAttempts = maxAttempts - currentAttempts - 1; // -1 because this attempt just happened
+    const remainingAttempts = maxAttempts - currentAttempts - 1;
 
-    return {
-      isCorrect,
-      // 不透露正确答案，只告诉用户是否正确
-      feedback: isCorrect
-        ? `回答正确！✓`
-        : `回答错误，请继续尝试。剩余 ${Math.max(0, remainingAttempts)} 次机会。`,
-      similarity: isCorrect ? 1 : 0,
-    };
-  }, [currentScenario, answerState]);
+    try {
+      const { validateAnswerWithAI } = await import('@services/answerValidator');
+
+      if (type === 'emperor') {
+        // 皇帝姓名使用AI验证
+        const correctEmperor = currentScenario.emperor.name;
+
+        const aiResult = await validateAnswerWithAI(
+          'emperor',
+          correctEmperor,
+          answer,
+          currentScenario
+        );
+
+        // 关键修复：如果验证正确，立即保存正确状态到store
+        if (aiResult.isCorrect) {
+          setAnswerCorrect('emperor', true);
+        }
+
+        return {
+          isCorrect: aiResult.isCorrect,
+          feedback: aiResult.isCorrect
+            ? `回答正确！✓ ${aiResult.feedback}`
+            : `回答错误，请继续尝试。剩余 ${Math.max(0, remainingAttempts)} 次机会。`,
+          similarity: aiResult.isCorrect ? 1 : 0,
+        };
+      } else {
+        // 历史事件使用AI验证
+        const correctEvent = currentScenario.emperor.historicalEvent || currentScenario.emperor.dynasty;
+
+        const aiResult = await validateAnswerWithAI(
+          'event',
+          correctEvent,
+          answer,
+          currentScenario
+        );
+
+        // 关键修复：如果验证正确，立即保存正确状态到store
+        if (aiResult.isCorrect) {
+          setAnswerCorrect('dynasty', true);
+        }
+
+        return {
+          isCorrect: aiResult.isCorrect,
+          feedback: aiResult.isCorrect
+            ? `回答正确！✓ ${aiResult.feedback}`
+            : `回答错误，请继续尝试。剩余 ${Math.max(0, remainingAttempts)} 次机会。`,
+          similarity: aiResult.isCorrect ? 1 : 0,
+        };
+      }
+    } catch (error) {
+      console.error('[App] AI验证失败:', error);
+      // AI验证失败时回退到简单包含匹配
+      const correctAnswer = type === 'emperor'
+        ? currentScenario.emperor.name
+        : (currentScenario.emperor.historicalEvent || currentScenario.emperor.dynasty);
+      const isCorrect = answer.toLowerCase().includes(correctAnswer.toLowerCase()) ||
+        correctAnswer.toLowerCase().includes(answer.toLowerCase());
+
+      // 关键修复：如果验证正确，立即保存正确状态到store
+      if (isCorrect) {
+        setAnswerCorrect(type, true);
+      }
+
+      return {
+        isCorrect,
+        feedback: isCorrect
+          ? `回答正确！✓`
+          : `回答错误，请继续尝试。剩余 ${Math.max(0, remainingAttempts)} 次机会。`,
+        similarity: isCorrect ? 1 : 0,
+      };
+    }
+  }, [currentScenario, answerState, setAnswerCorrect]);
 
   // 处理问题回答完成
   const handleQuestionsComplete = useCallback((finalState: AnswerState) => {
@@ -259,7 +302,7 @@ function App() {
       setEnding({
         type: 'neutral_escape',
         title: '部分真相',
-        summary: `你只答对了${hasCorrectEmperor ? '皇帝身份' : '朝代'}，但这也足以让你暂时稳住局势。`,
+        summary: `你只答对了${hasCorrectEmperor ? '皇帝身份' : '历史事件'}，但这也足以让你暂时稳住局势。`,
         epilogue: '虽然你没有完全找回自己的身份，但你的部分认知足以让你在这个危险的世界中生存下去。',
       });
     } else {

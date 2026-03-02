@@ -3,7 +3,7 @@
  * 玩家可以在回合耗尽前或耗尽后回答两个问题
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import type { AnswerState, AnswerValidationResult } from '@types/game';
 
@@ -39,6 +39,14 @@ export function QuestionAnswerPanel({
   const isEmperorDone = emperorCorrect === true || emperorAttempts >= maxAttemptsValue;
   const isDynastyDone = dynastyCorrect === true || dynastyAttempts >= maxAttemptsValue;
   const isAllDone = isEmperorDone && isDynastyDone;
+
+  // 自动检测：两个都答对后立即触发结算
+  useEffect(() => {
+    if (emperorCorrect === true && dynastyCorrect === true) {
+      console.log('[QuestionAnswerPanel] 两个问题都答对，自动触发结算');
+      onComplete?.(answerState);
+    }
+  }, [emperorCorrect, dynastyCorrect, onComplete, answerState]);
 
   const handleSubmitEmperor = async () => {
     if (!emperorInput.trim() || validating || isEmperorDone) return;
@@ -153,19 +161,22 @@ export function QuestionAnswerPanel({
                 {emperorCorrect === true ? (
                   <div className="text-green-400">
                     <div className="font-semibold">回答正确！✓</div>
-                    <div className="text-sm mt-1 text-green-300">答案：{answerState.emperorGuess}</div>
+                    <div className="text-sm mt-1 text-green-300">正确答案：{answerState.emperorGuess}</div>
                   </div>
                 ) : (
-                  <span className="text-red-400">机会已用尽</span>
+                  <div className="text-red-400">
+                    <div className="font-semibold">回答错误</div>
+                    <div className="text-sm mt-1 text-red-300">机会已用尽</div>
+                  </div>
                 )}
               </div>
             )}
           </div>
 
-          {/* 朝代问题 */}
+          {/* 历史事件问题 */}
           <div className={`p-4 rounded-lg border ${dynastyCorrect === true ? 'bg-green-900/30 border-green-600' : dynastyCorrect === false && isDynastyDone ? 'bg-red-900/30 border-red-600' : 'bg-slate-700/50 border-slate-600'}`}>
             <div className="flex justify-between items-center mb-3">
-              <h3 className="text-lg font-semibold text-slate-200">这是哪个朝代？</h3>
+              <h3 className="text-lg font-semibold text-slate-200">这是什么历史事件？</h3>
               {dynastyCorrect === true && <span className="text-green-400 text-sm">✓ 正确</span>}
               {dynastyCorrect === false && isDynastyDone && <span className="text-red-400 text-sm">✗ 错误</span>}
             </div>
@@ -177,7 +188,7 @@ export function QuestionAnswerPanel({
                     type="text"
                     value={dynastyInput}
                     onChange={(e) => setDynastyInput(e.target.value)}
-                    placeholder="请输入朝代名称..."
+                    placeholder="请输入历史事件..."
                     disabled={validating}
                     className="flex-1 px-3 py-2 bg-slate-800 border border-slate-600 rounded text-slate-200 placeholder-slate-500 focus:outline-none focus:border-amber-500"
                     onKeyDown={(e) => e.key === 'Enter' && handleSubmitDynasty()}
@@ -206,10 +217,13 @@ export function QuestionAnswerPanel({
                 {dynastyCorrect === true ? (
                   <div className="text-green-400">
                     <div className="font-semibold">回答正确！✓</div>
-                    <div className="text-sm mt-1 text-green-300">答案：{answerState.dynastyGuess}</div>
+                    <div className="text-sm mt-1 text-green-300">正确答案：{answerState.dynastyGuess}</div>
                   </div>
                 ) : (
-                  <span className="text-red-400">机会已用尽</span>
+                  <div className="text-red-400">
+                    <div className="font-semibold">回答错误</div>
+                    <div className="text-sm mt-1 text-red-300">机会已用尽</div>
+                  </div>
                 )}
               </div>
             )}

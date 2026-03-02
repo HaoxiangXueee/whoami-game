@@ -129,12 +129,13 @@ export interface AnswerValidationResult {
  * 答案状态
  */
 export interface AnswerState {
-  emperorAnswer: string;
-  dynastyAnswer: string;
+  emperorGuess: string;
+  dynastyGuess: string;
   emperorCorrect: boolean | null;
   dynastyCorrect: boolean | null;
   emperorAttempts: number;
   dynastyAttempts: number;
+  isSubmitting: boolean;
 }
 
 /**

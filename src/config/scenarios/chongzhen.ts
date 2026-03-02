@@ -19,6 +19,7 @@ export const chongzhenScenario: ScenarioConfig = {
     title: '明思宗',
     dynasty: '大明',
     realIdentity: '末代帝王',
+    historicalEvent: '崇祯帝煤山自缢，明朝灭亡',
   },
 
   // 场景设定
@@ -46,7 +47,7 @@ export const chongzhenScenario: ScenarioConfig = {
       description: '皇帝身边最信任的老太监，忠心耿耿侍奉多年',
       personality: '忠诚老练，深知大势已去但仍想护主',
       attitude: 'loyal',
-      introduction: '陛...陛下！您终于醒了！您...您还记得老奴吗？外面...外面情况紧急，还请陛下速速定夺！',
+      introduction: '（一个苍老的身影跌跌撞撞地闯入内殿，声音颤抖而急促）陛下！您终于醒了！外面...外面那些贼人已经...（老太监声音哽咽，几乎说不下去）陛下，您...您还记得老奴吗？',
     },
     {
       id: 'wei_zaode',
@@ -55,7 +56,7 @@ export const chongzhenScenario: ScenarioConfig = {
       description: '皇帝倚重的大臣，圆滑世故',
       personality: '圆滑世故，正在考虑是否另谋出路',
       attitude: 'neutral',
-      introduction: '陛下龙体可安？臣...臣有紧急军情要禀报。',
+      introduction: '（一位身着官服的中年大臣缓步走入，面色凝重，目光闪烁不定）陛下龙体可安？臣...臣有紧急军情要禀报。只是...只是这局势，恐怕已经...（他说到此处，欲言又止，低头不语）',
     },
   ],
 
