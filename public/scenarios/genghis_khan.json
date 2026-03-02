@@ -1,0 +1,86 @@
+{
+  "id": "genghis_khan",
+  "name": "成吉思汗",
+  "description": "蒙古帝国，征服世界的草原雄鹰",
+  "difficulty": "hard",
+  "emperor": {
+    "name": "铁木真",
+    "title": "成吉思汗",
+    "dynasty": "蒙古帝国",
+    "realIdentity": "成吉思汗铁木真"
+  },
+  "setting": {
+    "time": "公元1206年",
+    "location": "斡难河",
+    "atmosphere": "统一蒙古各部后的巩固，对外扩张压力",
+    "weather": "晴朗"
+  },
+  "initialStats": {
+    "authority": 35,
+    "suspicion": 0
+  },
+  "maxTurns": 10,
+  "npcs": [
+    {
+      "id": "npc_1",
+      "name": "大将",
+      "title": "镇国将军",
+      "description": "镇国将军，性格久经沙场，智勇双全",
+      "personality": "久经沙场，智勇双全",
+      "attitude": "loyal",
+      "introduction": "启奏陛下..."
+    },
+    {
+      "id": "npc_2",
+      "name": "谋士",
+      "title": "军师祭酒",
+      "description": "军师祭酒，性格运筹帷幄，深谋远虑",
+      "personality": "运筹帷幄，深谋远虑",
+      "attitude": "neutral",
+      "introduction": "启奏陛下..."
+    },
+    {
+      "id": "npc_3",
+      "name": "斥候",
+      "title": "边关探马",
+      "description": "边关探马，性格机警敏捷，善于伪装",
+      "personality": "机警敏捷，善于伪装",
+      "attitude": "loyal",
+      "introduction": "启奏陛下..."
+    },
+    {
+      "id": "npc_4",
+      "name": "粮官",
+      "title": "督粮御史",
+      "description": "督粮御史，性格精打细算，一丝不苟",
+      "personality": "精打细算，一丝不苟",
+      "attitude": "loyal",
+      "introduction": "启奏陛下..."
+    }
+  ],
+  "background": "这是蒙古帝国时期。\n皇帝是铁木真（成吉思汗）。\n当前处境：统一蒙古各部后的巩固，对外扩张压力。\n关键事件：统一蒙古、建立帝国、西征花剌子模。\n皇帝性格：冷酷无情，雄才大略，善于用人。\n时间地点：公元1206年，斡难河。\n\nNPC对话注意事项：\n- 绝不直接说出皇帝的真实姓名\n- 绝不直接说出朝代名\n- 使用模糊称谓暗示时代背景\n- 通过对话内容暗示历史事件",
+  "playerIntro": "你缓缓睁开眼睛，发现自己身处一座古老而宏伟的宫殿之中。\n\n殿内烛火摇曳，四周弥漫着一种压抑的紧张感。\n统一蒙古各部后的巩固，对外扩张压力\n\n你试图回忆自己是谁，却惊恐地发现——\n你的记忆一片空白！\n你不知道自己是谁，不知道自己为何会在这里，\n更不知道外面究竟发生了什么...\n\n就在这时，一位身穿官服的人快步走入。\n他见到你醒来，脸上露出如释重负的表情，\n随即跪倒在地，颤声说道：\n\n\"陛...陛下！您终于醒了！\n您...您还记得老臣吗？\"\n\n你心中猛地一震——\n他为什么叫我\"陛下\"？\n我...我到底是谁？！",
+  "winLoseConditions": {
+    "winConditions": [
+      "威势值达到80以上且暴露度不超过20",
+      "成功应对统一蒙古",
+      "坚持到最后回合未被推翻"
+    ],
+    "loseConditions": [
+      "威势值降至0（被政变废黜）",
+      "暴露度达到100（被识破身份）",
+      "做出明显违背历史常识的决定"
+    ]
+  },
+  "metadata": {
+    "author": "AI Game Studio",
+    "createdAt": "2026-03-02T05:42:09.642Z",
+    "updatedAt": "2026-03-02T05:42:09.642Z",
+    "tags": [
+      "蒙古",
+      "帝国",
+      "征服",
+      "困难"
+    ]
+  }
+}

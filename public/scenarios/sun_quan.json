@@ -1,0 +1,86 @@
+{
+  "id": "sun_quan",
+  "name": "孙权",
+  "description": "坐断东南，赤壁之战，东吴开国",
+  "difficulty": "medium",
+  "emperor": {
+    "name": "孙权",
+    "title": "吴大帝",
+    "dynasty": "东吴",
+    "realIdentity": "吴大帝孙权"
+  },
+  "setting": {
+    "time": "公元229年",
+    "location": "建业",
+    "atmosphere": "荆州之争，合肥之战失利",
+    "weather": "晴朗"
+  },
+  "initialStats": {
+    "authority": 45,
+    "suspicion": 0
+  },
+  "maxTurns": 10,
+  "npcs": [
+    {
+      "id": "npc_1",
+      "name": "大将",
+      "title": "镇国将军",
+      "description": "镇国将军，性格久经沙场，智勇双全",
+      "personality": "久经沙场，智勇双全",
+      "attitude": "loyal",
+      "introduction": "启奏陛下..."
+    },
+    {
+      "id": "npc_2",
+      "name": "谋士",
+      "title": "军师祭酒",
+      "description": "军师祭酒，性格运筹帷幄，深谋远虑",
+      "personality": "运筹帷幄，深谋远虑",
+      "attitude": "neutral",
+      "introduction": "启奏陛下..."
+    },
+    {
+      "id": "npc_3",
+      "name": "斥候",
+      "title": "边关探马",
+      "description": "边关探马，性格机警敏捷，善于伪装",
+      "personality": "机警敏捷，善于伪装",
+      "attitude": "loyal",
+      "introduction": "启奏陛下..."
+    },
+    {
+      "id": "npc_4",
+      "name": "粮官",
+      "title": "督粮御史",
+      "description": "督粮御史，性格精打细算，一丝不苟",
+      "personality": "精打细算，一丝不苟",
+      "attitude": "loyal",
+      "introduction": "启奏陛下..."
+    }
+  ],
+  "background": "这是三国时期。\n皇帝是孙权（吴大帝）。\n当前处境：荆州之争，合肥之战失利。\n关键事件：继承父兄基业、赤壁之战、夺取荆州。\n皇帝性格：沉稳果断，善于守成，多谋善断。\n时间地点：公元229年，建业。\n\nNPC对话注意事项：\n- 绝不直接说出皇帝的真实姓名\n- 绝不直接说出朝代名\n- 使用模糊称谓暗示时代背景\n- 通过对话内容暗示历史事件",
+  "playerIntro": "你缓缓睁开眼睛，发现自己身处一座古老而宏伟的宫殿之中。\n\n殿内烛火摇曳，四周弥漫着一种压抑的紧张感。\n荆州之争，合肥之战失利\n\n你试图回忆自己是谁，却惊恐地发现——\n你的记忆一片空白！\n你不知道自己是谁，不知道自己为何会在这里，\n更不知道外面究竟发生了什么...\n\n就在这时，一位身穿官服的人快步走入。\n他见到你醒来，脸上露出如释重负的表情，\n随即跪倒在地，颤声说道：\n\n\"陛...陛下！您终于醒了！\n您...您还记得老臣吗？\"\n\n你心中猛地一震——\n他为什么叫我\"陛下\"？\n我...我到底是谁？！",
+  "winLoseConditions": {
+    "winConditions": [
+      "威势值达到80以上且暴露度不超过20",
+      "成功应对继承父兄基业",
+      "坚持到最后回合未被推翻"
+    ],
+    "loseConditions": [
+      "威势值降至0（被政变废黜）",
+      "暴露度达到100（被识破身份）",
+      "做出明显违背历史常识的决定"
+    ]
+  },
+  "metadata": {
+    "author": "AI Game Studio",
+    "createdAt": "2026-03-02T05:42:09.651Z",
+    "updatedAt": "2026-03-02T05:42:09.651Z",
+    "tags": [
+      "三国",
+      "东吴",
+      "守成",
+      "中等"
+    ]
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "id": "qianlong",
+  "name": "乾隆帝",
+  "description": "十全武功，六下江南，康乾盛世顶峰",
+  "difficulty": "medium",
+  "emperor": {
+    "name": "弘历",
+    "title": "乾隆皇帝",
+    "dynasty": "清",
+    "realIdentity": "乾隆皇帝弘历"
+  },
+  "setting": {
+    "time": "公元1736年",
+    "location": "紫禁城",
+    "atmosphere": "盛世下的危机，和珅专权，白莲教起义",
+    "weather": "晴朗"
+  },
+  "initialStats": {
+    "authority": 45,
+    "suspicion": 0
+  },
+  "maxTurns": 10,
+  "npcs": [
+    {
+      "id": "npc_1",
+      "name": "忠臣",
+      "title": "辅政大臣",
+      "description": "辅政大臣，性格忠诚耿直，敢于直谏",
+      "personality": "忠诚耿直，敢于直谏",
+      "attitude": "loyal",
+      "introduction": "启奏陛下..."
+    },
+    {
+      "id": "npc_2",
+      "name": "权臣",
+      "title": "权谋之士",
+      "description": "权谋之士，性格心机深沉，善于权术",
+      "personality": "心机深沉，善于权术",
+      "attitude": "neutral",
+      "introduction": "启奏陛下..."
+    },
+    {
+      "id": "npc_3",
+      "name": "宦官",
+      "title": "内廷总管",
+      "description": "内廷总管，性格谨慎小心，善于察言观色",
+      "personality": "谨慎小心，善于察言观色",
+      "attitude": "loyal",
+      "introduction": "启奏陛下..."
+    },
+    {
+      "id": "npc_4",
+      "name": "将军",
+      "title": "边关大将",
+      "description": "边关大将，性格忠勇善战，性格刚烈",
+      "personality": "忠勇善战，性格刚烈",
+      "attitude": "loyal",
+      "introduction": "启奏陛下..."
+    }
+  ],
+  "background": "这是清朝时期。\n皇帝是弘历（乾隆皇帝）。\n当前处境：盛世下的危机，和珅专权，白莲教起义。\n关键事件：十全武功、六下江南、编纂四库全书。\n皇帝性格：好大喜功，风流倜傥，附庸风雅。\n时间地点：公元1736年，紫禁城。\n\nNPC对话注意事项：\n- 绝不直接说出皇帝的真实姓名\n- 绝不直接说出朝代名\n- 使用模糊称谓暗示时代背景\n- 通过对话内容暗示历史事件",
+  "playerIntro": "你缓缓睁开眼睛，发现自己身处一座古老而宏伟的宫殿之中。\n\n殿内烛火摇曳，四周弥漫着一种压抑的紧张感。\n盛世下的危机，和珅专权，白莲教起义\n\n你试图回忆自己是谁，却惊恐地发现——\n你的记忆一片空白！\n你不知道自己是谁，不知道自己为何会在这里，\n更不知道外面究竟发生了什么...\n\n就在这时，一位身穿官服的人快步走入。\n他见到你醒来，脸上露出如释重负的表情，\n随即跪倒在地，颤声说道：\n\n\"陛...陛下！您终于醒了！\n您...您还记得老臣吗？\"\n\n你心中猛地一震——\n他为什么叫我\"陛下\"？\n我...我到底是谁？！",
+  "winLoseConditions": {
+    "winConditions": [
+      "威势值达到80以上且暴露度不超过20",
+      "成功应对十全武功",
+      "坚持到最后回合未被推翻"
+    ],
+    "loseConditions": [
+      "威势值降至0（被政变废黜）",
+      "暴露度达到100（被识破身份）",
+      "做出明显违背历史常识的决定"
+    ]
+  },
+  "metadata": {
+    "author": "AI Game Studio",
+    "createdAt": "2026-03-02T05:42:09.644Z",
+    "updatedAt": "2026-03-02T05:42:09.644Z",
+    "tags": [
+      "清朝",
+      "乾隆",
+      "盛世",
+      "中等"
+    ]
+  }
+}

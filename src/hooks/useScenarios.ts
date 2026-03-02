@@ -4,7 +4,7 @@
  */
 
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { scenarioLoader } from '../services/ScenarioLoader';
+import { scenarioLoader } from '@services/ScenarioLoader';
 import type { ScenarioConfig, ScenarioIndex, ScenarioIndexItem } from '../types/scenario';
 
 const PLAYED_SCENARIOS_KEY = 'whoami_played_scenarios';
