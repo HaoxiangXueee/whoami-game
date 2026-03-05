@@ -19,7 +19,6 @@ import { StatChangeAnimation } from '@components/game/StatChangeAnimation';
 import { EndingScreen } from '@components/game/EndingScreen';
 import { QuestionAnswerPanel } from '@components/game/QuestionAnswerPanel';
 import type { ChatMessage, ScenarioConfig, AnswerValidationResult, AnswerState } from '@/types/game';
-import { getScenarioIntro } from '@config/scenarios';
 
 function App() {
   const {
@@ -61,13 +60,16 @@ function App() {
 
   // 初始化LLM服务
   useEffect(() => {
-    // 从环境变量或硬编码初始化（生产环境应使用环境变量）
-    const apiKey = import.meta.env.VITE_KIMI_API_KEY || 'sk-HpoMZwOkPXQzzpzGE8r0slVSfCf96KWbXCV83crtfp32REAo';
+    // 检测是否在Vercel生产环境（使用代理）
+    const isProduction = import.meta.env.PROD;
+    // 从环境变量获取（开发环境用，生产环境代理不需要
+    const apiKey = import.meta.env.VITE_KIMI_API_KEY || '';
 
     if (!llm.isInitialized) {
-      const success = llm.initialize(apiKey);
+      // 生产环境使用代理，不需要前端传真实API Key
+      const success = llm.initialize(apiKey, isProduction);
       if (success) {
-        console.log('[App] LLM服务初始化成功');
+        console.log('[App] LLM服务初始化成功', { useProxy: isProduction });
       } else {
         console.error('[App] LLM服务初始化失败');
       }
@@ -244,7 +246,6 @@ function App() {
 
     // 使用 playerIntro（模糊失忆场景）而非 background（完整历史）
     const introText =
-      getScenarioIntro(scenario.id) ||
       scenario.playerIntro ||
       '你醒来发现自己身处一座古老宫殿...';
 
@@ -460,6 +461,7 @@ function App() {
         finalStats={stats}
         currentTurn={currentTurn}
         maxTurns={maxTurns}
+        currentScenario={currentScenario}
         onRestart={handleStartGame}
         onReturnToMenu={resetGame}
       />

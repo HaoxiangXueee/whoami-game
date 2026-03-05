@@ -39,6 +39,8 @@ export class LLMService {
           this.provider = new KimiProvider(config.apiKey, {
             baseUrl: config.baseUrl ?? 'https://api.moonshot.cn',
             model: config.model ?? 'moonshot-v1-8k',
+            useProxy: config.useProxy,
+            proxyUrl: config.proxyUrl,
             defaultConfig: config.defaultConfig,
           });
           break;

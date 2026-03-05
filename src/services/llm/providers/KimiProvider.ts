@@ -55,6 +55,8 @@ export class KimiProvider implements ILLMProvider {
   private baseUrl: string;
   private model: string;
   private defaultConfig: LLMRequestConfig;
+  private useProxy: boolean;
+  private proxyUrl: string;
 
   constructor(
     apiKey: string,
@@ -62,6 +64,8 @@ export class KimiProvider implements ILLMProvider {
       baseUrl?: string;
       model?: string;
       defaultConfig?: LLMRequestConfig;
+      useProxy?: boolean;
+      proxyUrl?: string;
     }
   ) {
     this.apiKey = apiKey;
@@ -72,6 +76,8 @@ export class KimiProvider implements ILLMProvider {
       maxTokens: 2048,
       topP: 0.9,
     };
+    this.useProxy = options?.useProxy ?? false;
+    this.proxyUrl = options?.proxyUrl ?? '/api/kimi';
   }
 
   validateConfig(): boolean {
@@ -90,12 +96,18 @@ export class KimiProvider implements ILLMProvider {
     const kimiRequest = this.convertToKimiFormat(request);
 
     try {
-      const response = await fetch(`${this.baseUrl}/v1/chat/completions`, {
+      const url = this.useProxy ? this.proxyUrl : `${this.baseUrl}/v1/chat/completions`;
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+      };
+
+      if (!this.useProxy) {
+        headers['Authorization'] = `Bearer ${this.apiKey}`;
+      }
+
+      const response = await fetch(url, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.apiKey}`,
-        },
+        headers,
         body: JSON.stringify(kimiRequest),
       });
 
@@ -125,12 +137,18 @@ export class KimiProvider implements ILLMProvider {
     const kimiRequest = this.convertToKimiFormat(request);
 
     try {
-      const response = await fetch(`${this.baseUrl}/v1/chat/completions`, {
+      const url = this.useProxy ? this.proxyUrl : `${this.baseUrl}/v1/chat/completions`;
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+      };
+
+      if (!this.useProxy) {
+        headers['Authorization'] = `Bearer ${this.apiKey}`;
+      }
+
+      const response = await fetch(url, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.apiKey}`,
-        },
+        headers,
         body: JSON.stringify({
           ...kimiRequest,
           stream: true,

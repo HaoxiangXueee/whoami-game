@@ -82,6 +82,8 @@ export interface LLMServiceConfig {
   apiKey: string;
   baseUrl?: string;
   model?: string;
+  useProxy?: boolean;
+  proxyUrl?: string;
   defaultConfig?: LLMRequestConfig;
 }
 

@@ -23,7 +23,7 @@ interface UseLLMReturn {
   isLoading: boolean;
   error: string | null;
   sendMessage: (content: string) => Promise<GameLLMResponse | null>;
-  initialize: (apiKey: string) => boolean;
+  initialize: (apiKey: string, useProxy?: boolean) => boolean;
   isInitialized: boolean;
 }
 
@@ -37,7 +37,7 @@ export function useLLM(options: UseLLMOptions): UseLLMReturn {
   const llmServiceRef = useRef(getLLMService());
 
   // 初始化LLM服务
-  const initialize = useCallback((apiKey: string): boolean => {
+  const initialize = useCallback((apiKey: string, useProxy: boolean = true): boolean => {
     try {
       const service = llmServiceRef.current;
       const success = service.initialize({
@@ -45,6 +45,8 @@ export function useLLM(options: UseLLMOptions): UseLLMReturn {
         apiKey,
         baseUrl: 'https://api.moonshot.cn',
         model: 'moonshot-v1-8k',
+        useProxy,
+        proxyUrl: '/api/kimi',
         defaultConfig: {
           temperature: 0.7,
           maxTokens: 1500,
