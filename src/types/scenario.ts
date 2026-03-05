@@ -72,7 +72,18 @@ export interface InitialStats {
 
 
 /**
+ * 胜利/失败条件（JSON格式）
+ */
+export interface WinLoseConditions {
+  winConditions: string[];
+  loseConditions: string[];
+}
+
+/**
  * 剧本配置 - JSON可序列化格式
+ * 支持两种格式：
+ * 1. 分开的 winConditions 和 loseConditions（TypeScript 格式）
+ * 2. 组合的 winLoseConditions（JSON 格式）
  */
 export interface ScenarioConfig {
   id: string;
@@ -98,14 +109,20 @@ export interface ScenarioConfig {
   // 背景故事（给LLM看的完整背景）
   background: string;
 
-  // 给玩家看的开场白（可选，通过 getScenarioIntro 获取）
+  // 给玩家看的开场白
   playerIntro?: string;
 
-  // 胜利条件
-  winConditions: string[];
+  // 胜利条件（TypeScript 格式）
+  winConditions?: string[];
 
-  // 失败条件
-  loseConditions: string[];
+  // 失败条件（TypeScript 格式）
+  loseConditions?: string[];
+
+  // 胜利/失败条件（JSON 格式）
+  winLoseConditions?: WinLoseConditions;
+
+  // 元数据（可选）
+  metadata?: Record<string, any>;
 }
 
 /**

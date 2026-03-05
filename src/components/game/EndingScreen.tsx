@@ -5,9 +5,10 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
-import { EndingCard } from './EndingCard';
+import { EndingShareCard } from '@/components/share/EndingShareCard';
 import type { EndingType } from '@/types/game';
 import type { GameStats } from '@/types/game';
+import type { ScenarioConfig } from '@/types/game';
 
 interface EndingScreenProps {
   type: EndingType;
@@ -18,6 +19,7 @@ interface EndingScreenProps {
   finalStats: GameStats;
   currentTurn: number;
   maxTurns: number;
+  currentScenario: ScenarioConfig;
   onRestart: () => void;
   onReturnToMenu: () => void;
 }
@@ -100,6 +102,7 @@ export function EndingScreen({
   finalStats,
   currentTurn,
   maxTurns,
+  currentScenario,
   onRestart,
   onReturnToMenu,
 }: EndingScreenProps) {
@@ -146,11 +149,14 @@ export function EndingScreen({
         }}
         className="relative w-full max-w-4xl z-10 px-2 sm:px-4"
       >
-        {/* 结局卡片 */}
-        <EndingCard
-          type={type}
-          title={title}
-          summary={summary}
+        {/* 结局分享卡片 */}
+        <EndingShareCard
+          endingType={type}
+          endingTitle={title}
+          endingSummary={summary}
+          scenarioName={currentScenario.name}
+          turnsUsed={currentTurn}
+          maxTurns={maxTurns}
           className="mb-6"
         />
 

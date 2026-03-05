@@ -1,15 +1,15 @@
 /**
  * RandomScenarioLoader - 随机剧本加载器
  *
- * v2.0 核心组件：实现随机分配剧本，隐藏身份信息
- * - 直接从 @config/scenarios 导入剧本列表
- * - 支持随机选择剧本
- * - 替代原有的 ScenarioSelect 组件，确保玩家不知道自己是谁
+ * v2.1 版本：使用 ScenarioLoader 加载 JSON 剧本
+ * - 从 /scenarios 目录动态加载 JSON 剧本
+ * - 支持 30 个历史剧本
+ * - 保持穿越动画效果
  */
 
-import { useEffect, useState } from 'react';
-import { scenarios } from '@config/scenarios';
-import type { ScenarioConfig } from '@/types/game';
+import { useEffect, useState, useCallback } from 'react';
+import { scenarioLoader } from '@services/ScenarioLoader';
+import type { ScenarioConfig } from '@/types/scenario';
 
 /**
  * 组件 Props
@@ -49,22 +49,50 @@ export function RandomScenarioLoader({ onComplete }: RandomScenarioLoaderProps) 
   const [displayText, setDisplayText] = useState('');
   const [showGlitch, setShowGlitch] = useState(false);
   const [selectedScenario, setSelectedScenario] = useState<ScenarioConfig | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   /**
-   * 随机选择剧本
+   * 加载随机剧本
+   */
+  const loadRandomScenario = useCallback(async () => {
+    try {
+      console.log('[RandomScenarioLoader] 开始加载剧本索引...');
+      const index = await scenarioLoader.loadIndex();
+
+      if (index.scenarios.length === 0) {
+        throw new Error('没有可用的剧本');
+      }
+
+      // 随机选择一个剧本
+      const randomIndex = Math.floor(Math.random() * index.scenarios.length);
+      const selected = index.scenarios[randomIndex];
+
+      console.log(`[RandomScenarioLoader] 选中剧本: ${selected.name} (${selected.id})`);
+
+      // 加载完整剧本
+      const scenario = await scenarioLoader.loadScenario(selected.id);
+      setSelectedScenario(scenario);
+
+      console.log('[RandomScenarioLoader] 剧本加载完成');
+    } catch (error) {
+      console.error('[RandomScenarioLoader] 加载剧本失败:', error);
+      const errorMessage = error instanceof Error ? error.message : '加载剧本失败';
+      setLoadError(errorMessage);
+    }
+  }, []);
+
+  /**
+   * 开始加载流程
    */
   useEffect(() => {
-    if (scenarios.length > 0 && !selectedScenario) {
-      const randomIndex = Math.floor(Math.random() * scenarios.length);
-      setSelectedScenario(scenarios[randomIndex]);
-    }
-  }, [selectedScenario]);
+    loadRandomScenario();
+  }, [loadRandomScenario]);
 
   /**
    * 打字机效果
    */
   useEffect(() => {
-    const text = stepMessages[currentStep];
+    const text = loadError ? `加载失败: ${loadError}` : stepMessages[currentStep];
     let index = 0;
     setDisplayText('');
 
@@ -78,12 +106,17 @@ export function RandomScenarioLoader({ onComplete }: RandomScenarioLoaderProps) 
     }, 40);
 
     return () => clearInterval(interval);
-  }, [currentStep]);
+  }, [currentStep, loadError]);
 
   /**
    * 步骤推进逻辑
    */
   useEffect(() => {
+    // 如果有错误，停止推进
+    if (loadError) {
+      return;
+    }
+
     const stepOrder: LoadingStep[] = [
       'initializing',
       'connecting',
@@ -109,6 +142,13 @@ export function RandomScenarioLoader({ onComplete }: RandomScenarioLoaderProps) 
     const delay = 1200 + Math.random() * 600; // 1.2-1.8秒随机延迟
 
     const timer = setTimeout(() => {
+      // 只有在剧本加载完成后才能进入 complete 步骤
+      if (stepOrder[nextIndex] === 'complete' && !selectedScenario) {
+        // 剧本还没加载完，等待
+        console.log('[RandomScenarioLoader] 等待剧本加载完成...');
+        return;
+      }
+
       setCurrentStep(stepOrder[nextIndex] as LoadingStep);
 
       // 特定步骤触发 glitch 效果
@@ -119,9 +159,25 @@ export function RandomScenarioLoader({ onComplete }: RandomScenarioLoaderProps) 
     }, delay);
 
     return () => clearTimeout(timer);
-  }, [currentStep, onComplete, selectedScenario]);
+  }, [currentStep, onComplete, selectedScenario, loadError]);
 
-  const progress = stepProgress[currentStep];
+  // 监听剧本加载完成，如果步骤还没到 complete，等待
+  useEffect(() => {
+    if (selectedScenario && currentStep === 'synchronizing') {
+      // 剧本已加载完成，可以推进到 complete
+      console.log('[RandomScenarioLoader] 剧本已准备好，推进到完成步骤');
+    }
+  }, [selectedScenario, currentStep]);
+
+  const progress = loadError ? 0 : stepProgress[currentStep];
+
+  // 重试按钮
+  const handleRetry = () => {
+    setLoadError(null);
+    setCurrentStep('initializing');
+    setSelectedScenario(null);
+    loadRandomScenario();
+  };
 
   return (
     <div className="random-scenario-loader">
@@ -143,7 +199,7 @@ export function RandomScenarioLoader({ onComplete }: RandomScenarioLoaderProps) 
           {/* 状态文本 */}
           <div className="loader-status">
             <p className="status-text">{displayText}</p>
-            <span className="status-cursor">|</span>
+            {!loadError && <span className="status-cursor">|</span>}
           </div>
 
           {/* 进度条 */}
@@ -156,6 +212,16 @@ export function RandomScenarioLoader({ onComplete }: RandomScenarioLoaderProps) 
             </div>
             <span className="loader-progress-text">{progress}%</span>
           </div>
+
+          {/* 重试按钮（出错时显示） */}
+          {loadError && (
+            <button
+              onClick={handleRetry}
+              className="mt-4 px-6 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-lg font-bold transition-colors"
+            >
+              重试
+            </button>
+          )}
 
           {/* 装饰元素 */}
           <div className="loader-decorations">

@@ -8,6 +8,7 @@ import type {
   ScenarioIndex,
   ScenarioIndexItem,
   ScenarioValidationResult,
+  WinLoseConditions,
 } from '../types/scenario';
 
 const SCENARIO_BASE_PATH = '/scenarios';
@@ -80,7 +81,10 @@ class ScenarioLoader {
         throw new Error(`Failed to load scenario: ${response.status} ${response.statusText}`);
       }
 
-      const scenario: ScenarioConfig = await response.json();
+      const rawScenario = await response.json();
+
+      // 转换数据格式（兼容 winLoseConditions 和分开的 winConditions/loseConditions）
+      const scenario = this.normalizeScenarioFormat(rawScenario);
 
       // 验证剧本格式
       const validation = this.validateScenario(scenario);
@@ -157,6 +161,38 @@ class ScenarioLoader {
         typeof s.name === 'string'
       )
     );
+  }
+
+  /**
+   * 标准化剧本格式
+   * 确保返回的剧本同时有 winConditions/loseConditions 和 winLoseConditions
+   */
+  private normalizeScenarioFormat(raw: any): ScenarioConfig {
+    const scenario: ScenarioConfig = { ...raw };
+
+    // 处理胜利/失败条件
+    if (scenario.winLoseConditions) {
+      // JSON 格式：有 winLoseConditions，展开为分开的字段
+      const conditions = scenario.winLoseConditions as WinLoseConditions;
+      scenario.winConditions = conditions.winConditions;
+      scenario.loseConditions = conditions.loseConditions;
+    } else if (scenario.winConditions && scenario.loseConditions) {
+      // TypeScript 格式：有分开的字段，组合为 winLoseConditions
+      scenario.winLoseConditions = {
+        winConditions: scenario.winConditions,
+        loseConditions: scenario.loseConditions,
+      };
+    } else {
+      // 都没有，设置默认空数组
+      scenario.winConditions = [];
+      scenario.loseConditions = [];
+      scenario.winLoseConditions = {
+        winConditions: [],
+        loseConditions: [],
+      };
+    }
+
+    return scenario;
   }
 
   /**
