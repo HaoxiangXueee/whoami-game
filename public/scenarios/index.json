@@ -1,13 +1,13 @@
 {
-  "version": "2.0.0",
-  "lastUpdated": "2026-03-01T00:00:00Z",
+  "version": "2.1.0",
+  "lastUpdated": "2026-03-05T00:00:00Z",
   "scenarios": [
     {
       "id": "qin_shihuang",
       "name": "秦始皇",
       "description": "统一六国，称帝建制，千古一帝的开端",
       "difficulty": "medium",
-      "tags": ["秦朝", "开国", "统一", "困难"]
+      "tags": ["秦朝", "开国", "统一", "中等"]
     },
     {
       "id": "han_wudi",
@@ -122,7 +122,7 @@
       "tags": ["明朝", "崇祯", "煤山", "困难"]
     },
     {
-      "id": "xuantong",
+      "id": "puli",
       "name": "溥仪",
       "description": "末代皇帝，退位诏书，清朝终结",
       "difficulty": "easy",
@@ -141,13 +141,83 @@
       "description": "霸王别姬，乌江自刎，西楚霸王",
       "difficulty": "hard",
       "tags": ["秦末", "霸王", "悲剧", "困难"]
+    },
+    {
+      "id": "liu_bei",
+      "name": "刘备",
+      "description": "桃园结义，三顾茅庐，蜀汉开国",
+      "difficulty": "medium",
+      "tags": ["三国", "蜀汉", "仁德", "中等"]
+    },
+    {
+      "id": "sun_quan",
+      "name": "孙权",
+      "description": "坐断东南，赤壁之战，东吴开国",
+      "difficulty": "medium",
+      "tags": ["三国", "东吴", "守成", "中等"]
+    },
+    {
+      "id": "sui_wendi",
+      "name": "隋文帝",
+      "description": "结束分裂，开皇之治，隋朝开国",
+      "difficulty": "medium",
+      "tags": ["隋朝", "开国", "统一", "中等"]
+    },
+    {
+      "id": "tang_gaozong",
+      "name": "唐高宗",
+      "description": "永徽之治，武则天的丈夫",
+      "difficulty": "medium",
+      "tags": ["唐朝", "守成", "中等"]
+    },
+    {
+      "id": "daoguang",
+      "name": "道光帝",
+      "description": "鸦片战争，南京条约，清朝衰落",
+      "difficulty": "hard",
+      "tags": ["清朝", "鸦片战争", "近代", "困难"]
+    },
+    {
+      "id": "ming_taizu",
+      "name": "明太祖",
+      "description": "从乞丐到皇帝，洪武之治，明朝开国",
+      "difficulty": "medium",
+      "tags": ["明朝", "开国", "洪武", "中等"]
+    },
+    {
+      "id": "guangxu",
+      "name": "光绪帝",
+      "description": "戊戌变法，甲午战败，清朝末路",
+      "difficulty": "hard",
+      "tags": ["清朝", "变法", "甲午", "困难"]
+    },
+    {
+      "id": "jin_wudi",
+      "name": "晋武帝",
+      "description": "结束三国分裂，太康之治，晋朝开国",
+      "difficulty": "medium",
+      "tags": ["西晋", "开国", "统一", "中等"]
+    },
+    {
+      "id": "zhou_shizong",
+      "name": "周世宗",
+      "description": "后周明君，雄才大略，英年早逝",
+      "difficulty": "medium",
+      "tags": ["五代", "明君", "英年早逝", "中等"]
+    },
+    {
+      "id": "yuan_shizu",
+      "name": "元世祖",
+      "description": "建立元朝，统一中国，开创帝国",
+      "difficulty": "medium",
+      "tags": ["元朝", "开国", "统一", "中等"]
     }
   ],
   "total": 30,
   "difficultyDistribution": {
-    "easy": 4,
-    "medium": 15,
-    "hard": 11
+    "easy": 2,
+    "medium": 18,
+    "hard": 10
   },
-  "dynasties": ["秦", "西汉", "东汉", "三国", "隋", "唐", "北宋", "南宋", "元", "明", "清"]
+  "dynasties": ["秦", "西汉", "东汉", "三国", "西晋", "隋", "唐", "五代", "宋", "元", "明", "清", "蒙古", "西楚"]
 }
