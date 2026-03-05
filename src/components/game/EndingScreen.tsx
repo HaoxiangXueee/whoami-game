@@ -6,8 +6,8 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import { EndingCard } from './EndingCard';
-import type { EndingType } from '@types/game';
-import type { GameStats } from '@types/game';
+import type { EndingType } from '@/types/game';
+import type { GameStats } from '@/types/game';
 
 interface EndingScreenProps {
   type: EndingType;

@@ -5,7 +5,7 @@
  * 地点：北京紫禁城养心殿
  */
 
-import type { ScenarioConfig } from '@types/game';
+import type { ScenarioConfig } from '@/types/game';
 
 export const xuantongScenario: ScenarioConfig = {
   id: 'xuantong',
@@ -76,7 +76,7 @@ NPC台词必须遵循：
 - 绝不直接说出"溥仪"、"清朝"、"孙中山"
 - 用"南方党人"、"革命党"代替革命派
 - 用"陛下"、"皇上"称呼皇帝，不说真名
-- 用"袁大人"、"总理大臣"指代袁世凯',
+- 用"袁大人"、"总理大臣"指代袁世凯`,
 
   // 胜利条件
   winConditions: [

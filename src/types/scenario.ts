@@ -3,7 +3,25 @@
  * 支持JSON动态加载的剧本配置
  */
 
-import type { EndingType } from './game';
+/**
+ * 结局类型
+ */
+export type EndingType =
+  | 'win_correct_answer'
+  | 'neutral_escape'
+  | 'lose_wrong_answer'
+  | 'lose_exposed'
+  | 'lose_overthrown'
+  | 'special_hidden'
+  | 'lose_coup'
+  | 'lose_imposter'
+  | 'win_parallel'
+  | 'lose_timeout'
+  | 'win_escape'
+  | 'win_surrender'
+  | 'lose_assassinated'
+  | 'lose_suicide';
+
 
 /**
  * 剧本NPC配置
@@ -16,6 +34,7 @@ export interface ScenarioNPC {
   personality: string;
   attitude: 'loyal' | 'neutral' | 'hostile';
   introduction: string;
+  avatar?: string;
 }
 
 /**
@@ -51,13 +70,6 @@ export interface InitialStats {
   suspicion: number;
 }
 
-/**
- * 胜利/失败条件
- */
-export interface WinLoseConditions {
-  winConditions: string[];
-  loseConditions: string[];
-}
 
 /**
  * 剧本配置 - JSON可序列化格式
@@ -86,19 +98,14 @@ export interface ScenarioConfig {
   // 背景故事（给LLM看的完整背景）
   background: string;
 
-  // 给玩家看的开场白
-  playerIntro: string;
+  // 给玩家看的开场白（可选，通过 getScenarioIntro 获取）
+  playerIntro?: string;
 
-  // 胜利/失败条件
-  winLoseConditions: WinLoseConditions;
+  // 胜利条件
+  winConditions: string[];
 
-  // 元数据
-  metadata: {
-    author: string;
-    createdAt: string;
-    updatedAt: string;
-    tags: string[];
-  };
+  // 失败条件
+  loseConditions: string[];
 }
 
 /**

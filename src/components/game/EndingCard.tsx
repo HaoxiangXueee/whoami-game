@@ -118,6 +118,22 @@ const endingConfig: Record<EndingType, {
     borderColor: 'border-purple-500',
     shadowColor: 'shadow-purple-600/50',
   },
+  lose_overthrown: {
+    label: '推翻结局',
+    theme: 'red',
+    icon: '🏚️',
+    gradient: 'from-red-600 via-red-500 to-rose-600',
+    borderColor: 'border-red-500',
+    shadowColor: 'shadow-red-600/50',
+  },
+  special_hidden: {
+    label: '隐藏结局',
+    theme: 'purple',
+    icon: '🌟',
+    gradient: 'from-violet-600 via-purple-500 to-fuchsia-600',
+    borderColor: 'border-violet-500',
+    shadowColor: 'shadow-violet-600/50',
+  },
 };
 
 export function EndingCard({ type, title, summary, className = '' }: EndingCardProps) {

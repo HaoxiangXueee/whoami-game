@@ -3,7 +3,7 @@
  * 显示所有可用剧本卡片，供玩家选择
  */
 
-import type { ScenarioConfig } from '@types/game';
+import type { ScenarioConfig } from '@/types/game';
 
 interface ScenarioSelectProps {
   scenarios: ScenarioConfig[];

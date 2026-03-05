@@ -5,7 +5,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import type { AnswerState, AnswerValidationResult } from '@types/game';
+import type { AnswerState, AnswerValidationResult } from '@/types/game';
 
 interface QuestionAnswerPanelProps {
   answerState: AnswerState;

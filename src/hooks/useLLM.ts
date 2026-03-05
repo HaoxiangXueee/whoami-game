@@ -10,7 +10,7 @@ import type {
   GameLLMResponse,
   GameContext,
 } from '@services/llm/types';
-import type { ScenarioConfig, ChatMessage } from '@types/game';
+import type { ScenarioConfig, ChatMessage } from '@/types/game';
 
 interface UseLLMOptions {
   scenario: ScenarioConfig | null;

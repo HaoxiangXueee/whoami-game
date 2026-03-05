@@ -7,7 +7,7 @@ import type {
   GameEnding,
   GameStats,
   ScenarioConfig,
-} from '@types/game';
+} from '@/types/game';
 
 // ============================================
 // Game Store

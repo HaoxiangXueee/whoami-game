@@ -5,7 +5,7 @@
  * 地点：华清宫
  */
 
-import type { ScenarioConfig } from '@types/game';
+import type { ScenarioConfig } from '@/types/game';
 
 export const tangxuanzongScenario: ScenarioConfig = {
   id: 'tangxuanzong',

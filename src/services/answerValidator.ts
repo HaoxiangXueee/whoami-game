@@ -94,8 +94,10 @@ export async function validateAnswerWithAI(
           content: prompt,
         },
       ],
-      temperature: 0.1, // 低温度以获得更确定性的结果
-      maxTokens: 500,
+      config: {
+        temperature: 0.1, // 低温度以获得更确定性的结果
+        maxTokens: 500,
+      },
     });
 
     // 解析JSON响应

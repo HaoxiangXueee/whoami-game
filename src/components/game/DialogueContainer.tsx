@@ -4,8 +4,8 @@
  */
 
 import { useRef, useEffect } from 'react';
-import type { ChatMessage, ScenarioConfig } from '@types/game';
-import { DialogueBubble, NPCBubble, PlayerBubble, SystemBubble } from './DialogueBubble';
+import type { ChatMessage, ScenarioConfig } from '@/types/game';
+import { NPCBubble, PlayerBubble, SystemBubble } from './DialogueBubble';
 
 interface DialogueContainerProps {
   messages: ChatMessage[];

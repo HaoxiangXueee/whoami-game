@@ -12,16 +12,14 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { useGameStore } from '@stores/gameStore';
 import { useLLM } from '@hooks/useLLM';
-import { useScenarios } from '@hooks/useScenarios';
 import { RandomScenarioLoader } from '@components/game/RandomScenarioLoader';
 import { DialogueContainer } from '@components/game/DialogueContainer';
 import { PlayerInput } from '@components/game/PlayerInput';
 import { StatChangeAnimation } from '@components/game/StatChangeAnimation';
 import { EndingScreen } from '@components/game/EndingScreen';
 import { QuestionAnswerPanel } from '@components/game/QuestionAnswerPanel';
-import type { ChatMessage, ScenarioConfig, AnswerValidationResult, AnswerState } from '@types/game';
+import type { ChatMessage, ScenarioConfig, AnswerValidationResult, AnswerState } from '@/types/game';
 import { getScenarioIntro } from '@config/scenarios';
-import { validateAnswerWithAI } from '@services/answerValidator';
 
 function App() {
   const {
@@ -45,7 +43,6 @@ function App() {
     submitAnswer,
     setAnsweringQuestions,
     setAnswerCorrect,
-    incrementAnswerAttempt,
   } = useGameStore();
 
   // v1.1: 控制穿越动画显示
@@ -100,94 +97,6 @@ function App() {
     console.log(`[App] 提交${type === 'emperor' ? '皇帝' : '朝代'}答案:`, answer);
     submitAnswer(type, answer);
   }, [submitAnswer]);
-
-  // 皇帝答案别名映射（支持多种正确答案）
-  const emperorAliasMap: Record<string, string[]> = {
-    // 明朝
-    '朱由检': ['崇祯', '崇祯帝', '明思宗', '思宗', '庄烈帝', '怀宗'],
-    '朱元璋': ['太祖', '明太祖', '洪武', '洪武帝'],
-    '朱棣': ['明成祖', '成祖', '永乐', '永乐帝', '太宗'],
-    '朱允炆': ['建文', '建文帝', '惠帝'],
-    '朱祁镇': ['英宗', '明英宗', '正统', '天顺'],
-    '朱祁钰': ['景泰', '景泰帝', '代宗'],
-    '朱厚熜': ['嘉靖', '嘉靖帝', '世宗'],
-    '朱载坖': ['隆庆', '隆庆帝', '穆宗'],
-    '朱翊钧': ['万历', '万历帝', '神宗'],
-    '朱常洛': ['泰昌', '泰昌帝', '光宗'],
-    '朱由校': ['天启', '天启帝', '熹宗'],
-    // 秦朝
-    '嬴政': ['秦始皇', '始皇', '秦王', '赵政'],
-    '胡亥': ['秦二世', '二世', '嬴胡亥'],
-    // 汉朝
-    '刘邦': ['汉高祖', '高祖', '汉太祖', '沛公'],
-    '刘彻': ['汉武帝', '武帝', '世宗'],
-    '刘秀': ['汉光武帝', '光武帝', '世祖', '汉世祖'],
-    '刘备': ['昭烈帝', '先主', '汉中王'],
-    '刘禅': ['后主', '安乐公'],
-    '刘协': ['汉献帝', '献帝', '山阳公'],
-    // 三国
-    '曹操': ['魏武帝', '武帝', '曹孟德'],
-    '曹丕': ['魏文帝', '文帝'],
-    '孙权': ['吴大帝', '大帝', '大皇帝'],
-    '孙策': ['长沙桓王', '伯符'],
-    // 晋朝
-    '司马炎': ['晋武帝', '武帝'],
-    '司马睿': ['晋元帝', '元帝'],
-    // 隋朝
-    '杨坚': ['隋文帝', '文帝', '隋高祖'],
-    '杨广': ['隋炀帝', '炀帝'],
-    // 唐朝
-    '李渊': ['唐高祖', '高祖'],
-    '李世民': ['唐太宗', '太宗', '秦王'],
-    '李治': ['唐高宗', '高宗'],
-    '武则天': ['则天皇后', '武后', '女皇'],
-    '李隆基': ['唐玄宗', '玄宗', '唐明皇'],
-    '李适': ['唐德宗', '德宗'],
-    '李纯': ['唐宪宗', '宪宗'],
-    '李晔': ['唐昭宗', '昭宗'],
-    // 宋朝
-    '赵匡胤': ['宋太祖', '太祖'],
-    '赵光义': ['宋太宗', '太宗', '赵匡义'],
-    '赵恒': ['宋真宗', '真宗'],
-    '赵祯': ['宋仁宗', '仁宗'],
-    '赵顼': ['宋神宗', '神宗'],
-    '赵煦': ['宋哲宗', '哲宗'],
-    '赵佶': ['宋徽宗', '徽宗'],
-    '赵构': ['宋高宗', '高宗'],
-    '赵昚': ['宋孝宗', '孝宗'],
-    '赵扩': ['宋宁宗', '宁宗'],
-    // 元朝
-    '忽必烈': ['元世祖', '世祖'],
-    '铁穆耳': ['元成宗', '成宗'],
-    // 清朝
-    '皇太极': ['清太宗', '太宗'],
-    '福临': ['顺治', '顺治帝', '清世祖'],
-    '玄烨': ['康熙', '康熙帝', '清圣祖'],
-    '胤禛': ['雍正', '雍正帝', '清世宗'],
-    '弘历': ['乾隆', '乾隆帝', '清高宗'],
-    '颙琰': ['嘉庆', '嘉庆帝', '清仁宗'],
-    '旻宁': ['道光', '道光帝', '清宣宗'],
-    '奕詝': ['咸丰', '咸丰帝', '清文宗'],
-    '载淳': ['同治', '同治帝', '清穆宗'],
-    '载湉': ['光绪', '光绪帝', '清德宗'],
-    '溥仪': ['宣统', '宣统帝', '清逊帝'],
-  };
-
-  // 朝代答案别名映射
-  const dynastyAliasMap: Record<string, string[]> = {
-    '秦': ['秦朝', '大秦', '秦代'],
-    '汉': ['汉朝', '大汉', '西汉', '东汉', '汉代'],
-    '三国': ['三国时期', '三国时代'],
-    '晋': ['晋朝', '西晋', '东晋', '晋代'],
-    '南北朝': ['南北朝时期'],
-    '隋': ['隋朝', '隋代', '大隋'],
-    '唐': ['唐朝', '大唐', '唐代'],
-    '五代': ['五代十国', '五代时期'],
-    '宋': ['宋朝', '大宋', '北宋', '南宋', '宋代'],
-    '元': ['元朝', '大元', '元代', '蒙古'],
-    '明': ['明朝', '大明', '明代'],
-    '清': ['清朝', '大清', '清代', '满清'],
-  };
 
   // 统一使用AI验证答案
   const validateAnswer = useCallback(async (

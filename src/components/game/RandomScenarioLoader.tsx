@@ -2,14 +2,14 @@
  * RandomScenarioLoader - 随机剧本加载器
  *
  * v2.0 核心组件：实现随机分配剧本，隐藏身份信息
- * - 使用 useScenarios hook 从 JSON 动态加载剧本
- * - 支持剧本缓存和预加载
+ * - 直接从 @config/scenarios 导入剧本列表
+ * - 支持随机选择剧本
  * - 替代原有的 ScenarioSelect 组件，确保玩家不知道自己是谁
  */
 
-import { useEffect, useState, useCallback } from 'react';
-import { useScenarios } from '@hooks/useScenarios';
-import type { ScenarioConfig } from '@types/scenario';
+import { useEffect, useState } from 'react';
+import { scenarios } from '@config/scenarios';
+import type { ScenarioConfig } from '@/types/game';
 
 /**
  * 组件 Props
@@ -48,27 +48,17 @@ export function RandomScenarioLoader({ onComplete }: RandomScenarioLoaderProps) 
   const [currentStep, setCurrentStep] = useState<LoadingStep>('initializing');
   const [displayText, setDisplayText] = useState('');
   const [showGlitch, setShowGlitch] = useState(false);
-
-  // v2.0: 使用 useScenarios hook 从 JSON 动态加载剧本
-  const {
-    index,
-    getRandomScenario,
-    loadIndex,
-    isLoadingIndex,
-    error,
-  } = useScenarios({
-    enablePreload: true,
-    preloadCount: 3,
-  });
+  const [selectedScenario, setSelectedScenario] = useState<ScenarioConfig | null>(null);
 
   /**
-   * 初始化：加载剧本索引
+   * 随机选择剧本
    */
   useEffect(() => {
-    if (!index && !isLoadingIndex && currentStep === 'initializing') {
-      loadIndex().catch(console.error);
+    if (scenarios.length > 0 && !selectedScenario) {
+      const randomIndex = Math.floor(Math.random() * scenarios.length);
+      setSelectedScenario(scenarios[randomIndex]);
     }
-  }, [index, isLoadingIndex, currentStep, loadIndex]);
+  }, [selectedScenario]);
 
   /**
    * 打字机效果
@@ -105,26 +95,12 @@ export function RandomScenarioLoader({ onComplete }: RandomScenarioLoaderProps) 
     const currentIndex = stepOrder.indexOf(currentStep);
 
     if (currentStep === 'complete') {
-      // v2.0: 使用 getRandomScenario 从 JSON 加载随机剧本
-      const loadRandomScenario = async () => {
-        try {
-          const scenario = await getRandomScenario();
-          if (scenario) {
-            // 短暂延迟后通过回调传出选中的剧本
-            setTimeout(() => {
-              onComplete(scenario);
-            }, 800);
-          } else if (error) {
-            // 加载失败时的回退逻辑
-            console.error('[RandomScenarioLoader] 加载剧本失败:', error);
-            // 可以在这里添加错误提示或重试逻辑
-          }
-        } catch (err) {
-          console.error('[RandomScenarioLoader] 加载剧本异常:', err);
-        }
-      };
-
-      loadRandomScenario();
+      if (selectedScenario) {
+        // 短暂延迟后通过回调传出选中的剧本
+        setTimeout(() => {
+          onComplete(selectedScenario);
+        }, 800);
+      }
       return;
     }
 
@@ -143,65 +119,9 @@ export function RandomScenarioLoader({ onComplete }: RandomScenarioLoaderProps) 
     }, delay);
 
     return () => clearTimeout(timer);
-  }, [currentStep, onComplete, getRandomScenario, error]);
+  }, [currentStep, onComplete, selectedScenario]);
 
   const progress = stepProgress[currentStep];
-
-  // 错误状态显示
-  if (error && currentStep === 'complete') {
-    return (
-      <div className="random-scenario-loader">
-        <div className="loader-container">
-          <div className="loader-background">
-            <div className="loader-noise"></div>
-            <div className="loader-vignette"></div>
-          </div>
-          <div className="loader-content">
-            <h1 className="loader-title text-red-400">
-              <span className="title-icon">⚠️</span>
-              时空连接失败
-            </h1>
-            <p className="text-slate-300 mt-4 mb-6">{error}</p>
-            <button
-              onClick={() => {
-                clearError?.();
-                loadIndex();
-                setCurrentStep('initializing');
-              }}
-              className="px-6 py-3 bg-amber-600 hover:bg-amber-500 text-white rounded-lg font-bold transition-colors"
-            >
-              重试连接
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // 初始加载状态
-  if (isLoadingIndex && currentStep === 'initializing') {
-    return (
-      <div className="random-scenario-loader">
-        <div className="loader-container">
-          <div className="loader-background">
-            <div className="loader-noise"></div>
-            <div className="loader-vignette"></div>
-          </div>
-          <div className="loader-content">
-            <h1 className="loader-title">
-              <span className="title-icon">📡</span>
-              连接时空网络...
-            </h1>
-            <div className="loader-progress-container mt-8">
-              <div className="loader-progress-bar">
-                <div className="loader-progress-fill animate-pulse" style={{ width: '50%' }} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="random-scenario-loader">

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import type { GameState, GameStats, ScenarioConfig, ChatMessage, GameEnding, AnswerState } from '@types/game';
+import type { GameState, GameStats, ScenarioConfig, ChatMessage, EndingInfo, AnswerState } from '@/types/game';
 
 const initialStats: GameStats = {
   authority: 50,
@@ -43,7 +43,7 @@ interface GameStore extends GameState {
   setStats: (stats: GameStats) => void;
   nextTurn: () => void;
   setMaxTurns: (turns: number) => void;
-  setEnding: (ending: GameEnding) => void;
+  setEnding: (ending: EndingInfo | null) => void;
   setLoading: (isLoading: boolean) => void;
   setError: (error: string | null) => void;
   // 答案相关方法
@@ -168,10 +168,12 @@ export const useGameStore = create<GameStore>()(
       });
     },
 
-    setEnding: (ending: GameEnding) => {
+    setEnding: (ending: EndingInfo | null) => {
       set((state) => {
         state.ending = ending;
-        state.status = 'game_over';
+        if (ending) {
+          state.status = 'game_over';
+        }
       });
     },
 

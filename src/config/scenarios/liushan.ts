@@ -5,7 +5,7 @@
  * 地点：成都皇宫
  */
 
-import type { ScenarioConfig } from '@types/game';
+import type { ScenarioConfig } from '@/types/game';
 
 export const liushanScenario: ScenarioConfig = {
   id: 'liushan',

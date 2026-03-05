@@ -3,7 +3,7 @@
  */
 
 import { ENDING_TYPES, GAME_CONSTANTS } from '@config/constants';
-import type { GameStats, GameEnding, EndingType } from '@types/game';
+import type { GameStats, GameEnding, EndingType } from '@/types/game';
 
 /**
  * 检查游戏是否结束
@@ -93,6 +93,26 @@ export function generateEnding(
       title: '逃离宫廷',
       summary: '你成功逃离了宫廷，隐姓埋名过上了平凡的生活。',
       epilogue: '史书记载：「帝失踪，不知所终。」有传言说你在民间过着普通人的生活。',
+    },
+    win_correct_answer: {
+      title: '真相大白',
+      summary: '你成功找回了自己的身份！通过对朝臣们的巧妙试探和对局势的敏锐判断，你终于确认了自己的真实身份。',
+      epilogue: '你的智慧和耐心帮助你度过了这场危机，现在你终于可以以真实的身份治理天下了。',
+    },
+    lose_wrong_answer: {
+      title: '身份迷失',
+      summary: '你没有正确回答出任何一个问题。你的记忆混乱到了极点，连最基本的自我认知都无法保持。',
+      epilogue: '朝臣们对你的怀疑越来越深，你的处境变得越来越危险...最终，你被当作冒名顶替者处理。',
+    },
+    lose_overthrown: {
+      title: '被推翻',
+      summary: '你被权臣推翻，失去了帝位。',
+      epilogue: '史书记载：「帝失德，权臣废之，另立新君。」你的统治就此结束。',
+    },
+    special_hidden: {
+      title: '隐藏结局',
+      summary: '你发现了一个隐藏的秘密，开启了一段不为人知的故事。',
+      epilogue: '这段历史被尘封在档案深处，只有少数人知道真相...',
     },
   };
 

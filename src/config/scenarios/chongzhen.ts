@@ -5,7 +5,7 @@
  * 地点：北京紫禁城乾清宫
  */
 
-import type { ScenarioConfig } from '@types/game';
+import type { ScenarioConfig } from '@/types/game';
 
 export const chongzhenScenario: ScenarioConfig = {
   id: 'chongzhen',

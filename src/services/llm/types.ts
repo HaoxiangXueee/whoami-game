@@ -2,8 +2,8 @@
  * LLM服务类型定义
  */
 
-import type { GameStats, ScenarioConfig, ChatMessage, EndingType } from '@types/game';
-export type { EndingType } from '@types/game';
+import type { GameStats, ScenarioConfig, ChatMessage, EndingType } from '@/types/game';
+export type { EndingType } from '@/types/game';
 
 // LLM提供商类型
 export type LLMProviderType = 'anthropic' | 'openai' | 'gemini' | 'volcano' | 'zhipu' | 'kimi';
@@ -56,7 +56,7 @@ export interface GameLLMResponse {
   ending_summary: string | null; // 结局总结
 }
 
-// EndingType is now re-exported from '@types/game'
+// EndingType is now re-exported from '@/types/game'
 
 // 游戏上下文
 export interface GameContext {

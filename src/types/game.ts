@@ -14,7 +14,7 @@ export type ScenarioConfig = ScenarioConfigFromScenario;
 /**
  * 游戏状态
  */
-export type GameStatus = 'start_menu' | 'playing' | 'game_over' | 'paused';
+export type GameStatus = 'start_menu' | 'playing' | 'game_over' | 'paused' | 'loading';
 
 /**
  * 游戏数值
@@ -39,6 +39,11 @@ export interface EmperorInfo {
   dynasty: string;
   /** 完整身份描述 */
   realIdentity: string;
+  /**
+   * 历史事件描述（用于第二题问答）
+   * 例如："崇祯煤山自缢"、"李自成攻破北京"等
+   */
+  historicalEvent?: string;
 }
 
 /**
@@ -52,12 +57,16 @@ export interface NPCInfo {
   name: string;
   /** NPC职位 */
   title: string;
+  /** NPC描述 */
+  description: string;
   /** 性格描述 */
   personality: string;
   /** 对玩家态度 */
   attitude: 'loyal' | 'neutral' | 'hostile';
   /** 开场白 */
   introduction: string;
+  /** NPC头像（可选） */
+  avatar?: string;
 }
 
 /**
@@ -104,7 +113,25 @@ export type EndingType =
   | 'lose_wrong_answer'
   | 'lose_exposed'
   | 'lose_overthrown'
-  | 'special_hidden';
+  | 'special_hidden'
+  | 'lose_coup'
+  | 'lose_imposter'
+  | 'win_parallel'
+  | 'lose_timeout'
+  | 'win_escape'
+  | 'win_surrender'
+  | 'lose_assassinated'
+  | 'lose_suicide';
+
+/**
+ * 游戏结局（兼容旧代码）
+ */
+export interface GameEnding {
+  type: EndingType;
+  title: string;
+  summary: string;
+  epilogue?: string;
+}
 
 /**
  * 结局信息
@@ -170,20 +197,10 @@ export interface GameState {
   // 结局
   ending: EndingInfo | null;
 
+  // 错误
+  error: string | null;
+
   // 答题状态
   answerState: AnswerState;
   isAnsweringQuestions: boolean;
-
-  // 操作方法
-  resetGame: () => void;
-  setScenario: (scenario: ScenarioConfig) => void;
-  addMessage: (message: ChatMessage) => void;
-  setLoading: (loading: boolean) => void;
-  updateStats: (changes: Partial<GameStats>) => void;
-  nextTurn: () => void;
-  setEnding: (ending: EndingInfo | null) => void;
-  submitAnswer: (type: 'emperor' | 'dynasty', answer: string) => void;
-  setAnsweringQuestions: (isAnswering: boolean) => void;
-  setAnswerCorrect: (type: 'emperor' | 'dynasty', isCorrect: boolean) => void;
-  incrementAnswerAttempt: (type: 'emperor' | 'dynasty') => void;
 }

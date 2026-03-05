@@ -6,7 +6,7 @@
 export * from './llm';
 
 // 剧本加载服务
-export { ScenarioLoader, scenarioLoader } from './ScenarioLoader';
+export { scenarioLoader } from './ScenarioLoader';
 
 // 存储服务将在后续实现
 // export * from './storage';

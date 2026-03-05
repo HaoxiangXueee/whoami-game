@@ -3,7 +3,7 @@
  * 显示NPC对话和玩家回复
  */
 
-import type { ChatMessage } from '@types/game';
+import type { ChatMessage } from '@/types/game';
 
 interface DialogueBubbleProps {
   message: ChatMessage;

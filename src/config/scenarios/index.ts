@@ -6,7 +6,7 @@ import { chongzhenScenario, chongzhenPlayerIntro } from './chongzhen';
 import { liushanScenario, liushanPlayerIntro } from './liushan';
 import { tangxuanzongScenario, tangxuanzongPlayerIntro } from './tangxuanzong';
 import { xuantongScenario, xuantongPlayerIntro } from './xuantong';
-import type { ScenarioConfig } from '@types/game';
+import type { ScenarioConfig } from '@/types/game';
 
 // 导出所有剧本
 export { chongzhenScenario, chongzhenPlayerIntro } from './chongzhen';
