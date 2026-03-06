@@ -29,6 +29,7 @@ function App() {
     isLoading,
     currentTurn,
     maxTurns,
+    currentNpcIndex,
     ending,
     answerState,
     isAnsweringQuestions,
@@ -56,6 +57,7 @@ function App() {
     chatHistory,
     currentTurn,
     maxTurns,
+    currentNpcIndex,
   });
 
   // 初始化LLM服务
@@ -259,21 +261,23 @@ function App() {
 
     addMessage(openingMessage);
 
-    // 延迟发送第一个 NPC 问候
-    const firstNPC = scenario.npcs[0];
-    if (firstNPC) {
-      setTimeout(() => {
-        const introMessage: ChatMessage = {
-          id: `npc_${Date.now()}`,
-          role: 'assistant',
-          content: firstNPC.introduction || '陛下，臣有要事禀报。',
-          timestamp: Date.now(),
-          type: 'dialogue',
-          npcId: firstNPC.id,
-          npcName: firstNPC.name,
-        };
-        addMessage(introMessage);
-      }, 1500);
+    // 延迟发送第一个 NPC 问候（使用当前NPC索引）
+    if (scenario.npcs && scenario.npcs.length > 0) {
+      const currentNPC = scenario.npcs[currentNpcIndex % scenario.npcs.length];
+      if (currentNPC) {
+        setTimeout(() => {
+          const introMessage: ChatMessage = {
+            id: `npc_${Date.now()}`,
+            role: 'assistant',
+            content: currentNPC.introduction || '陛下，臣有要事禀报。',
+            timestamp: Date.now(),
+            type: 'dialogue',
+            npcId: currentNPC.id,
+            npcName: currentNPC.name,
+          };
+          addMessage(introMessage);
+        }, 1500);
+      }
     }
   }, [setScenario, addMessage]);
 
@@ -298,14 +302,16 @@ function App() {
       console.error('[App] LLM服务未初始化');
       // 使用模拟响应作为回退
       setTimeout(() => {
+        const npcIndex = currentNpcIndex % (currentScenario.npcs?.length || 1);
+        const currentNPC = currentScenario.npcs?.[npcIndex];
         const npcMessage: ChatMessage = {
           id: `npc_${Date.now()}`,
           role: 'assistant',
           content: '陛下恕罪，老臣身体不适，请容老臣稍作歇息...',
           timestamp: Date.now(),
           type: 'dialogue',
-          npcId: currentScenario.npcs[0]?.id,
-          npcName: currentScenario.npcs[0]?.name,
+          npcId: currentNPC?.id,
+          npcName: currentNPC?.name,
         };
         addMessage(npcMessage);
         setLoading(false);
@@ -352,16 +358,18 @@ function App() {
           addMessage(dmMessage);
         }
 
-        // 添加NPC回复
+        // 添加NPC回复（使用当前NPC）
         if (response.npc_dialogue) {
+          const npcIndex = currentNpcIndex % (currentScenario.npcs?.length || 1);
+          const currentNPC = currentScenario.npcs?.[npcIndex];
           const npcMessage: ChatMessage = {
             id: `npc_${Date.now()}`,
             role: 'assistant',
             content: response.npc_dialogue,
             timestamp: Date.now(),
             type: 'dialogue',
-            npcId: currentScenario.npcs[0]?.id,
-            npcName: currentScenario.npcs[0]?.name,
+            npcId: currentNPC?.id,
+            npcName: currentNPC?.name,
           };
           addMessage(npcMessage);
         }
@@ -419,25 +427,6 @@ function App() {
           登基为帝
         </button>
 
-        {/* 次要按钮组 */}
-        <div className="grid grid-cols-2 gap-2 sm:gap-3">
-          <button
-            onClick={() => {}}
-            className="py-3 px-3 sm:px-4 bg-slate-700 hover:bg-slate-600 text-slate-200 font-medium rounded-lg border border-slate-600 transition-all duration-300 flex items-center justify-center gap-1.5 sm:gap-2 text-sm"
-          >
-            <span>📊</span>
-            <span className="hidden sm:inline">游戏统计</span>
-            <span className="sm:hidden">统计</span>
-          </button>
-          <button
-            onClick={() => {}}
-            className="py-3 px-3 sm:px-4 bg-slate-700 hover:bg-slate-600 text-slate-200 font-medium rounded-lg border border-slate-600 transition-all duration-300 flex items-center justify-center gap-1.5 sm:gap-2 text-sm"
-          >
-            <span>⚙️</span>
-            <span className="hidden sm:inline">游戏设置</span>
-            <span className="sm:hidden">设置</span>
-          </button>
-        </div>
       </div>
 
       {/* 页脚 */}
@@ -528,7 +517,7 @@ function App() {
             <span className="text-amber-400 font-bold text-sm sm:text-base">{currentTurn}/{maxTurns}</span>
           </div>
 
-          {/* 回答问题按钮 - 只在桌面端显示，移动端放到底部 */}
+          {/* 回答问题按钮 - 桌面端显示 */}
           {(answerState.emperorCorrect !== true || answerState.dynastyCorrect !== true) && (
             <button
               onClick={() => setAnsweringQuestions(true)}
@@ -585,29 +574,30 @@ function App() {
           isLoading={isLoading}
         />
 
+        {/* 移动端浮动答题按钮 - 只在移动端显示 */}
+        {(answerState.emperorCorrect !== true || answerState.dynastyCorrect !== true) && (
+          <button
+            onClick={() => setAnsweringQuestions(true)}
+            className="sm:hidden fixed right-4 bottom-28 z-40 flex items-center justify-center w-14 h-14 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white rounded-full shadow-lg shadow-amber-600/40 transition-all duration-300 border-2 border-amber-400"
+          >
+            <div className="text-center">
+              <span className="text-lg">❓</span>
+              <span className="text-xs font-bold block leading-tight">
+                {[answerState.emperorCorrect, answerState.dynastyCorrect].filter(Boolean).length}/2
+              </span>
+            </div>
+          </button>
+        )}
+
         {/* 输入区域 - 回合耗尽且未答对所有问题时禁用 */}
         {shouldForceAnswer ? (
-          <div style={{
-            padding: '15px',
-            textAlign: 'center',
-            backgroundColor: '#2a2a2a',
-            borderTop: '1px solid #444',
-            color: '#d4a574'
-          }}>
-            <p style={{margin: '0 0 10px 0', fontWeight: 'bold'}}>
+          <div className="p-4 text-center bg-slate-800 border-t border-slate-700 text-amber-300 shrink-0">
+            <p className="mb-3 font-bold">
               ⚠️ 回合已耗尽，请先回答问题！
             </p>
             <button
               onClick={() => setAnsweringQuestions(true)}
-              style={{
-                padding: '8px 20px',
-                backgroundColor: '#d4a574',
-                color: '#2a2a2a',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontWeight: 'bold'
-              }}
+              className="px-5 py-2 bg-amber-300 text-slate-800 rounded font-bold hover:bg-amber-200 transition-colors"
             >
               立即回答问题
             </button>

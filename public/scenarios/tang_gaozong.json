@@ -72,6 +72,20 @@
       "做出明显违背历史常识的决定"
     ]
   },
+  "clues": {
+    "early": [
+      { "type": "location", "description": "关中", "hint": "大唐都城" },
+      { "type": "crisis", "description": "后宫纷争", "hint": "皇后之争" }
+    ],
+    "mid": [
+      { "type": "policy", "description": "永徽之治", "hint": "贞观遗风" },
+      { "type": "person", "description": "武则天", "hint": "武昭仪" }
+    ],
+    "late": [
+      { "type": "event", "description": "二圣临朝", "hint": "天后参政" },
+      { "type": "time", "description": "唐高宗", "hint": "守成之君" }
+    ]
+  },
   "metadata": {
     "author": "AI Game Studio",
     "createdAt": "2026-03-02T05:42:09.652Z",

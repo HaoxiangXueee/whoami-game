@@ -72,6 +72,20 @@
       "做出明显违背历史常识的决定"
     ]
   },
+  "clues": {
+    "early": [
+      { "type": "location", "description": "北方", "hint": "草原都城" },
+      { "type": "crisis", "description": "宗王纷争", "hint": "汗位之争" }
+    ],
+    "mid": [
+      { "type": "policy", "description": "行汉法", "hint": "汉化改革" },
+      { "type": "person", "description": "文天祥", "hint": "南宋忠臣" }
+    ],
+    "late": [
+      { "type": "event", "description": "灭南宋", "hint": "一统天下" },
+      { "type": "time", "description": "元世祖", "hint": "元朝开国" }
+    ]
+  },
   "metadata": {
     "author": "AI Game Studio",
     "createdAt": "2026-03-02T05:42:09.655Z",

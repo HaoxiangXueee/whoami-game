@@ -72,6 +72,20 @@
       "做出明显违背历史常识的决定"
     ]
   },
+  "clues": {
+    "early": [
+      { "type": "location", "description": "洛阳", "hint": "西晋都城" },
+      { "type": "crisis", "description": "三国归晋", "hint": "一统天下" }
+    ],
+    "mid": [
+      { "type": "policy", "description": "太康之治", "hint": "盛世开端" },
+      { "type": "person", "description": "司马衷", "hint": "太子愚钝" }
+    ],
+    "late": [
+      { "type": "event", "description": "八王之乱", "hint": "诸王之乱" },
+      { "type": "time", "description": "晋武帝", "hint": "西晋开国" }
+    ]
+  },
   "metadata": {
     "author": "AI Game Studio",
     "createdAt": "2026-03-02T05:42:09.654Z",

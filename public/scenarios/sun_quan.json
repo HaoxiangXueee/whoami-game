@@ -72,6 +72,20 @@
       "做出明显违背历史常识的决定"
     ]
   },
+  "clues": {
+    "early": [
+      { "type": "location", "description": "江东", "hint": "长江之畔" },
+      { "type": "crisis", "description": "北方强敌", "hint": "曹军南下" }
+    ],
+    "mid": [
+      { "type": "policy", "description": "三分天下", "hint": "联刘抗曹" },
+      { "type": "person", "description": "周瑜鲁肃", "hint": "江东才俊" }
+    ],
+    "late": [
+      { "type": "event", "description": "夺取荆州", "hint": "关羽之死" },
+      { "type": "time", "description": "大皇帝", "hint": "东吴开国" }
+    ]
+  },
   "metadata": {
     "author": "AI Game Studio",
     "createdAt": "2026-03-02T05:42:09.651Z",

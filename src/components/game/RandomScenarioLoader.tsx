@@ -223,13 +223,6 @@ export function RandomScenarioLoader({ onComplete }: RandomScenarioLoaderProps) 
             </button>
           )}
 
-          {/* 装饰元素 */}
-          <div className="loader-decorations">
-            <div className="decoration-ring ring-1"></div>
-            <div className="decoration-ring ring-2"></div>
-            <div className="decoration-ring ring-3"></div>
-          </div>
-
           {/* 提示文本 */}
           <p className="loader-hint">
             当你醒来时，你将不知道自己是谁...

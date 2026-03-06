@@ -72,6 +72,20 @@
       "做出明显违背历史常识的决定"
     ]
   },
+  "clues": {
+    "early": [
+      { "type": "location", "description": "关中京城", "hint": "汉唐古都" },
+      { "type": "crisis", "description": "北方边患", "hint": "胡骑南下" }
+    ],
+    "mid": [
+      { "type": "policy", "description": "和亲政策", "hint": "公主远嫁" },
+      { "type": "person", "description": "卫青霍去病", "hint": "名将出击" }
+    ],
+    "late": [
+      { "type": "event", "description": "封狼居胥", "hint": "漠北之战" },
+      { "type": "time", "description": "建元", "hint": "第一个年号" }
+    ]
+  },
   "metadata": {
     "author": "AI Game Studio",
     "createdAt": "2026-03-02T05:42:09.637Z",

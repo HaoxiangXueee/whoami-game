@@ -72,6 +72,20 @@
       "做出明显违背历史常识的决定"
     ]
   },
+  "clues": {
+    "early": [
+      { "type": "location", "description": "成都", "hint": "西南的京城" },
+      { "type": "crisis", "description": "北境有敌", "hint": "北方有战事" }
+    ],
+    "mid": [
+      { "type": "location", "description": "绵竹、剑阁", "hint": "险要关隘" },
+      { "type": "policy", "description": "北伐有争议", "hint": "连年征战" }
+    ],
+    "late": [
+      { "type": "event", "description": "降魏", "hint": "有降" },
+      { "type": "event", "description": "乐不思蜀", "hint": "此间乐" }
+    ]
+  },
   "metadata": {
     "author": "AI Game Studio",
     "createdAt": "2026-03-02T05:42:09.646Z",

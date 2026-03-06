@@ -72,6 +72,20 @@
       "做出明显违背历史常识的决定"
     ]
   },
+  "clues": {
+    "early": [
+      { "type": "location", "description": "江都", "hint": "扬州行宫" },
+      { "type": "crisis", "description": "修大运河", "hint": "劳民伤财" }
+    ],
+    "mid": [
+      { "type": "policy", "description": "三征高句丽", "hint": "辽东之战" },
+      { "type": "person", "description": "杨玄感", "hint": "起兵反隋" }
+    ],
+    "late": [
+      { "type": "event", "description": "江都之变", "hint": "骁果军叛" },
+      { "type": "time", "description": "隋朝灭亡", "hint": "二世而亡" }
+    ]
+  },
   "metadata": {
     "author": "AI Game Studio",
     "createdAt": "2026-03-02T05:42:09.647Z",

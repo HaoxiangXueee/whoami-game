@@ -72,6 +72,20 @@
       "做出明显违背历史常识的决定"
     ]
   },
+  "clues": {
+    "early": [
+      { "type": "location", "description": "紫禁城", "hint": "北京皇宫" },
+      { "type": "crisis", "description": "革命党起事", "hint": "南方有变" }
+    ],
+    "mid": [
+      { "type": "person", "description": "袁世凯", "hint": "袁大人" },
+      { "type": "policy", "description": "退位诏书", "hint": "逊位保命" }
+    ],
+    "late": [
+      { "type": "event", "description": "清朝终结", "hint": "民国建立" },
+      { "type": "time", "description": "宣统三年", "hint": "末代年号" }
+    ]
+  },
   "metadata": {
     "author": "AI Game Studio",
     "createdAt": "2026-03-02T05:42:09.649Z",

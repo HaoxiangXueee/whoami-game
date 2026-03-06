@@ -72,6 +72,20 @@
       "做出明显违背历史常识的决定"
     ]
   },
+  "clues": {
+    "early": [
+      { "type": "location", "description": "中原", "hint": "东都" },
+      { "type": "crisis", "description": "新旧交替", "hint": "人心未定" }
+    ],
+    "mid": [
+      { "type": "policy", "description": "酷吏政治", "hint": "告密成风" },
+      { "type": "person", "description": "太平公主", "hint": "爱女" }
+    ],
+    "late": [
+      { "type": "event", "description": "改唐为周", "hint": "新朝建立" },
+      { "type": "time", "description": "唯一女皇", "hint": "前无古人" }
+    ]
+  },
   "metadata": {
     "author": "AI Game Studio",
     "createdAt": "2026-03-02T05:42:09.640Z",

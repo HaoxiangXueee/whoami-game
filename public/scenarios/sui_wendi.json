@@ -72,6 +72,20 @@
       "做出明显违背历史常识的决定"
     ]
   },
+  "clues": {
+    "early": [
+      { "type": "location", "description": "大兴城", "hint": "隋都长安" },
+      { "type": "crisis", "description": "尉迟迥之乱", "hint": "北周旧臣" }
+    ],
+    "mid": [
+      { "type": "policy", "description": "开皇之治", "hint": "三省六部" },
+      { "type": "person", "description": "独孤皇后", "hint": "一夫一妻" }
+    ],
+    "late": [
+      { "type": "event", "description": "平陈之战", "hint": "一统天下" },
+      { "type": "time", "description": "隋朝开国", "hint": "代周建隋" }
+    ]
+  },
   "metadata": {
     "author": "AI Game Studio",
     "createdAt": "2026-03-02T05:42:09.652Z",

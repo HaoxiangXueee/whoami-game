@@ -72,6 +72,20 @@
       "做出明显违背历史常识的决定"
     ]
   },
+  "clues": {
+    "early": [
+      { "type": "location", "description": "中原", "hint": "北方都城" },
+      { "type": "crisis", "description": "武将势大", "hint": "五代余患" }
+    ],
+    "mid": [
+      { "type": "policy", "description": "重文轻武", "hint": "以文治国" },
+      { "type": "person", "description": "陈桥兵变", "hint": "黄袍加身" }
+    ],
+    "late": [
+      { "type": "event", "description": "杯酒释兵权", "hint": "酒宴夺权" },
+      { "type": "time", "description": "建隆", "hint": "开国年号" }
+    ]
+  },
   "metadata": {
     "author": "AI Game Studio",
     "createdAt": "2026-03-02T05:42:09.641Z",

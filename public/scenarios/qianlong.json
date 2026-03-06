@@ -28,7 +28,7 @@
       "description": "三朝元老，老成持重",
       "personality": "忠诚耿直，敢于直谏",
       "attitude": "loyal",
-      "introduction": "（一位身着朝服的老臣快步走入，神色忧虑）陛下！老臣有本奏！如今天下太平，但...但国库...近年来用度太大，六下江南、修书筑园...这花费...老臣以为，当节俭用度，与民休息啊！"
+      "introduction": "（一位身着朝服的老臣快步走入，神色忧虑）陛下！老臣有本奏！如今天下太平，但...但国库...近年来用度太大，各处巡幸、修书筑园...这花费...老臣以为，当节俭用度，与民休息啊！"
     },
     {
       "id": "npc_2",
@@ -70,6 +70,20 @@
       "威势值降至0（被政变废黜）",
       "暴露度达到100（被识破身份）",
       "做出明显违背历史常识的决定"
+    ]
+  },
+  "clues": {
+    "early": [
+      { "type": "location", "description": "江南", "hint": "南方水乡" },
+      { "type": "crisis", "description": "国库空虚", "hint": "用度浩大" }
+    ],
+    "mid": [
+      { "type": "policy", "description": "四库全书", "hint": "修书盛典" },
+      { "type": "event", "description": "六下江南", "hint": "多次巡幸" }
+    ],
+    "late": [
+      { "type": "person", "description": "十全老人", "hint": "十全武功" },
+      { "type": "time", "description": "康乾盛世", "hint": "盛世顶峰" }
     ]
   },
   "metadata": {

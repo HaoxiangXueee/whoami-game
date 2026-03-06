@@ -72,6 +72,20 @@
       "做出明显违背历史常识的决定"
     ]
   },
+  "clues": {
+    "early": [
+      { "type": "location", "description": "北方京城", "hint": "皇城巍巍" },
+      { "type": "crisis", "description": "外敌内乱", "hint": "江山飘摇" }
+    ],
+    "mid": [
+      { "type": "location", "description": "景山", "hint": "宫后的山丘" },
+      { "type": "policy", "description": "宦官专权", "hint": "厂卫纷争" }
+    ],
+    "late": [
+      { "type": "event", "description": "煤山自缢", "hint": "老槐树" },
+      { "type": "person", "description": "皇兄继位", "hint": "天启之后" }
+    ]
+  },
   "metadata": {
     "author": "AI Game Studio",
     "createdAt": "2026-03-02T05:42:09.648Z",

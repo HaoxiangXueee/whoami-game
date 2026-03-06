@@ -191,6 +191,9 @@ export interface GameState {
   currentTurn: number;
   maxTurns: number;
 
+  // NPC轮换
+  currentNpcIndex: number;
+
   // 游戏数值
   stats: GameStats;
 

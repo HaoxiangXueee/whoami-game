@@ -125,10 +125,20 @@ export class LLMService {
     // 添加上下文消息（最近的对话历史）
     const recentHistory = context.chatHistory.slice(-10); // 保留最近10条
     for (const msg of recentHistory) {
-      if (msg.role === 'user' || msg.role === 'assistant') {
+      if (msg.role === 'user') {
         messages.push({
           role: msg.role,
           content: msg.content,
+        });
+      } else if (msg.role === 'assistant') {
+        // 给NPC消息添加说话者身份标注
+        let annotatedContent = msg.content;
+        if (msg.npcName) {
+          annotatedContent = `[${msg.npcName}说] ${msg.content}`;
+        }
+        messages.push({
+          role: msg.role,
+          content: annotatedContent,
         });
       }
     }

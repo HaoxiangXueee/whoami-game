@@ -37,7 +37,7 @@
       "description": "智囊谋士，深谋远虑",
       "personality": "运筹帷幄，深谋远虑",
       "attitude": "neutral",
-      "introduction": "（一位文士打扮的人躬身行礼，神色从容）大汗！臣有一言。如今我们刚刚统一草原，人心未定。依臣之见，当对内安抚各部，对外遣使通商。至于西边...西边的花剌子模，财大气粗，可以先礼后兵啊。"
+      "introduction": "（一位文士打扮的人躬身行礼，神色从容）大汗！臣有一言。如今我们连年征战，人心未定。依臣之见，当对内安抚各部，对外遣使通商。至于西边...西边的花剌子模，财大气粗，可以先礼后兵啊。"
     },
     {
       "id": "npc_3",
@@ -70,6 +70,20 @@
       "威势值降至0（被政变废黜）",
       "暴露度达到100（被识破身份）",
       "做出明显违背历史常识的决定"
+    ]
+  },
+  "clues": {
+    "early": [
+      { "type": "location", "description": "斡难河", "hint": "草原之地" },
+      { "type": "crisis", "description": "统一草原", "hint": "各部相争" }
+    ],
+    "mid": [
+      { "type": "policy", "description": "千户制度", "hint": "军政合一" },
+      { "type": "person", "description": "铁木真", "hint": "草原之主" }
+    ],
+    "late": [
+      { "type": "event", "description": "西征花剌子模", "hint": "西方商队" },
+      { "type": "time", "description": "成吉思汗", "hint": "四海之王" }
     ]
   },
   "metadata": {

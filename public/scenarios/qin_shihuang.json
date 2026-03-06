@@ -72,6 +72,20 @@
       "做出明显违背历史常识的决定"
     ]
   },
+  "clues": {
+    "early": [
+      { "type": "location", "description": "咸阳", "hint": "关中都城" },
+      { "type": "crisis", "description": "六国旧部", "hint": "关东不安" }
+    ],
+    "mid": [
+      { "type": "policy", "description": "统一度量衡", "hint": "书同文车同轨" },
+      { "type": "event", "description": "焚书坑儒", "hint": "禁书烧书" }
+    ],
+    "late": [
+      { "type": "event", "description": "求仙问道", "hint": "长生不老" },
+      { "type": "person", "description": "始皇帝", "hint": "千古一帝" }
+    ]
+  },
   "metadata": {
     "author": "AI Game Studio",
     "createdAt": "2026-03-02T05:42:09.636Z",

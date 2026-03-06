@@ -17,6 +17,7 @@ interface UseLLMOptions {
   chatHistory: ChatMessage[];
   currentTurn: number;
   maxTurns: number;
+  currentNpcIndex?: number;
 }
 
 interface UseLLMReturn {
@@ -28,7 +29,7 @@ interface UseLLMReturn {
 }
 
 export function useLLM(options: UseLLMOptions): UseLLMReturn {
-  const { scenario, chatHistory, currentTurn, maxTurns } = options;
+  const { scenario, chatHistory, currentTurn, maxTurns, currentNpcIndex = 0 } = options;
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -93,12 +94,45 @@ export function useLLM(options: UseLLMOptions): UseLLMReturn {
         // 确保参数有默认值，避免 undefined
         const safeCurrentTurn = currentTurn ?? 1;
         const safeMaxTurns = maxTurns ?? 10;
+
+        // 获取当前NPC信息
+        let currentNpcInfo = undefined;
+        let previousNpcInfo = undefined;
+
+        if (scenario.npcs && scenario.npcs.length > 0) {
+          const npc = scenario.npcs[currentNpcIndex % scenario.npcs.length];
+          if (npc) {
+            currentNpcInfo = [
+              `姓名: ${npc.name}`,
+              `职位: ${npc.title}`,
+              `性格: ${npc.personality}`,
+              `对玩家态度: ${npc.attitude === 'loyal' ? '忠诚' : npc.attitude === 'hostile' ? '敌意' : '中立'}`,
+              `描述: ${npc.description}`,
+              `开场白风格参考: ${npc.introduction}`,
+            ].join('\\n');
+          }
+
+          // 获取上一回合NPC信息（如果不是第一回合）
+          if (safeCurrentTurn > 1 && scenario.npcs.length > 1) {
+            const prevNpcIndex = (currentNpcIndex - 1 + scenario.npcs.length) % scenario.npcs.length;
+            const prevNpc = scenario.npcs[prevNpcIndex];
+            if (prevNpc) {
+              previousNpcInfo = [
+                `职位: ${prevNpc.title}`,
+                `性格: ${prevNpc.personality}`,
+              ].join('\\n');
+            }
+          }
+        }
+
         const systemPrompt = generateSystemPrompt(
           scenario.background || '',
           safeCurrentTurn,
           safeMaxTurns,
           0, // authority 会在后续更新
-          0  // suspicion 会在后续更新
+          0,  // suspicion 会在后续更新
+          currentNpcInfo,
+          previousNpcInfo
         );
 
         const gameContext: GameContext = {

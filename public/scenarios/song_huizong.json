@@ -72,6 +72,20 @@
       "做出明显违背历史常识的决定"
     ]
   },
+  "clues": {
+    "early": [
+      { "type": "location", "description": "中原", "hint": "北方都城" },
+      { "type": "crisis", "description": "民不聊生", "hint": "赋税沉重" }
+    ],
+    "mid": [
+      { "type": "policy", "description": "书画皇帝", "hint": "瘦金体" },
+      { "type": "person", "description": "蔡京童贯", "hint": "六贼当道" }
+    ],
+    "late": [
+      { "type": "event", "description": "靖康之变", "hint": "金人南下" },
+      { "type": "time", "description": "北宋终结", "hint": "二帝北狩" }
+    ]
+  },
   "metadata": {
     "author": "AI Game Studio",
     "createdAt": "2026-03-02T05:42:09.648Z",

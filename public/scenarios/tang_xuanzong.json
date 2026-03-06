@@ -72,6 +72,20 @@
       "做出明显违背历史常识的决定"
     ]
   },
+  "clues": {
+    "early": [
+      { "type": "location", "description": "关中", "hint": "关中京城" },
+      { "type": "crisis", "description": "边将异动", "hint": "东北有变" }
+    ],
+    "mid": [
+      { "type": "location", "description": "潼关、马嵬坡", "hint": "西行之路" },
+      { "type": "person", "description": "杨贵妃", "hint": "贵妃专宠" }
+    ],
+    "late": [
+      { "type": "event", "description": "安史之乱", "hint": "胡将造反" },
+      { "type": "policy", "description": "开元盛世", "hint": "早年英明" }
+    ]
+  },
   "metadata": {
     "author": "AI Game Studio",
     "createdAt": "2026-03-02T05:42:09.647Z",

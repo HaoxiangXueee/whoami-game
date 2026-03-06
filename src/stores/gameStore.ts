@@ -24,6 +24,7 @@ const initialState: GameState = {
   chatHistory: [],
   currentTurn: 0,
   maxTurns: 10,
+  currentNpcIndex: 0,
   ending: null,
   isLoading: false,
   error: null,
@@ -46,6 +47,8 @@ interface GameStore extends GameState {
   setEnding: (ending: EndingInfo | null) => void;
   setLoading: (isLoading: boolean) => void;
   setError: (error: string | null) => void;
+  // NPC轮换
+  rotateNpc: () => void;
   // 答案相关方法
   submitAnswer: (type: 'emperor' | 'dynasty', answer: string) => void;
   setAnsweringQuestions: (isAnswering: boolean) => void;
@@ -159,6 +162,20 @@ export const useGameStore = create<GameStore>()(
     nextTurn: () => {
       set((state) => {
         state.currentTurn += 1;
+        // 每个回合自动轮换到下一个NPC
+        if (state.currentScenario) {
+          const npcCount = state.currentScenario.npcs.length;
+          state.currentNpcIndex = (state.currentNpcIndex + 1) % npcCount;
+        }
+      });
+    },
+
+    rotateNpc: () => {
+      set((state) => {
+        if (state.currentScenario) {
+          const npcCount = state.currentScenario.npcs.length;
+          state.currentNpcIndex = (state.currentNpcIndex + 1) % npcCount;
+        }
       });
     },
 

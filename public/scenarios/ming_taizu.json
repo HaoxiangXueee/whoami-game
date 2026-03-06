@@ -72,6 +72,20 @@
       "做出明显违背历史常识的决定"
     ]
   },
+  "clues": {
+    "early": [
+      { "type": "location", "description": "江南", "hint": "应天都城" },
+      { "type": "crisis", "description": "出身微寒", "hint": "起于草莽" }
+    ],
+    "mid": [
+      { "type": "policy", "description": "胡惟庸案", "hint": "废丞相" },
+      { "type": "person", "description": "蓝玉案", "hint": "诛功臣" }
+    ],
+    "late": [
+      { "type": "event", "description": "洪武之治", "hint": "卫所制度" },
+      { "type": "time", "description": "明太祖", "hint": "明朝开国" }
+    ]
+  },
   "metadata": {
     "author": "AI Game Studio",
     "createdAt": "2026-03-02T05:42:09.653Z",

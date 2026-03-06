@@ -72,6 +72,20 @@
       "做出明显违背历史常识的决定"
     ]
   },
+  "clues": {
+    "early": [
+      { "type": "location", "description": "关中", "hint": "秦都" },
+      { "type": "crisis", "description": "新帝继位", "hint": "先帝驾崩" }
+    ],
+    "mid": [
+      { "type": "policy", "description": "指鹿为马", "hint": "赵高弄权" },
+      { "type": "person", "description": "陈胜吴广", "hint": "大泽乡起义" }
+    ],
+    "late": [
+      { "type": "event", "description": "秦朝灭亡", "hint": "帝国崩溃" },
+      { "type": "time", "description": "二世而亡", "hint": "秦二世" }
+    ]
+  },
   "metadata": {
     "author": "AI Game Studio",
     "createdAt": "2026-03-02T05:42:09.645Z",

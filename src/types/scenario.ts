@@ -24,6 +24,29 @@ export type EndingType =
 
 
 /**
+ * 线索类型
+ */
+export type ClueType = 'location' | 'crisis' | 'policy' | 'event' | 'person' | 'time';
+
+/**
+ * 单个线索结构
+ */
+export interface ClueItem {
+  type: ClueType;
+  description: string;
+  hint: string;
+}
+
+/**
+ * 按阶段分组的线索
+ */
+export interface CluesByStage {
+  early: ClueItem[];
+  mid: ClueItem[];
+  late: ClueItem[];
+}
+
+/**
  * 剧本NPC配置
  */
 export interface ScenarioNPC {
@@ -123,6 +146,9 @@ export interface ScenarioConfig {
 
   // 元数据（可选）
   metadata?: Record<string, any>;
+
+  // 结构化线索（可选）
+  clues?: CluesByStage;
 }
 
 /**

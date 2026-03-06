@@ -72,6 +72,20 @@
       "做出明显违背历史常识的决定"
     ]
   },
+  "clues": {
+    "early": [
+      { "type": "location", "description": "北方京城", "hint": "皇城巍巍" },
+      { "type": "crisis", "description": "权臣专权", "hint": "少年天子" }
+    ],
+    "mid": [
+      { "type": "policy", "description": "削藩", "hint": "三藩之乱" },
+      { "type": "person", "description": "布库", "hint": "少年侍卫" }
+    ],
+    "late": [
+      { "type": "event", "description": "收复台湾", "hint": "东南海岛" },
+      { "type": "time", "description": "康乾盛世", "hint": "盛世开端" }
+    ]
+  },
   "metadata": {
     "author": "AI Game Studio",
     "createdAt": "2026-03-02T05:42:09.644Z",

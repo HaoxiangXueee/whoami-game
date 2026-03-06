@@ -72,6 +72,20 @@
       "做出明显违背历史常识的决定"
     ]
   },
+  "clues": {
+    "early": [
+      { "type": "location", "description": "关中", "hint": "唐朝都城" },
+      { "type": "crisis", "description": "北方边患", "hint": "胡骑南下" }
+    ],
+    "mid": [
+      { "type": "policy", "description": "贞观之治", "hint": "虚心纳谏" },
+      { "type": "person", "description": "魏征", "hint": "直言敢谏" }
+    ],
+    "late": [
+      { "type": "event", "description": "玄武门", "hint": "手足相残" },
+      { "type": "time", "description": "天可汗", "hint": "四夷臣服" }
+    ]
+  },
   "metadata": {
     "author": "AI Game Studio",
     "createdAt": "2026-03-02T05:42:09.639Z",
