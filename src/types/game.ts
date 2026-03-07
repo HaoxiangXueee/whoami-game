@@ -156,13 +156,22 @@ export interface AnswerValidationResult {
  * 答案状态
  */
 export interface AnswerState {
-  emperorGuess: string;
-  dynastyGuess: string;
-  emperorCorrect: boolean | null;
-  dynastyCorrect: boolean | null;
-  emperorAttempts: number;
-  dynastyAttempts: number;
+  guess: string;              // 皇帝姓名猜测
+  correct: boolean | null;   // 是否正确
+  attempts: number;          // 尝试次数
   isSubmitting: boolean;
+}
+
+/**
+ * 结局评分
+ */
+export interface EndingScore {
+  totalScore: number;           // 总分 0-100
+  turnScore: number;            // 回合数得分 0-30
+  attemptsScore: number;        // 剩余机会得分 0-20
+  authorityScore: number;       // 威望值得分 0-30
+  suspicionScore: number;       // 暴露值得分 0-20
+  isCorrect: boolean;           // 是否答对
 }
 
 /**

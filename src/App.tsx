@@ -18,7 +18,7 @@ import { PlayerInput } from '@components/game/PlayerInput';
 import { StatChangeAnimation } from '@components/game/StatChangeAnimation';
 import { EndingScreen } from '@components/game/EndingScreen';
 import { QuestionAnswerPanel } from '@components/game/QuestionAnswerPanel';
-import type { ChatMessage, ScenarioConfig, AnswerValidationResult, AnswerState } from '@/types/game';
+import type { ChatMessage, ScenarioConfig, AnswerValidationResult, AnswerState, EndingScore } from '@/types/game';
 
 function App() {
   const {
@@ -97,14 +97,13 @@ function App() {
   }, [resetGame]);
 
   // 处理答案提交
-  const handleAnswerSubmit = useCallback((type: 'emperor' | 'dynasty', answer: string) => {
-    console.log(`[App] 提交${type === 'emperor' ? '皇帝' : '朝代'}答案:`, answer);
-    submitAnswer(type, answer);
+  const handleAnswerSubmit = useCallback((answer: string) => {
+    console.log('[App] 提交答案:', answer);
+    submitAnswer(answer);
   }, [submitAnswer]);
 
   // 统一使用AI验证答案
   const validateAnswer = useCallback(async (
-    type: 'emperor' | 'dynasty',
     answer: string
   ): Promise<AnswerValidationResult> => {
     if (!currentScenario) {
@@ -117,71 +116,44 @@ function App() {
 
     // 计算剩余次数
     const maxAttempts = 3;
-    const currentAttempts = type === 'emperor' ? answerState.emperorAttempts : answerState.dynastyAttempts;
+    const currentAttempts = answerState.attempts;
     const remainingAttempts = maxAttempts - currentAttempts - 1;
 
     try {
       const { validateAnswerWithAI } = await import('@services/answerValidator');
 
-      if (type === 'emperor') {
-        // 皇帝姓名使用AI验证
-        const correctEmperor = currentScenario.emperor.name;
+      // 皇帝姓名使用AI验证
+      const correctEmperor = currentScenario.emperor.name;
 
-        const aiResult = await validateAnswerWithAI(
-          'emperor',
-          correctEmperor,
-          answer,
-          currentScenario
-        );
+      const aiResult = await validateAnswerWithAI(
+        'emperor',
+        correctEmperor,
+        answer,
+        currentScenario
+      );
 
-        // 关键修复：如果验证正确，立即保存正确状态到store
-        if (aiResult.isCorrect) {
-          setAnswerCorrect('emperor', true);
-        }
-
-        return {
-          isCorrect: aiResult.isCorrect,
-          feedback: aiResult.isCorrect
-            ? `回答正确！✓ ${aiResult.feedback}`
-            : `回答错误，请继续尝试。剩余 ${Math.max(0, remainingAttempts)} 次机会。`,
-          similarity: aiResult.isCorrect ? 1 : 0,
-        };
-      } else {
-        // 历史事件使用AI验证
-        const correctEvent = currentScenario.emperor.historicalEvent || currentScenario.emperor.dynasty;
-
-        const aiResult = await validateAnswerWithAI(
-          'event',
-          correctEvent,
-          answer,
-          currentScenario
-        );
-
-        // 关键修复：如果验证正确，立即保存正确状态到store
-        if (aiResult.isCorrect) {
-          setAnswerCorrect('dynasty', true);
-        }
-
-        return {
-          isCorrect: aiResult.isCorrect,
-          feedback: aiResult.isCorrect
-            ? `回答正确！✓ ${aiResult.feedback}`
-            : `回答错误，请继续尝试。剩余 ${Math.max(0, remainingAttempts)} 次机会。`,
-          similarity: aiResult.isCorrect ? 1 : 0,
-        };
+      // 关键修复：如果验证正确，立即保存正确状态到store
+      if (aiResult.isCorrect) {
+        setAnswerCorrect(true);
       }
+
+      return {
+        isCorrect: aiResult.isCorrect,
+        feedback: aiResult.isCorrect
+          ? `回答正确！✓ ${aiResult.feedback}`
+          : `回答错误，请继续尝试。剩余 ${Math.max(0, remainingAttempts)} 次机会。`,
+        similarity: aiResult.isCorrect ? 1 : 0,
+      };
     } catch (error) {
       console.error('[App] AI验证失败:', error);
       // AI验证失败时回退到简单包含匹配
-      const correctAnswer = type === 'emperor'
-        ? currentScenario.emperor.name
-        : (currentScenario.emperor.historicalEvent || currentScenario.emperor.dynasty);
+      const correctAnswer = currentScenario.emperor.name;
       const isCorrect = answer.toLowerCase().includes(correctAnswer.toLowerCase()) ||
         correctAnswer.toLowerCase().includes(answer.toLowerCase());
 
       // 关键修复：如果验证正确，立即保存正确状态到store
       if (isCorrect) {
-        setAnswerCorrect(type, true);
+        setAnswerCorrect(true);
       }
 
       return {
@@ -194,42 +166,115 @@ function App() {
     }
   }, [currentScenario, answerState, setAnswerCorrect]);
 
+  // 结局评分计算函数
+  const calculateEndingScore = useCallback((
+    currentTurn: number,
+    maxTurns: number,
+    attempts: number,
+    maxAttempts: number,
+    authority: number,
+    suspicion: number,
+    isCorrect: boolean
+  ): EndingScore => {
+    // 1. 回合数得分：越早答题分越高 (0-30)
+    // 第1回合答题: 30分，最后1回合答题: 0分
+    const turnScore = maxTurns > 1
+      ? Math.max(0, Math.round(30 * (1 - (currentTurn - 1) / (maxTurns - 1))))
+      : 30;
+
+    // 2. 剩余机会得分：剩余越多分越高 (0-20)
+    // 剩余3次: 20分，剩余0次: 0分
+    const remainingAttempts = maxAttempts - attempts;
+    const attemptsScore = Math.round(20 * (remainingAttempts / maxAttempts));
+
+    // 3. 威望值得分：越高越好 (0-30)
+    const authorityScore = Math.round(30 * (authority / 100));
+
+    // 4. 暴露值得分：越低越好 (0-20)
+    const suspicionScore = Math.round(20 * (1 - suspicion / 100));
+
+    // 总分
+    let totalScore = turnScore + attemptsScore + authorityScore + suspicionScore;
+
+    // 如果答对了，额外加20分奖励
+    if (isCorrect) {
+      totalScore += 20;
+    }
+
+    // 总分上限100
+    totalScore = Math.min(100, totalScore);
+
+    return {
+      totalScore,
+      turnScore,
+      attemptsScore,
+      authorityScore,
+      suspicionScore,
+      isCorrect,
+    };
+  }, []);
+
   // 处理问题回答完成
   const handleQuestionsComplete = useCallback((finalState: AnswerState) => {
     console.log('[App] 问题回答完成:', finalState);
 
-    // 根据回答结果决定结局
-    const hasCorrectEmperor = finalState.emperorCorrect === true;
-    const hasCorrectDynasty = finalState.dynastyCorrect === true;
+    const isCorrect = finalState.correct === true;
 
-    if (hasCorrectEmperor && hasCorrectDynasty) {
-      // 两个问题都答对了
-      setEnding({
-        type: 'win_correct_answer',
-        title: '真相大白',
-        summary: '你成功找回了自己的身份！通过对朝臣们的巧妙试探和对局势的敏锐判断，你终于确认了自己的真实身份。',
-        epilogue: '你的智慧和耐心帮助你度过了这场危机，现在你终于可以以真实的身份治理天下了。',
-      });
-    } else if (hasCorrectEmperor || hasCorrectDynasty) {
-      // 答对了一个
-      setEnding({
-        type: 'neutral_escape',
-        title: '部分真相',
-        summary: `你只答对了${hasCorrectEmperor ? '皇帝身份' : '历史事件'}，但这也足以让你暂时稳住局势。`,
-        epilogue: '虽然你没有完全找回自己的身份，但你的部分认知足以让你在这个危险的世界中生存下去。',
-      });
+    // 计算结局评分
+    const score = calculateEndingScore(
+      currentTurn,
+      maxTurns,
+      finalState.attempts,
+      3, // maxAttempts
+      stats.authority,
+      stats.suspicion,
+      isCorrect
+    );
+
+    console.log('[App] 结局评分:', score);
+
+    // 根据分数决定结局类型
+    let endingType: string;
+    let title: string;
+    let summary: string;
+    let epilogue: string;
+
+    if (score.totalScore >= 80) {
+      endingType = 'win_correct_answer';
+      title = '完美识破';
+      summary = `太厉害了！你以${score.totalScore}分的高分完美找回了自己的身份！回合数得分${score.turnScore}分，剩余机会${score.attemptsScore}分，威望${score.authorityScore}分，暴露控制${score.suspicionScore}分。${isCorrect ? '答案正确额外+20分！' : ''}`;
+      epilogue = '你的智慧和洞察力令人叹为观止，现在你可以稳稳地坐江山了！';
+    } else if (score.totalScore >= 60) {
+      endingType = 'win_correct_answer';
+      title = '真相大白';
+      summary = `不错！你以${score.totalScore}分成功找回了自己的身份！回合数得分${score.turnScore}分，剩余机会${score.attemptsScore}分，威望${score.authorityScore}分，暴露控制${score.suspicionScore}分。`;
+      epilogue = '虽然过程有些波折，但你最终还是确认了自己的身份，天下可以安定了。';
+    } else if (score.totalScore >= 40) {
+      endingType = 'neutral_escape';
+      title = '部分真相';
+      summary = `你获得了${score.totalScore}分。回合数得分${score.turnScore}分，剩余机会${score.attemptsScore}分，威望${score.authorityScore}分，暴露控制${score.suspicionScore}分。虽然没有完全确认，但你隐约猜到了自己是谁。`;
+      epilogue = '这份模糊的认知足以让你暂时稳住局势，但未来依然充满变数...';
+    } else if (score.totalScore >= 20) {
+      endingType = 'neutral_escape';
+      title = '记忆模糊';
+      summary = `你只获得了${score.totalScore}分。回合数得分${score.turnScore}分，剩余机会${score.attemptsScore}分，威望${score.authorityScore}分，暴露控制${score.suspicionScore}分。你的记忆依然混乱不堪。`;
+      epilogue = '你勉强维持着皇帝的威严，但内心的不安越来越强烈...';
     } else {
-      // 都没答对
-      setEnding({
-        type: 'lose_wrong_answer',
-        title: '身份迷失',
-        summary: '你没有正确回答出任何一个问题。你的记忆混乱到了极点，连最基本的自我认知都无法保持。',
-        epilogue: '朝臣们对你的怀疑越来越深，你的处境变得越来越危险...最终，你被当作冒名顶替者处理。',
-      });
+      endingType = 'lose_wrong_answer';
+      title = '身份迷失';
+      summary = `很遗憾，你只获得了${score.totalScore}分。回合数得分${score.turnScore}分，剩余机会${score.attemptsScore}分，威望${score.authorityScore}分，暴露控制${score.suspicionScore}分。你的记忆完全混乱了。`;
+      epilogue = '朝臣们开始窃窃私语，你的处境变得岌岌可危...';
     }
 
+    setEnding({
+      type: endingType as any,
+      title,
+      summary,
+      epilogue,
+    });
+
     setAnsweringQuestions(false);
-  }, [setEnding, setAnsweringQuestions]);
+  }, [setEnding, setAnsweringQuestions, currentTurn, maxTurns, stats, calculateEndingScore]);
 
   // v1.1: 穿越动画完成，RandomScenarioLoader 传回随机选中的剧本
   const handleScenarioReady = useCallback((scenario: ScenarioConfig) => {
@@ -476,15 +521,9 @@ function App() {
       );
     }
 
-    // 检查是否应该强制结束（任意问题耗尽且答错，或全部完成）
-    const isEmperorDone = answerState.emperorCorrect === true || answerState.emperorAttempts >= 3;
-    const isDynastyDone = answerState.dynastyCorrect === true || answerState.dynastyAttempts >= 3;
-    const isAllDone = isEmperorDone && isDynastyDone;
-
-    // 任意一个问题耗尽且答错，就应该强制结束
-    const hasEmperorFailed = answerState.emperorAttempts >= 3 && answerState.emperorCorrect !== true;
-    const hasDynastyFailed = answerState.dynastyAttempts >= 3 && answerState.dynastyCorrect !== true;
-    const shouldForceAnswer = hasEmperorFailed || hasDynastyFailed || isAllDone;
+    // 检查是否应该强制结束（答题完成或耗尽机会）
+    const isDone = answerState.correct === true || answerState.attempts >= 3;
+    const shouldForceAnswer = isDone;
 
     // 如果应该强制结束，但面板没打开，自动打开并触发结局
     if (shouldForceAnswer && !isAnsweringQuestions) {
@@ -518,12 +557,12 @@ function App() {
           </div>
 
           {/* 回答问题按钮 - 桌面端显示 */}
-          {(answerState.emperorCorrect !== true || answerState.dynastyCorrect !== true) && (
+          {answerState.correct !== true && (
             <button
               onClick={() => setAnsweringQuestions(true)}
               className="hidden sm:block ml-2 px-3 py-1 bg-amber-600/80 hover:bg-amber-500 text-amber-100 rounded border border-amber-500 text-sm font-bold transition-colors"
             >
-              答题 ({[answerState.emperorCorrect, answerState.dynastyCorrect].filter(Boolean).length}/2)
+              答题 {answerState.attempts > 0 ? `(${answerState.attempts}/3)` : ''}
             </button>
           )}
         </header>
@@ -575,7 +614,7 @@ function App() {
         />
 
         {/* 移动端浮动答题按钮 - 只在移动端显示 */}
-        {(answerState.emperorCorrect !== true || answerState.dynastyCorrect !== true) && (
+        {answerState.correct !== true && (
           <button
             onClick={() => setAnsweringQuestions(true)}
             className="sm:hidden fixed right-4 bottom-28 z-40 flex items-center justify-center w-14 h-14 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white rounded-full shadow-lg shadow-amber-600/40 transition-all duration-300 border-2 border-amber-400"
@@ -583,7 +622,7 @@ function App() {
             <div className="text-center">
               <span className="text-lg">❓</span>
               <span className="text-xs font-bold block leading-tight">
-                {[answerState.emperorCorrect, answerState.dynastyCorrect].filter(Boolean).length}/2
+                {answerState.attempts > 0 ? `${answerState.attempts}/3` : ''}
               </span>
             </div>
           </button>

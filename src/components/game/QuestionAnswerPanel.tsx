@@ -1,6 +1,6 @@
 /**
  * 问题与答案面板组件
- * 玩家可以在回合耗尽前或耗尽后回答两个问题
+ * 玩家可以在回合耗尽前或耗尽后回答一个问题：你是谁？
  */
 
 import { useState, useEffect } from 'react';
@@ -11,8 +11,8 @@ interface QuestionAnswerPanelProps {
   answerState: AnswerState;
   isForced: boolean;
   maxAttempts?: number;
-  onSubmitAnswer: (type: 'emperor' | 'dynasty', answer: string) => void;
-  onValidateAnswer?: (type: 'emperor' | 'dynasty', answer: string) => Promise<AnswerValidationResult>;
+  onSubmitAnswer: (answer: string) => void;
+  onValidateAnswer?: (answer: string) => Promise<AnswerValidationResult>;
   onComplete?: (finalState: AnswerState) => void;
   onClose?: () => void;
 }
@@ -26,60 +26,39 @@ export function QuestionAnswerPanel({
   onComplete,
   onClose,
 }: QuestionAnswerPanelProps) {
-  const [emperorInput, setEmperorInput] = useState('');
-  const [dynastyInput, setDynastyInput] = useState('');
+  const [input, setInput] = useState('');
   const [validating, setValidating] = useState(false);
-  const [emperorFeedback, setEmperorFeedback] = useState<string>('');
-  const [dynastyFeedback, setDynastyFeedback] = useState<string>('');
+  const [feedback, setFeedback] = useState<string>('');
 
-  const { emperorAttempts, dynastyAttempts, emperorCorrect, dynastyCorrect } = answerState;
+  const { attempts, correct } = answerState;
 
   const maxAttemptsValue = maxAttempts || 3;
 
-  const isEmperorDone = emperorCorrect === true || emperorAttempts >= maxAttemptsValue;
-  const isDynastyDone = dynastyCorrect === true || dynastyAttempts >= maxAttemptsValue;
-  const isAllDone = isEmperorDone && isDynastyDone;
+  const isDone = correct === true || attempts >= maxAttemptsValue;
 
-  // 自动检测：两个都答对后立即触发结算
+  // 自动检测：答对后立即触发结算
   useEffect(() => {
-    if (emperorCorrect === true && dynastyCorrect === true) {
-      console.log('[QuestionAnswerPanel] 两个问题都答对，自动触发结算');
+    if (correct === true) {
+      console.log('[QuestionAnswerPanel] 答对了，自动触发结算');
       onComplete?.(answerState);
     }
-  }, [emperorCorrect, dynastyCorrect, onComplete, answerState]);
+  }, [correct, onComplete, answerState]);
 
-  const handleSubmitEmperor = async () => {
-    if (!emperorInput.trim() || validating || isEmperorDone) return;
+  const handleSubmit = async () => {
+    if (!input.trim() || validating || isDone) return;
 
     setValidating(true);
-    onSubmitAnswer('emperor', emperorInput.trim());
+    onSubmitAnswer(input.trim());
 
     if (onValidateAnswer) {
-      const result = await onValidateAnswer('emperor', emperorInput.trim());
-      setEmperorFeedback(result.feedback);
+      const result = await onValidateAnswer(input.trim());
+      setFeedback(result.feedback);
     } else {
-      setEmperorFeedback(`已提交: ${emperorInput.trim()}`);
+      setFeedback(`已提交: ${input.trim()}`);
     }
 
     setValidating(false);
-    setEmperorInput('');
-  };
-
-  const handleSubmitDynasty = async () => {
-    if (!dynastyInput.trim() || validating || isDynastyDone) return;
-
-    setValidating(true);
-    onSubmitAnswer('dynasty', dynastyInput.trim());
-
-    if (onValidateAnswer) {
-      const result = await onValidateAnswer('dynasty', dynastyInput.trim());
-      setDynastyFeedback(result.feedback);
-    } else {
-      setDynastyFeedback(`已提交: ${dynastyInput.trim()}`);
-    }
-
-    setValidating(false);
-    setDynastyInput('');
+    setInput('');
   };
 
   return (
@@ -98,8 +77,8 @@ export function QuestionAnswerPanel({
               </h2>
               <p className="mt-1 text-slate-400 text-sm">
                 {isForced
-                  ? '回合已经耗尽，现在必须回答这两个问题...'
-                  : '在回合耗尽前，你可以随时尝试回答这两个问题'}
+                  ? '回合已经耗尽，现在必须回答这个问题...'
+                  : '在回合耗尽前，你可以随时尝试回答这个问题'}
               </p>
             </div>
             {/* 关闭按钮 - 仅在非强制模式下显示 */}
@@ -116,108 +95,52 @@ export function QuestionAnswerPanel({
         </div>
 
         {/* 问题区域 */}
-        <div className="p-6 space-y-6">
+        <div className="p-6">
           {/* 皇帝问题 */}
-          <div className={`p-4 rounded-lg border ${emperorCorrect === true ? 'bg-green-900/30 border-green-600' : emperorCorrect === false && isEmperorDone ? 'bg-red-900/30 border-red-600' : 'bg-slate-700/50 border-slate-600'}`}>
+          <div className={`p-4 rounded-lg border ${correct === true ? 'bg-green-900/30 border-green-600' : correct === false && isDone ? 'bg-red-900/30 border-red-600' : 'bg-slate-700/50 border-slate-600'}`}>
             <div className="flex justify-between items-center mb-3">
               <h3 className="text-lg font-semibold text-slate-200">你是谁？</h3>
-              {emperorCorrect === true && <span className="text-green-400 text-sm">✓ 正确</span>}
-              {emperorCorrect === false && isEmperorDone && <span className="text-red-400 text-sm">✗ 错误</span>}
+              {correct === true && <span className="text-green-400 text-sm">✓ 正确</span>}
+              {correct === false && isDone && <span className="text-red-400 text-sm">✗ 错误</span>}
             </div>
 
-            {!isEmperorDone ? (
+            {!isDone ? (
               <>
                 <div className="flex gap-2">
                   <input
                     type="text"
-                    value={emperorInput}
-                    onChange={(e) => setEmperorInput(e.target.value)}
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
                     placeholder="请输入皇帝姓名..."
                     disabled={validating}
                     className="flex-1 px-3 py-2 bg-slate-800 border border-slate-600 rounded text-slate-200 placeholder-slate-500 focus:outline-none focus:border-amber-500"
-                    onKeyDown={(e) => e.key === 'Enter' && handleSubmitEmperor()}
+                    onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
                   />
                   <button
-                    onClick={handleSubmitEmperor}
-                    disabled={!emperorInput.trim() || validating}
+                    onClick={handleSubmit}
+                    disabled={!input.trim() || validating}
                     className="px-4 py-2 bg-amber-600 hover:bg-amber-500 disabled:bg-slate-600 text-white rounded font-medium transition-colors"
                   >
                     {validating ? '验证中...' : '提交'}
                   </button>
                 </div>
                 <p className="mt-2 text-sm text-slate-500">
-                  剩余机会: {maxAttemptsValue - emperorAttempts}/{maxAttemptsValue} | 已尝试 {emperorAttempts} 次
+                  剩余机会: {maxAttemptsValue - attempts}/{maxAttemptsValue} | 已尝试 {attempts} 次
                 </p>
 
                 {/* 反馈显示 */}
-                {emperorFeedback && (
-                  <div className={`mt-3 p-3 rounded ${emperorFeedback.includes('正确') ? 'bg-green-900/50 text-green-300' : 'bg-red-900/50 text-red-300'}`}>
-                    {emperorFeedback}
+                {feedback && (
+                  <div className={`mt-3 p-3 rounded ${feedback.includes('正确') ? 'bg-green-900/50 text-green-300' : 'bg-red-900/50 text-red-300'}`}>
+                    {feedback}
                   </div>
                 )}
               </>
             ) : (
               <div className="py-2 text-center">
-                {emperorCorrect === true ? (
+                {correct === true ? (
                   <div className="text-green-400">
                     <div className="font-semibold">回答正确！✓</div>
-                    <div className="text-sm mt-1 text-green-300">正确答案：{answerState.emperorGuess}</div>
-                  </div>
-                ) : (
-                  <div className="text-red-400">
-                    <div className="font-semibold">回答错误</div>
-                    <div className="text-sm mt-1 text-red-300">机会已用尽</div>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-
-          {/* 历史事件问题 */}
-          <div className={`p-4 rounded-lg border ${dynastyCorrect === true ? 'bg-green-900/30 border-green-600' : dynastyCorrect === false && isDynastyDone ? 'bg-red-900/30 border-red-600' : 'bg-slate-700/50 border-slate-600'}`}>
-            <div className="flex justify-between items-center mb-3">
-              <h3 className="text-lg font-semibold text-slate-200">这是什么历史事件？</h3>
-              {dynastyCorrect === true && <span className="text-green-400 text-sm">✓ 正确</span>}
-              {dynastyCorrect === false && isDynastyDone && <span className="text-red-400 text-sm">✗ 错误</span>}
-            </div>
-
-            {!isDynastyDone ? (
-              <>
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={dynastyInput}
-                    onChange={(e) => setDynastyInput(e.target.value)}
-                    placeholder="请输入历史事件..."
-                    disabled={validating}
-                    className="flex-1 px-3 py-2 bg-slate-800 border border-slate-600 rounded text-slate-200 placeholder-slate-500 focus:outline-none focus:border-amber-500"
-                    onKeyDown={(e) => e.key === 'Enter' && handleSubmitDynasty()}
-                  />
-                  <button
-                    onClick={handleSubmitDynasty}
-                    disabled={!dynastyInput.trim() || validating}
-                    className="px-4 py-2 bg-amber-600 hover:bg-amber-500 disabled:bg-slate-600 text-white rounded font-medium transition-colors"
-                  >
-                    {validating ? '验证中...' : '提交'}
-                  </button>
-                </div>
-                <p className="mt-2 text-sm text-slate-500">
-                  剩余机会: {maxAttemptsValue - dynastyAttempts}/{maxAttemptsValue} | 已尝试 {dynastyAttempts} 次
-                </p>
-
-                {/* 反馈显示 */}
-                {dynastyFeedback && (
-                  <div className={`mt-3 p-3 rounded ${dynastyFeedback.includes('正确') ? 'bg-green-900/50 text-green-300' : 'bg-red-900/50 text-red-300'}`}>
-                    {dynastyFeedback}
-                  </div>
-                )}
-              </>
-            ) : (
-              <div className="py-2 text-center">
-                {dynastyCorrect === true ? (
-                  <div className="text-green-400">
-                    <div className="font-semibold">回答正确！✓</div>
-                    <div className="text-sm mt-1 text-green-300">正确答案：{answerState.dynastyGuess}</div>
+                    <div className="text-sm mt-1 text-green-300">正确答案：{answerState.guess}</div>
                   </div>
                 ) : (
                   <div className="text-red-400">
@@ -236,7 +159,7 @@ export function QuestionAnswerPanel({
             <div className="text-slate-500">
               <span className="text-amber-500">💡</span> 提示：可以在对话中收集线索
             </div>
-            {isAllDone && (
+            {isDone && (
               <button
                 onClick={() => onComplete?.(answerState)}
                 className="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white font-medium rounded-lg transition-colors"

@@ -8,12 +8,9 @@ const initialStats: GameStats = {
 };
 
 const initialAnswerState: AnswerState = {
-  emperorGuess: '',
-  dynastyGuess: '',
-  emperorAttempts: 0,
-  dynastyAttempts: 0,
-  emperorCorrect: null,
-  dynastyCorrect: null,
+  guess: '',
+  correct: null,
+  attempts: 0,
   isSubmitting: false,
 };
 
@@ -50,11 +47,11 @@ interface GameStore extends GameState {
   // NPC轮换
   rotateNpc: () => void;
   // 答案相关方法
-  submitAnswer: (type: 'emperor' | 'dynasty', answer: string) => void;
+  submitAnswer: (answer: string) => void;
   setAnsweringQuestions: (isAnswering: boolean) => void;
   resetAnswerState: () => void;
-  incrementAnswerAttempt: (type: 'emperor' | 'dynasty') => void;
-  setAnswerCorrect: (type: 'emperor' | 'dynasty', isCorrect: boolean) => void;
+  incrementAnswerAttempt: () => void;
+  setAnswerCorrect: (isCorrect: boolean) => void;
 }
 
 export const useGameStore = create<GameStore>()(
@@ -207,15 +204,10 @@ export const useGameStore = create<GameStore>()(
     },
 
     // 答案相关方法实现
-    submitAnswer: (type: 'emperor' | 'dynasty', answer: string) => {
+    submitAnswer: (answer: string) => {
       set((state) => {
-        if (type === 'emperor') {
-          state.answerState.emperorGuess = answer;
-          state.answerState.emperorAttempts += 1;
-        } else {
-          state.answerState.dynastyGuess = answer;
-          state.answerState.dynastyAttempts += 1;
-        }
+        state.answerState.guess = answer;
+        state.answerState.attempts += 1;
         state.answerState.isSubmitting = true;
       });
     },
@@ -232,23 +224,15 @@ export const useGameStore = create<GameStore>()(
       });
     },
 
-    incrementAnswerAttempt: (type: 'emperor' | 'dynasty') => {
+    incrementAnswerAttempt: () => {
       set((state) => {
-        if (type === 'emperor') {
-          state.answerState.emperorAttempts += 1;
-        } else {
-          state.answerState.dynastyAttempts += 1;
-        }
+        state.answerState.attempts += 1;
       });
     },
 
-    setAnswerCorrect: (type: 'emperor' | 'dynasty', isCorrect: boolean) => {
+    setAnswerCorrect: (isCorrect: boolean) => {
       set((state) => {
-        if (type === 'emperor') {
-          state.answerState.emperorCorrect = isCorrect;
-        } else {
-          state.answerState.dynastyCorrect = isCorrect;
-        }
+        state.answerState.correct = isCorrect;
       });
     },
   }))
