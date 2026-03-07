@@ -74,12 +74,12 @@
   },
   "clues": {
     "early": [
-      { "type": "location", "description": "江南", "hint": "南方水乡" },
-      { "type": "crisis", "description": "国库空虚", "hint": "用度浩大" }
+      { "type": "location", "description": "京城/园林", "hint": "地理" },
+      { "type": "atmosphere", "description": "国家鼎盛/仓库充盈", "hint": "盛世氛围" }
     ],
     "mid": [
-      { "type": "policy", "description": "四库全书", "hint": "修书盛典" },
-      { "type": "event", "description": "六下江南", "hint": "多次巡幸" }
+      { "type": "policy", "description": "修书", "hint": "修书盛典" },
+      { "type": "event", "description": "数次巡幸南方", "hint": "个人喜好特征" }
     ],
     "late": [
       { "type": "person", "description": "十全老人", "hint": "十全武功" },

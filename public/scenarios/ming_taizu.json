@@ -74,12 +74,13 @@
   },
   "clues": {
     "early": [
-      { "type": "location", "description": "江南", "hint": "应天都城" },
+      { "type": "location", "description": "江南", "hint": "暗示发迹地金陵" },
       { "type": "crisis", "description": "出身微寒", "hint": "起于草莽" }
     ],
     "mid": [
-      { "type": "policy", "description": "胡惟庸案", "hint": "废丞相" },
-      { "type": "person", "description": "蓝玉案", "hint": "诛功臣" }
+      { "type": "crisis", "description": "北方残余势力逃亡漠北", "hint": "暗示北元威胁" },
+      { "type": "policy", "description": "分封子弟为王", "hint": "早期制度特征" },
+      { "type": "resource", "description": "严密的户籍与土地调查", "hint": "暗示黄册与鱼鳞图册" }
     ],
     "late": [
       { "type": "event", "description": "洪武之治", "hint": "卫所制度" },

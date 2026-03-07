@@ -78,8 +78,8 @@
       { "type": "crisis", "description": "外敌入侵", "hint": "北汉勾结" }
     ],
     "mid": [
-      { "type": "policy", "description": "整顿禁军", "hint": "殿前诸班" },
-      { "type": "person", "description": "赵匡胤", "hint": "殿前都虞侯" }
+      { "type": "policy", "description": "整顿禁军，强化中央", "hint": "军事改革特征" },
+      { "type": "crisis", "description": "南有割据伪权，北有游牧掠夺", "hint": "典型的四战之境" }
     ],
     "late": [
       { "type": "event", "description": "北伐幽州", "hint": "功败垂成" },

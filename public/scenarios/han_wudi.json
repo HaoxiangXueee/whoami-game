@@ -76,10 +76,12 @@
     "early": [
       { "type": "location", "description": "关中京城", "hint": "汉唐古都" },
       { "type": "crisis", "description": "北方边患", "hint": "胡骑南下" }
+      { "type": "atmosphere", "description": "承袭前人丰厚家底", "hint": "暗示是二代或三代盛世" }
     ],
     "mid": [
       { "type": "policy", "description": "和亲政策", "hint": "公主远嫁" },
-      { "type": "person", "description": "卫青霍去病", "hint": "名将出击" }
+      { "type": "policy", "description": "推行政令以削弱封国", "hint": "内政手段，不点出'推恩令'" },
+      { "type": "resource", "description": "充盈的盐铁税收", "hint": "经济来源特征" } 
     ],
     "late": [
       { "type": "event", "description": "封狼居胥", "hint": "漠北之战" },

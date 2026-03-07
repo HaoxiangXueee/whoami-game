@@ -74,12 +74,12 @@
   },
   "clues": {
     "early": [
-      { "type": "location", "description": "北方京城", "hint": "皇城巍巍" },
+      { "type": "title", "description": "主子/皇上", "hint": "清代特有" },
       { "type": "crisis", "description": "权臣专权", "hint": "少年天子" }
     ],
     "mid": [
       { "type": "policy", "description": "削藩", "hint": "三藩之乱" },
-      { "type": "person", "description": "布库", "hint": "少年侍卫" }
+      { "type": "policy", "description": "延揽汉族士人/打击权臣", "hint": "政治平衡术" }
     ],
     "late": [
       { "type": "event", "description": "收复台湾", "hint": "东南海岛" },

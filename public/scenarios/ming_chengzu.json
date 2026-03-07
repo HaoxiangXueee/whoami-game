@@ -74,12 +74,12 @@
   },
   "clues": {
     "early": [
-      { "type": "location", "description": "南北两京", "hint": "迁都之议" },
-      { "type": "crisis", "description": "新朝初立", "hint": "人心未定" }
+      { "type": "atmosphere", "description": "皇权内争后/重整江山", "hint": "暗示得位不正或政权剧变" },
+      { "type": "location", "description": "北平", "hint": "暗示发迹地" }
     ],
     "mid": [
-      { "type": "policy", "description": "郑和下西洋", "hint": "三宝太监" },
-      { "type": "person", "description": "方孝孺", "hint": "诛十族" }
+      { "type": "policy", "description": "迁都以御敌患", "hint": "重大国策，虽指证明明成祖，但也具一定通用描述" },
+      { "type": "crisis", "description": "北方草原残余势力未消", "hint": "外部威胁" }
     ],
     "late": [
       { "type": "event", "description": "永乐大典", "hint": "旷世巨著" },

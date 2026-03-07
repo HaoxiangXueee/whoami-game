@@ -74,11 +74,11 @@
   },
   "clues": {
     "early": [
-      { "type": "location", "description": "成都", "hint": "西南的京城" },
+      { "type": "location", "description": "继往开来", "hint": "暗示身处蜀地且是守成之主" },
       { "type": "crisis", "description": "北境有敌", "hint": "北方有战事" }
     ],
     "mid": [
-      { "type": "location", "description": "绵竹、剑阁", "hint": "险要关隘" },
+      { "type": "crisis", "description": "国小民疲", "hint": "暗示主要的国家负担" },
       { "type": "policy", "description": "北伐有争议", "hint": "连年征战" }
     ],
     "late": [

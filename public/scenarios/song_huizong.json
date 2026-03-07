@@ -74,16 +74,17 @@
   },
   "clues": {
     "early": [
-      { "type": "location", "description": "中原", "hint": "北方都城" },
-      { "type": "crisis", "description": "民不聊生", "hint": "赋税沉重" }
+      { "type": "title", "description": "官家", "hint": "宋代称呼" },
+      { "type": "location", "description": "宫廷画院", "hint": "职业偏好" }
     ],
     "mid": [
-      { "type": "policy", "description": "书画皇帝", "hint": "瘦金体" },
-      { "type": "person", "description": "蔡京童贯", "hint": "六贼当道" }
+      { "type": "policy", "description": "联外敌以灭宿敌，引狼入室", "hint": "外交政策描述" },
+      { "type": "resource", "description": "琳琅满目的内府收藏", "hint": "艺术资产特征" },
+      { "type": "crisis", "description": "北边新兴强敌压境/内地搜刮太甚", "hint": "暗示金人威胁与花石纲余怨" }
     ],
     "late": [
       { "type": "event", "description": "靖康之变", "hint": "金人南下" },
-      { "type": "time", "description": "北宋终结", "hint": "二帝北狩" }
+      { "type": "person", "description": "蔡京/童贯/李师师", "hint": "核心关联人物" }
     ]
   },
   "metadata": {

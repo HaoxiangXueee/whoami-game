@@ -75,15 +75,15 @@
   "clues": {
     "early": [
       { "type": "location", "description": "关中", "hint": "秦都" },
-      { "type": "crisis", "description": "新帝继位", "hint": "先帝驾崩" }
+      { "type": "atmosphere", "description": "先帝崩殂", "hint": "王朝初创即面临权力交接的压抑感" }
     ],
     "mid": [
-      { "type": "policy", "description": "指鹿为马", "hint": "赵高弄权" },
-      { "type": "person", "description": "陈胜吴广", "hint": "大泽乡起义" }
+      { "type": "crisis", "description": "朝堂言路断绝", "hint": "暗示大规模民变的开端与信息孤岛" },
+      { "type": "policy", "description": "唯亲信内臣之言是从", "hint": "暗示宦官或内侍专权" }
     ],
     "late": [
-      { "type": "event", "description": "秦朝灭亡", "hint": "帝国崩溃" },
-      { "type": "time", "description": "二世而亡", "hint": "秦二世" }
+      { "type": "resource", "description": "先帝留下的庞大刑徒军", "hint": "暗示最后的军事支柱" },
+      { "type": "time", "description": "沙丘矫诏", "hint": "唯一指向性典故" }
     ]
   },
   "metadata": {

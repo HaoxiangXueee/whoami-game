@@ -74,12 +74,12 @@
   },
   "clues": {
     "early": [
-      { "type": "location", "description": "西南边地", "hint": "巴蜀之地" },
-      { "type": "crisis", "description": "强敌在侧", "hint": "霸王相争" }
+      { "type": "atmosphere", "description": "乱世", "hint": "布衣起义的背景" },
+      { "type": "location", "description": "中原", "hint": "活动范围" }
     ],
     "mid": [
-      { "type": "policy", "description": "约法三章", "hint": "入关之初" },
-      { "type": "person", "description": "萧何韩信", "hint": "良臣名将" }
+      { "type": "policy", "description": "封赏异姓，共治天下", "hint": "初期的妥协性国策" },
+      { "type": "crisis", "description": "东方有强敌/内部诸将难御", "hint": "楚汉相争与御将难题" }
     ],
     "late": [
       { "type": "event", "description": "垓下之战", "hint": "四面楚歌" },

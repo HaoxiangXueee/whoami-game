@@ -74,12 +74,12 @@
   },
   "clues": {
     "early": [
-      { "type": "location", "description": "江东", "hint": "长江之畔" },
+      { "type": "atmosphere", "description": "承袭父兄基业", "hint": "暗示二代接班的背景" },
       { "type": "crisis", "description": "北方强敌", "hint": "曹军南下" }
     ],
     "mid": [
-      { "type": "policy", "description": "三分天下", "hint": "联刘抗曹" },
-      { "type": "person", "description": "周瑜鲁肃", "hint": "江东才俊" }
+      { "type": "title", "description": "将军/至尊", "hint": "吴地特有的早期称呼" },
+      { "type": "crisis", "description": "北军顺流而下，顺逆难料", "hint": "暗示来自中原的军事压力" }
     ],
     "late": [
       { "type": "event", "description": "夺取荆州", "hint": "关羽之死" },

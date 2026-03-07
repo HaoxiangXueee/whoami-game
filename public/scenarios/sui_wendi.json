@@ -74,12 +74,13 @@
   },
   "clues": {
     "early": [
-      { "type": "location", "description": "大兴城", "hint": "隋都长安" },
-      { "type": "crisis", "description": "尉迟迥之乱", "hint": "北周旧臣" }
+      { "type": "atmosphere", "description": "篡位立国", "hint": "暗示从权臣到开国者的转变" },
+      { "type": "location", "description": "北方新都", "hint": "地理暗示" }
     ],
     "mid": [
-      { "type": "policy", "description": "开皇之治", "hint": "三省六部" },
-      { "type": "person", "description": "独孤皇后", "hint": "一夫一妻" }
+      { "type": "crisis", "description": "南朝偏安政权尚存", "hint": "一统天下的最后障碍" },
+      { "type": "policy", "description": "崇尚节俭，整顿官僚体系", "hint": "治国风格" },
+      { "type": "resource", "description": "日益充盈的国库与粮仓", "hint": "经济特征" }
     ],
     "late": [
       { "type": "event", "description": "平陈之战", "hint": "一统天下" },

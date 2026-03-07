@@ -74,12 +74,13 @@
   },
   "clues": {
     "early": [
-      { "type": "location", "description": "北方京城", "hint": "皇城巍巍" },
+      { "type": "location", "description": "京师", "hint": "权力中心" },
       { "type": "crisis", "description": "外敌内乱", "hint": "江山飘摇" }
     ],
     "mid": [
-      { "type": "location", "description": "景山", "hint": "宫后的山丘" },
-      { "type": "policy", "description": "宦官专权", "hint": "厂卫纷争" }
+      { "type": "crisis", "description": "中原蝗旱交加", "hint": "典型的危机" },
+      { "type": "policy", "description": "宦官专权", "hint": "厂卫纷争" },
+      { "type": "policy", "description": "频换首辅，急功近利", "hint": "性格与决策特征" }
     ],
     "late": [
       { "type": "event", "description": "煤山自缢", "hint": "老槐树" },

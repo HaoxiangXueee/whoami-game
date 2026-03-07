@@ -74,12 +74,12 @@
   },
   "clues": {
     "early": [
-      { "type": "location", "description": "北方京城", "hint": "皇城巍巍" },
-      { "type": "crisis", "description": "洋人之患", "hint": "海上来敌" }
+      { "type": "location", "description": "京城", "hint": "皇城巍巍" },
+      { "type": "atmosphere", "description": "渐显颓势，内忧外患初现", "hint": "清中后期压抑氛围" }
     ],
     "mid": [
-      { "type": "policy", "description": "禁烟", "hint": "查禁毒物" },
-      { "type": "person", "description": "林则徐", "hint": "虎门销烟" }
+      { "type": "policy", "description": "极其崇尚克勤克俭，衣有补丁", "hint": "极具个人色彩的政风" },
+      { "type": "resource", "description": "各省海防文书", "hint": "暗示压力来自海上" }
     ],
     "late": [
       { "type": "event", "description": "鸦片战争", "hint": "英夷入侵" },

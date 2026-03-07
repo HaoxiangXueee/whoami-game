@@ -74,12 +74,13 @@
   },
   "clues": {
     "early": [
-      { "type": "location", "description": "关中", "hint": "大唐都城" },
+      { "type": "location", "description": "长安", "hint": "大唐都城" },
       { "type": "crisis", "description": "后宫纷争", "hint": "皇后之争" }
     ],
     "mid": [
-      { "type": "policy", "description": "永徽之治", "hint": "贞观遗风" },
-      { "type": "person", "description": "武则天", "hint": "武昭仪" }
+      { "type": "crisis", "description": "龙体欠安，常感眩晕", "hint": "暗示皇帝身体状况影响政治" },
+      { "type": "policy", "description": "外廷托付宰辅", "hint": "权力分配特征" },
+      { "type": "resource", "description": "击灭宿敌，威震边疆", "hint": "暗示完成先辈未竟的武功" }
     ],
     "late": [
       { "type": "event", "description": "二圣临朝", "hint": "天后参政" },

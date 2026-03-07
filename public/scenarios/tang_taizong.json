@@ -74,18 +74,22 @@
   },
   "clues": {
     "early": [
-      { "type": "location", "description": "关中", "hint": "唐朝都城" },
-      { "type": "crisis", "description": "北方边患", "hint": "胡骑南下" }
+      { "type": "atmosphere", "description": "前朝暴政终结/百废待兴", "hint": "开国初期" },
+      { "type": "title", "description": "大家/圣人", "hint": "唐代特有但并非唯一" },
+      { "type": "location", "description": "关中", "hint": "地理区域" }
     ],
     "mid": [
-      { "type": "policy", "description": "贞观之治", "hint": "虚心纳谏" },
-      { "type": "person", "description": "魏征", "hint": "直言敢谏" }
+      { "type": "crisis", "description": "北边部族可汗时有挑衅", "hint": "暗示突厥压力" },
+      { "type": "policy", "description": "虚心纳谏/完善科举", "hint": "治国理念" },
+      { "type": "resource", "description": "府兵骁勇", "hint": "军事制度特征" }
     ],
     "late": [
-      { "type": "event", "description": "玄武门", "hint": "手足相残" },
-      { "type": "time", "description": "天可汗", "hint": "四夷臣服" }
+      { "type": "event", "description": "玄武门之事/被尊为天可汗", "hint": "唯一指向性事件" },
+      { "type": "person", "description": "魏徵/长孙无忌", "hint": "关键人物" },
+      { "type": "identity", "description": "贞观之治/世民", "hint": "直接锁定" }
     ]
   },
+
   "metadata": {
     "author": "AI Game Studio",
     "createdAt": "2026-03-02T05:42:09.639Z",

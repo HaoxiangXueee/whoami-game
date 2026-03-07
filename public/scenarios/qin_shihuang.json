@@ -74,16 +74,19 @@
   },
   "clues": {
     "early": [
-      { "type": "location", "description": "咸阳", "hint": "关中都城" },
-      { "type": "crisis", "description": "六国旧部", "hint": "关东不安" }
+      { "type": "atmosphere", "description": "扫灭群雄/四海归一", "hint": "大一统开端的宏观氛围" },
+      { "type": "title", "description": "陛下", "hint": "通用最高尊称" },
+      { "type": "location", "description": "关中", "hint": "模糊的地理区域" }
     ],
     "mid": [
-      { "type": "policy", "description": "统一度量衡", "hint": "书同文车同轨" },
-      { "type": "event", "description": "焚书坑儒", "hint": "禁书烧书" }
+      { "type": "crisis", "description": "六国残余势力蠢蠢欲动", "hint": "暗示前朝势力尚存" },
+      { "type": "policy", "description": "废分封，行郡县", "hint": "制度变革，但不仅秦有，具一定指向性" },
+      { "type": "resource", "description": "关中铁骑", "hint": "精锐武装的泛称" }
     ],
     "late": [
-      { "type": "event", "description": "求仙问道", "hint": "长生不老" },
-      { "type": "person", "description": "始皇帝", "hint": "千古一帝" }
+      { "type": "event", "description": "书同文，车同轨", "hint": "唯一指向性政策" },
+      { "type": "location", "description": "咸阳宫/修筑万里长城", "hint": "唯一指向性地标/工程" },
+      { "type": "identity", "description": "始皇帝/祖龙", "hint": "直接锁定" }
     ]
   },
   "metadata": {

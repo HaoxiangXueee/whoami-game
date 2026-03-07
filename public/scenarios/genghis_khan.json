@@ -79,7 +79,7 @@
     ],
     "mid": [
       { "type": "policy", "description": "千户制度", "hint": "军政合一" },
-      { "type": "person", "description": "铁木真", "hint": "草原之主" }
+      { "type": "crisis", "description": "宿仇部落劫掠", "hint": "早期外敌" }
     ],
     "late": [
       { "type": "event", "description": "西征花剌子模", "hint": "西方商队" },

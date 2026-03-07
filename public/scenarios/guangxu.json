@@ -74,12 +74,12 @@
   },
   "clues": {
     "early": [
-      { "type": "location", "description": "水中小岛", "hint": "湖中宫殿" },
+      { "type": "title", "description": "万岁爷", "hint": "万岁爷" },
       { "type": "crisis", "description": "外敌环伺", "hint": "国势危亡" }
     ],
     "mid": [
-      { "type": "policy", "description": "变法维新", "hint": "百日维新" },
-      { "type": "person", "description": "康有为", "hint": "维新派" }
+      { "type": "location", "description": "颐和园", "hint": "活动受限区域" },
+      { "type": "resource", "description": "几位忧国忧民的年轻书生", "hint": "暗示变法派" }
     ],
     "late": [
       { "type": "event", "description": "慈禧太后", "hint": "戊戌政变" },

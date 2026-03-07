@@ -125,6 +125,22 @@ export function useLLM(options: UseLLMOptions): UseLLMReturn {
           }
         }
 
+        // 根据回合数提取对应的线索
+        let currentClues: string[] | undefined;
+        if (scenario.clues) {
+          let clueItems;
+          if (safeCurrentTurn <= 3) {
+            clueItems = scenario.clues.early;
+          } else if (safeCurrentTurn <= 7) {
+            clueItems = scenario.clues.mid;
+          } else {
+            clueItems = scenario.clues.late;
+          }
+          if (clueItems && clueItems.length > 0) {
+            currentClues = clueItems.map(item => `${item.description}（${item.hint}）`);
+          }
+        }
+
         const systemPrompt = generateSystemPrompt(
           scenario.background || '',
           safeCurrentTurn,
@@ -132,7 +148,8 @@ export function useLLM(options: UseLLMOptions): UseLLMReturn {
           0, // authority 会在后续更新
           0,  // suspicion 会在后续更新
           currentNpcInfo,
-          previousNpcInfo
+          previousNpcInfo,
+          currentClues
         );
 
         const gameContext: GameContext = {

@@ -74,15 +74,16 @@
   },
   "clues": {
     "early": [
-      { "type": "location", "description": "江都", "hint": "扬州行宫" },
-      { "type": "crisis", "description": "修大运河", "hint": "劳民伤财" }
+      { "type": "atmosphere", "description": "天下一统/家底殷实", "hint": "继承了极盛的基业" },
+      { "type": "location", "description": "洛阳/江南", "hint": "个人偏好的活动区域" }
     ],
     "mid": [
-      { "type": "policy", "description": "三征高句丽", "hint": "辽东之战" },
-      { "type": "person", "description": "杨玄感", "hint": "起兵反隋" }
+      { "type": "policy", "description": "征高句丽", "hint": "辽东之战" },
+      { "type": "policy", "description": "巡游天下", "hint": "工程与巡游特征的模糊描述" },
+      { "type": "crisis", "description": "百万劳役怨声载道/山东群盗蜂起", "hint": "暗示过度役使民力的后果" }
     ],
     "late": [
-      { "type": "event", "description": "江都之变", "hint": "骁果军叛" },
+      { "type": "resource", "description": "宏伟的龙舟舰队", "hint": "极具辨识度的交通工具" },
       { "type": "time", "description": "隋朝灭亡", "hint": "二世而亡" }
     ]
   },

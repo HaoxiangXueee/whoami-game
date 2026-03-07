@@ -78,8 +78,8 @@
       { "type": "crisis", "description": "新旧交替", "hint": "人心未定" }
     ],
     "mid": [
-      { "type": "policy", "description": "酷吏政治", "hint": "告密成风" },
-      { "type": "person", "description": "太平公主", "hint": "爱女" }
+      { "type": "policy", "description": "酷吏政治/遍布各地的告密箱", "hint": "告密成风" },
+      { "type": "crisis", "description": "旧宗室心怀不满/秘密谋反", "hint": "权力斗争特征" }
     ],
     "late": [
       { "type": "event", "description": "改唐为周", "hint": "新朝建立" },

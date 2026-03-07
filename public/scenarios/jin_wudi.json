@@ -75,11 +75,12 @@
   "clues": {
     "early": [
       { "type": "location", "description": "洛阳", "hint": "西晋都城" },
-      { "type": "crisis", "description": "三国归晋", "hint": "一统天下" }
+      { "type": "atmosphere", "description": "天下久违的大同", "hint": "暗示三国结束后的初平" }
     ],
     "mid": [
-      { "type": "policy", "description": "太康之治", "hint": "盛世开端" },
-      { "type": "person", "description": "司马衷", "hint": "太子愚钝" }
+      { "type": "crisis", "description": "皇室亲族纷纷获得统兵权", "hint": "为后来的乱局埋下伏笔" },
+      { "type": "person", "description": "太子愚钝", "hint": "司马衷" },
+      { "type": "policy", "description": "崇尚奢靡，官僚竞相攀比", "hint": "腐朽的社会风气特征" }
     ],
     "late": [
       { "type": "event", "description": "八王之乱", "hint": "诸王之乱" },

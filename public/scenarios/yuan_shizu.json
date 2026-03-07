@@ -78,8 +78,8 @@
       { "type": "crisis", "description": "宗王纷争", "hint": "汗位之争" }
     ],
     "mid": [
-      { "type": "policy", "description": "行汉法", "hint": "汉化改革" },
-      { "type": "person", "description": "文天祥", "hint": "南宋忠臣" }
+      { "type": "crisis", "description": "南方最后的海上堡垒尚未攻克", "hint": "暗示对南宋残余的最后攻势" },
+      { "type": "policy", "description": "推行等级分明的族群管理制度", "hint": "社会治理特征" }
     ],
     "late": [
       { "type": "event", "description": "灭南宋", "hint": "一统天下" },

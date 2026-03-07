@@ -78,8 +78,8 @@
       { "type": "crisis", "description": "痛失亲友", "hint": "悲伤不已" }
     ],
     "mid": [
-      { "type": "policy", "description": "桃园结义", "hint": "兄弟情深" },
-      { "type": "person", "description": "诸葛亮", "hint": "三顾茅庐" }
+      { "type": "location", "description": "曾辗转于大河南北", "hint": "初期流离失所的特征" },
+      { "type": "crisis", "description": "屡战屡败", "hint": "核心困境" }
     ],
     "late": [
       { "type": "event", "description": "夷陵之战", "hint": "火烧连营" },

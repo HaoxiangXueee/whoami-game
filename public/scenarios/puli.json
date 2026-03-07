@@ -75,14 +75,14 @@
   "clues": {
     "early": [
       { "type": "location", "description": "紫禁城", "hint": "北京皇宫" },
-      { "type": "crisis", "description": "革命党起事", "hint": "南方有变" }
+      { "type": "title", "description": "万岁爷", "hint": "清代语境" }
     ],
     "mid": [
-      { "type": "person", "description": "袁世凯", "hint": "袁大人" },
-      { "type": "policy", "description": "退位诏书", "hint": "逊位保命" }
+      { "type": "crisis", "description": "北方新军观望", "hint": "暗示辛亥革命" },
+      { "type": "resource", "description": "逐渐流失的皇室威仪", "hint": "身份虚弱特征" }
     ],
     "late": [
-      { "type": "event", "description": "清朝终结", "hint": "民国建立" },
+      { "type": "event", "description": "被逐出紫禁城", "hint": "终结帝制的事件" },
       { "type": "time", "description": "宣统三年", "hint": "末代年号" }
     ]
   },

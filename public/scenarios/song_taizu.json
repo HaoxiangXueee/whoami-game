@@ -74,12 +74,12 @@
   },
   "clues": {
     "early": [
-      { "type": "location", "description": "中原", "hint": "北方都城" },
-      { "type": "crisis", "description": "武将势大", "hint": "五代余患" }
+      { "type": "atmosphere", "description": "藩镇未平", "hint": "五代末宋初氛围" },
+      { "type": "title", "description": "官家", "hint": "宋代特有但全宋通用" }
     ],
     "mid": [
-      { "type": "policy", "description": "重文轻武", "hint": "以文治国" },
-      { "type": "person", "description": "陈桥兵变", "hint": "黄袍加身" }
+      { "type": "policy", "description": "重文轻武/收回地方兵权与财权", "hint": "以文治国，集权手段" },
+      { "type": "crisis", "description": "地方将领手握重兵，恐生变乱", "hint": "核心焦虑" }
     ],
     "late": [
       { "type": "event", "description": "杯酒释兵权", "hint": "酒宴夺权" },
